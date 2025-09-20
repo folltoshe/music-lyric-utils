@@ -1,0 +1,13 @@
+{
+  "name": "@music-lyric-utils/parser",
+  "version": "0.0.1",
+  "description": "Music Lyric Parser",
+  "author": "Folltoshe",
+  "license": "MIT",
+  "scripts": {},
+  "repository": {
+    "url": "https://github.com/Folltoshe/music-lyric-utils.git",
+    "directory": "packages/parser",
+    "type": "git"
+  }
+}
