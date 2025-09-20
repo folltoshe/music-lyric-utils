@@ -1,0 +1,13 @@
+{
+  "name": "@music-lyric-utils/shared",
+  "version": "0.0.1",
+  "description": "Music Lyric Shared",
+  "author": "Folltoshe",
+  "license": "MIT",
+  "scripts": {},
+  "repository": {
+    "url": "https://github.com/Folltoshe/music-lyric-utils.git",
+    "directory": "packages/shared",
+    "type": "git"
+  }
+}
