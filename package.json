@@ -1,0 +1,20 @@
+{
+  "name": "music-lyric-utils",
+  "version": "1.0.0",
+  "description": "Music Lyric Utils",
+  "author": "Folltoshe",
+  "license": "MIT",
+  "scripts": {},
+  "keywords": [
+    "music",
+    "lyric"
+  ],
+  "homepage": "https://github.com/Folltoshe/music-lyric-utils#readme",
+  "bugs": {
+    "url": "https://github.com/Folltoshe/music-lyric-utils/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Folltoshe/music-lyric-utils.git"
+  }
+}
