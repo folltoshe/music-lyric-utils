@@ -1,0 +1,13 @@
+{
+  "name": "@music-lyric-utils/player",
+  "version": "0.0.1",
+  "description": "Music Lyric Player",
+  "author": "Folltoshe",
+  "license": "MIT",
+  "scripts": {},
+  "repository": {
+    "url": "https://github.com/Folltoshe/music-lyric-utils.git",
+    "directory": "packages/player",
+    "type": "git"
+  }
+}
