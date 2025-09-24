@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {},
   "repository": {
-    "url": "https://github.com/Folltoshe/music-lyric-utils.git",
+    "url": "https://github.com/folltoshe/music-lyric-utils.git",
     "directory": "packages/shared",
     "type": "git"
   }

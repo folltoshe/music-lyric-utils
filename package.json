@@ -9,12 +9,12 @@
     "music",
     "lyric"
   ],
-  "homepage": "https://github.com/Folltoshe/music-lyric-utils#readme",
+  "homepage": "https://github.com/folltoshe/music-lyric-utils#readme",
   "bugs": {
-    "url": "https://github.com/Folltoshe/music-lyric-utils/issues"
+    "url": "https://github.com/folltoshe/music-lyric-utils/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Folltoshe/music-lyric-utils.git"
+    "url": "git+https://github.com/folltoshe/music-lyric-utils.git"
   }
 }
