@@ -25,21 +25,13 @@ importers:
 
   packages/player: {}
 
-  packages/shared:
-    devDependencies:
-      '@types/node':
-        specifier: ^24.5.2
-        version: 24.5.2
+  packages/shared: {}
 
   packages/test:
     dependencies:
       '@music-lyric-utils/shared':
         specifier: workspace:^
         version: link:../shared
-    devDependencies:
-      '@types/node':
-        specifier: ^24.5.2
-        version: 24.5.2
 
 packages:
 

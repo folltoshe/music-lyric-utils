@@ -14,9 +14,6 @@
     "directory": "packages/test",
     "type": "git"
   },
-  "devDependencies": {
-    "@types/node": "^24.5.2"
-  },
   "dependencies": {
     "@music-lyric-utils/shared": "workspace:^"
   }
