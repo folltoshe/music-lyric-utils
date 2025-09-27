@@ -4,7 +4,9 @@
   "description": "Music Lyric Utils",
   "author": "Folltoshe",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "pnpm run --filter * --if-present build && pnpm --filter test run dev"
+  },
   "keywords": [
     "music",
     "lyric"

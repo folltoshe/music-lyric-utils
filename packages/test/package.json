@@ -1,0 +1,23 @@
+{
+  "name": "@music-lyric-utils/test",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Music Lyric Test",
+  "author": "Folltoshe",
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build",
+    "dev": "node ./dist/index.mjs"
+  },
+  "repository": {
+    "url": "https://github.com/folltoshe/music-lyric-utils.git",
+    "directory": "packages/test",
+    "type": "git"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2"
+  },
+  "dependencies": {
+    "@music-lyric-utils/shared": "workspace:^"
+  }
+}
