@@ -7,3 +7,9 @@ settings:
 importers:
 
   .: {}
+
+  packages/parser: {}
+
+  packages/player: {}
+
+  packages/shared: {}
