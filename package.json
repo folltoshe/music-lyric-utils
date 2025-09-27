@@ -16,5 +16,11 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/folltoshe/music-lyric-utils.git"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
+    "vite-plugin-dts": "^4.5.4"
   }
 }

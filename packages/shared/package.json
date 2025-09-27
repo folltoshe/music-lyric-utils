@@ -4,10 +4,25 @@
   "description": "Music Lyric Shared",
   "author": "Folltoshe",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "vite build"
+  },
   "repository": {
     "url": "https://github.com/folltoshe/music-lyric-utils.git",
     "directory": "packages/shared",
     "type": "git"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "typings": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2"
   }
 }
