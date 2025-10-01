@@ -1,6 +1,6 @@
 import type { LyricTimeInfo, LyricLineType, LyricInfo, LyricLine, LyricDynamicInfo, LyricDynamicWord } from '../interface'
 
-export const LYRIC_LINE_TYPES: Record<string, LyricLineType> = {
+export const LYRIC_LINE_TYPES: Record<LyricLineType, LyricLineType> = {
   NORMAL: 'NORMAL',
   INTERLUDE: 'INTERLUDE',
 } as const
