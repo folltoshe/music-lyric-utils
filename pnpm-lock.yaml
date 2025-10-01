@@ -21,7 +21,18 @@ importers:
         specifier: ^4.5.4
         version: 4.5.4(@types/node@24.5.2)(rollup@4.52.3)(typescript@5.9.2)(vite@7.1.7(@types/node@24.5.2))
 
-  packages/parser: {}
+  packages/parser:
+    dependencies:
+      '@music-lyric-utils/shared':
+        specifier: workspace:*
+        version: link:../shared
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@types/lodash':
+        specifier: ^4.17.20
+        version: 4.17.20
 
   packages/player: {}
 
@@ -389,6 +400,9 @@ packages:
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
+
+  '@types/lodash@4.17.20':
+    resolution: {integrity: sha512-H3MHACvFUEiujabxhaI/ImO6gUrd8oOurg7LQtS7mbwIXA/cUqWrvBsaeJ23aZEPk1TAYkurjfMbSELfoCXlGA==}
 
   '@types/node@24.5.2':
     resolution: {integrity: sha512-FYxk1I7wPv3K2XBaoyH2cTnocQEu8AOZ60hPbsyukMPLv5/5qr7V1i8PLHdl6Zf87I+xZXFvPCXYjiTFq+YSDQ==}
@@ -1000,6 +1014,8 @@ snapshots:
   '@types/argparse@1.0.38': {}
 
   '@types/estree@1.0.8': {}
+
+  '@types/lodash@4.17.20': {}
 
   '@types/node@24.5.2':
     dependencies:
