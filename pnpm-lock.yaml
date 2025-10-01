@@ -40,6 +40,9 @@ importers:
 
   packages/test:
     dependencies:
+      '@music-lyric-utils/parser':
+        specifier: workspace:^
+        version: link:../parser
       '@music-lyric-utils/shared':
         specifier: workspace:^
         version: link:../shared

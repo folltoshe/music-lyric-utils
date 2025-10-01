@@ -15,6 +15,7 @@
     "type": "git"
   },
   "dependencies": {
-    "@music-lyric-utils/shared": "workspace:^"
+    "@music-lyric-utils/shared": "workspace:^",
+    "@music-lyric-utils/parser": "workspace:^"
   }
 }
