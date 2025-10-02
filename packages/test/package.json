@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "vite build",
-    "dev": "node ./dist/index.mjs"
+    "dev": "pnpm run build && node ./dist/index.mjs"
   },
   "repository": {
     "url": "https://github.com/folltoshe/music-lyric-utils.git",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@music-lyric-utils/shared": "workspace:^",
-    "@music-lyric-utils/parser": "workspace:^"
+    "@music-lyric-utils/parser": "workspace:^",
+    "@music-lyric-utils/player": "workspace:^"
   }
 }
