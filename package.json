@@ -9,6 +9,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "publish": "node scripts/publish.js",
     "update:version": "node scripts/update-version.js"
   },
   "keywords": [

@@ -35,7 +35,7 @@ export const targets = readdirSync(root)
 /**
  * @param {string} command
  * @param {Array<string>} args
- * @param {object} [options]
+ * @param {import('node:child_process').SpawnOptions} [options]
  */
 export const exec = (command, args, options) => {
   return new Promise((resolve, reject) => {

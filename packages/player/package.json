@@ -22,6 +22,9 @@
       "import": "./dist/index.mjs"
     }
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@music-lyric-utils/shared": "workspace:*",
     "lodash": "^4.17.21"
