@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run build && pnpm --filter test run dev"
+    "dev": "turbo run dev"
   },
   "keywords": [
     "music",
