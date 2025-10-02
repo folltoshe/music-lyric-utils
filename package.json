@@ -4,8 +4,10 @@
   "description": "Music Lyric Utils",
   "author": "Folltoshe",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "dev": "pnpm run --filter * --if-present build && pnpm --filter test run dev"
+    "build": "turbo run build",
+    "dev": "turbo run build && pnpm --filter test run dev"
   },
   "keywords": [
     "music",
@@ -19,8 +21,10 @@
     "type": "git",
     "url": "git+https://github.com/folltoshe/music-lyric-utils.git"
   },
+  "packageManager": "pnpm@10.15.0",
   "devDependencies": {
     "@types/node": "^24.5.2",
+    "turbo": "^2.5.8",
     "typescript": "^5.9.2",
     "vite": "^7.1.7",
     "vite-plugin-dts": "^4.5.4"

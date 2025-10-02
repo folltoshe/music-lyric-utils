@@ -1,23 +1,20 @@
-import Path from 'node:path'
+import { join } from 'node:path'
 
 import { defineConfig } from 'vite'
 
-const RootDir = Path.join(process.cwd())
-const SourceDir = Path.join(RootDir, 'src')
+const root = join(process.cwd())
+const src = join(root, 'src')
 
 export default defineConfig({
+  root,
   build: {
-    outDir: Path.join(RootDir, 'dist'),
+    outDir: join(root, 'dist'),
     lib: {
-      entry: Path.join(SourceDir, 'index.ts'),
-      formats: ['es'],
+      entry: join(src, 'index.ts'),
+      formats: ['es', 'cjs'],
       fileName: 'index',
     },
     minify: false,
-  },
-  resolve: {
-    alias: {
-      '@music-lyric-utils/*': Path.join(RootDir, '../'),
-    },
+    reportCompressedSize: false,
   },
 })
