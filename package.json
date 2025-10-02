@@ -10,7 +10,8 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "publish": "node scripts/publish.js",
-    "update:version": "node scripts/update-version.js"
+    "update-version": "node scripts/update-version.js",
+    "build-change-log": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "keywords": [
     "music",
@@ -27,6 +28,7 @@
   "packageManager": "pnpm@10.15.0",
   "devDependencies": {
     "@types/node": "^24.5.2",
+    "conventional-changelog-cli": "^5.0.0",
     "enquirer": "^2.4.1",
     "turbo": "^2.5.8",
     "typescript": "^5.9.2",
