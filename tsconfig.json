@@ -9,5 +9,5 @@
     "allowJs": true,
     "skipLibCheck": true
   },
-  "exclude": ["node_modules", "packages/**/dist"]
+  "exclude": ["node_modules", "scripts", "packages/**/dist"]
 }
