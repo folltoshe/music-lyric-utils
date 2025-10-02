@@ -37,7 +37,18 @@ importers:
         specifier: ^4.17.20
         version: 4.17.20
 
-  packages/player: {}
+  packages/player:
+    dependencies:
+      '@music-lyric-utils/shared':
+        specifier: workspace:*
+        version: link:../shared
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@types/lodash':
+        specifier: ^4.17.20
+        version: 4.17.20
 
   packages/shared: {}
 
