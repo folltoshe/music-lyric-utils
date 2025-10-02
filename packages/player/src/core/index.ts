@@ -49,7 +49,7 @@ export class LyricPlayer {
 
   handleGetCurrentTime() {
     const now = handleGetNow()
-    return (now - this.current.status.performanceTime) * Number(this.options.speed) || 1 + this.current.status.startTime
+    return (now - this.current.status.performanceTime) * this.currentSpeed + this.current.status.startTime
   }
 
   private handleUpdateLyric() {
@@ -92,7 +92,7 @@ export class LyricPlayer {
     const driftTime = currentTime - currentLine.time.start
     if (driftTime >= 0 || this.current.lineInfo.now === 0) {
       const nextLine = this.current.lyricInfo.lines[this.current.lineInfo.now + 1]
-      const delay = (nextLine.time.start - currentLine.time.start - driftTime) / (Number(this.options.speed) || 1)
+      const delay = (nextLine.time.start - currentLine.time.start - driftTime) / this.currentSpeed
       if (delay > 0) {
         if (this.current.status.playing) {
           this.timeout.line.start(() => {
@@ -168,6 +168,10 @@ export class LyricPlayer {
 
   get isPlaying() {
     return this.current.status.playing
+  }
+
+  get currentSpeed() {
+    return Number(this.options.speed) || 1
   }
 
   get currentLyricInfo() {
