@@ -4,11 +4,23 @@
   "description": "Music Lyric Player",
   "author": "Folltoshe",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "vite build"
+  },
   "repository": {
     "url": "https://github.com/folltoshe/music-lyric-utils.git",
     "directory": "packages/player",
     "type": "git"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "typings": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
   },
   "dependencies": {
     "@music-lyric-utils/shared": "workspace:*",
