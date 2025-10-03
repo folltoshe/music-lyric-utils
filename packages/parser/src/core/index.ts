@@ -38,7 +38,7 @@ export class LyricParser {
       }
     }
 
-    for (let index = 0; index < resultLyric.lines.length; index++) {
+    for (let index = 0, length = resultLyric.lines.length; index < length; index++) {
       const current = resultLyric.lines[index]
       const next = resultLyric.lines[index + 1]
 
@@ -52,6 +52,7 @@ export class LyricParser {
         line.type = LYRIC_LINE_TYPES.INTERLUDE
         resultLyric.lines.unshift(line)
       }
+
       // replace chinese punctuation
       current.content.original = replaceChinesePunctuationToEnglish(current.content.original)
       if (current.content.dynamic) {
@@ -59,6 +60,7 @@ export class LyricParser {
           return { ...item, text: replaceChinesePunctuationToEnglish(item.text) }
         })
       }
+
       // add interlude
       if (next && next.time.start - current.time.end > this.options.checkInterludeTime) {
         const line = cloneDeep(EMPTY_LYRIC_LINE)
