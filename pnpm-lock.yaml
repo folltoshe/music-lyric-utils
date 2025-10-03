@@ -56,7 +56,15 @@ importers:
         specifier: ^4.17.20
         version: 4.17.20
 
-  packages/shared: {}
+  packages/shared:
+    dependencies:
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@types/lodash':
+        specifier: ^4.17.20
+        version: 4.17.20
 
   packages/test:
     dependencies:
