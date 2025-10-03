@@ -66,17 +66,17 @@ importers:
         specifier: ^4.17.20
         version: 4.17.20
 
-  packages/test:
+  private/test:
     dependencies:
       '@music-lyric-utils/parser':
         specifier: workspace:^
-        version: link:../parser
+        version: link:../../packages/parser
       '@music-lyric-utils/player':
         specifier: workspace:^
-        version: link:../player
+        version: link:../../packages/player
       '@music-lyric-utils/shared':
         specifier: workspace:^
-        version: link:../shared
+        version: link:../../packages/shared
 
 packages:
 
