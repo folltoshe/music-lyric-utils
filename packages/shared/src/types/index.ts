@@ -4,7 +4,7 @@ type JoinKey<K extends string, P extends string> = P extends '' ? K : `${K}.${P}
 
 type SplitKey<S extends string, D extends string = '.'> = S extends '' ? [] : S extends `${infer Head}${D}${infer Rest}` ? [Head, ...SplitKey<Rest, D>] : [S]
 
-type NestedKeys<T> = T extends object
+export type NestedKeys<T> = T extends object
   ? {
       [K in keyof T & string]: IsPlainObject<T[K]> extends true ? K | JoinKey<K, Extract<NestedKeys<T[K]>, string>> : K
     }[keyof T & string]
@@ -18,21 +18,19 @@ type PathValueByKeys<T, Keys extends readonly string[]> = Keys extends [infer He
     : undefined
   : T
 
-type PathValue<T, K extends string> = PathValueByKeys<T, SplitKey<K>>
+export type PathValue<T, K extends string> = PathValueByKeys<T, SplitKey<K>>
 
-type DeepPartial<T> = T extends (...args: any[]) => any
+export type DeepPartial<T> = T extends (...args: any[]) => any
   ? T
   : T extends Map<infer K, infer V>
   ? Map<DeepPartial<K>, DeepPartial<V>>
   : T extends Set<infer U>
   ? Set<DeepPartial<U>>
-  : T extends readonly (infer U)[]
-  ? ArrayOrTupleDeepPartial<T>
   : T extends object
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : T
 
-type DeepRequired<T> = T extends (...args: any[]) => any
+export type DeepRequired<T> = T extends (...args: any[]) => any
   ? T
   : T extends readonly any[]
   ? { [K in keyof T]-?: DeepRequired<NonNullable<T[K]>> }

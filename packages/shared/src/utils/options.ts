@@ -1,5 +1,7 @@
 import { get, set, merge } from 'lodash'
 
+import { type DeepPartial, type PathValue, type NestedKeys } from '../types'
+
 export class OptionsManager<T extends Record<string, any>> {
   private current: T
 
