@@ -7,6 +7,10 @@ import { alignLyricWithTime } from '../utils'
 import { processNormalLyric } from './normal'
 import { processDynamicLyric } from './dynamic'
 
+export const isInterludeLine = (line: LyricLine) => {
+  return line.type === LYRIC_LINE_TYPES.INTERLUDE
+}
+
 export class LyricParser {
   private options: RequiredParserOptions
 
