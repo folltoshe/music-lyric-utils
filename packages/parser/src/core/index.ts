@@ -1,7 +1,12 @@
-import { merge, cloneDeep } from 'lodash'
-import { type LyricInfo, type LyricLine, LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE, replaceChinesePunctuationToEnglish } from '@music-lyric-utils/shared'
-import { type ParseLyricProps, type ParserOptions, type RequiredParserOptions } from '../interface'
+import { cloneDeep } from 'lodash'
+
+import { LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 import { PARSER_DEFAULT_OPTIONS } from '../constant'
+
+import { type LyricInfo, type LyricLine } from '@music-lyric-utils/shared'
+import { type ParseLyricProps, type ParserOptions, type RequiredParserOptions } from '../interface'
+
+import { OptionsManager, replaceChinesePunctuationToEnglish } from '@music-lyric-utils/shared'
 import { alignLyricWithTime } from '../utils'
 
 import { processNormalLyric } from './normal'
@@ -12,11 +17,17 @@ export const isInterludeLine = (line: LyricLine) => {
 }
 
 export class LyricParser {
-  private options: RequiredParserOptions
+  private options = new OptionsManager<RequiredParserOptions>(PARSER_DEFAULT_OPTIONS)
 
   constructor(opt?: ParserOptions) {
-    this.options = merge(PARSER_DEFAULT_OPTIONS, opt)
+    if (opt) {
+      this.options.setAll(opt)
+    }
   }
+
+  updateOptionsWithKey = this.options.setByKey.bind(this.options)
+
+  updateOptions = this.options.setAll.bind(this.options)
 
   parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): LyricInfo | null {
     const targetLyric = processNormalLyric(original)
@@ -66,7 +77,7 @@ export class LyricParser {
       }
 
       // add interlude
-      if (next && next.time.start - current.time.end > this.options.checkInterludeTime) {
+      if (next && next.time.start - current.time.end > this.options.getByKey('checkInterludeTime')) {
         const line = cloneDeep(EMPTY_LYRIC_LINE)
         const start = current.time.end + 100
         const duration = Math.max(next.time.start - start, 0)

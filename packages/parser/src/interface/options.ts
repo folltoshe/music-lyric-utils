@@ -1,3 +1,5 @@
+import type { DeepRequired } from '@music-lyric-utils/shared'
+
 export interface ParserOptions {
   /**
    * is show interlude line
@@ -9,7 +11,7 @@ export interface ParserOptions {
   checkInterludeTime?: number
 }
 
-export type RequiredParserOptions = Required<ParserOptions>
+export type RequiredParserOptions = DeepRequired<ParserOptions>
 
 export interface ParseLyricProps {
   original?: string
