@@ -1,13 +1,35 @@
-import { merge, cloneDeep } from 'lodash'
-import { type LyricInfo, EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
+import { cloneDeep } from 'lodash'
 
+import { type LyricInfo } from '@music-lyric-utils/shared'
 import { type PlayerOptions, type RequiredPlayerOptions } from '../interface'
+
+import { EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
 import { PLAYER_DEFAULT_OPTIONS } from '../constant'
+
+import { OptionsManager } from '@music-lyric-utils/shared'
 import { handleGetNow, TimeoutTools } from '../utils'
 
-export class LyricPlayer {
-  private options: RequiredPlayerOptions
+abstract class LyricPlayerOptions {
+  protected options = new OptionsManager<RequiredPlayerOptions>(PLAYER_DEFAULT_OPTIONS)
 
+  constructor(opt?: PlayerOptions) {
+    if (opt) this.options.setAll(opt)
+  }
+
+  protected abstract onUpdateOptions(): void
+
+  updateOptionsWithKey(...args: Parameters<typeof this.options.setByKey>) {
+    this.options.setByKey(...args)
+    this.onUpdateOptions()
+  }
+
+  updateOptions(...args: Parameters<typeof this.options.setAll>) {
+    this.options.setAll(...args)
+    this.onUpdateOptions()
+  }
+}
+
+export class LyricPlayer extends LyricPlayerOptions {
   private timeout: {
     line: TimeoutTools
   }
@@ -25,8 +47,9 @@ export class LyricPlayer {
     }
   }
 
-  constructor(opt: PlayerOptions) {
-    this.options = merge(PLAYER_DEFAULT_OPTIONS, opt)
+  constructor(opt?: PlayerOptions) {
+    super(opt)
+
     this.timeout = {
       line: new TimeoutTools(),
     }
@@ -47,13 +70,18 @@ export class LyricPlayer {
     this.handleUpdateLyric()
   }
 
+  protected override onUpdateOptions() {
+    if (!this.current.status.playing) return
+    this.play(this.handleGetCurrentTime())
+  }
+
   handleGetCurrentTime() {
     const now = handleGetNow()
     return (now - this.current.status.performanceTime) * this.currentSpeed + this.current.status.startTime
   }
 
   private handleUpdateLyric() {
-    this.options.onSetLyric(this.current.lyricInfo)
+    this.options.getByKey('onSetLyric')(this.current.lyricInfo)
     this.current.lineInfo.max = this.current.lyricInfo.lines.length - 1
   }
 
@@ -68,7 +96,7 @@ export class LyricPlayer {
 
   private handlePlayMaxLine() {
     const currentLine = this.current.lyricInfo.lines[this.current.lineInfo.now]
-    this.options.onLinePlay(this.current.lineInfo.now, currentLine)
+    this.options.getByKey('onLinePlay')(this.current.lineInfo.now, currentLine)
 
     if (currentLine.time.duration > 0) {
       this.timeout.line.start(() => this.pause(), currentLine.time.duration)
@@ -100,7 +128,7 @@ export class LyricPlayer {
             this.handleLineRefresh()
           }, delay)
         }
-        this.options.onLinePlay(this.current.lineInfo.now, currentLine)
+        this.options.getByKey('onLinePlay')(this.current.lineInfo.now, currentLine)
       } else {
         const newCurLineNum = this.handleFindCurrentLine(currentTime, this.current.lineInfo.now + 1)
         if (newCurLineNum > this.current.lineInfo.now) this.current.lineInfo.now = newCurLineNum - 1
@@ -126,7 +154,7 @@ export class LyricPlayer {
     const currentLineNum = this.handleFindCurrentLine(this.handleGetCurrentTime())
     if (this.current.lineInfo.now !== currentLineNum) {
       this.current.lineInfo.now = currentLineNum
-      this.options.onLinePlay(currentLineNum, this.current.lyricInfo.lines[currentLineNum])
+      this.options.getByKey('onLinePlay')(currentLineNum, this.current.lyricInfo.lines[currentLineNum])
     }
   }
 
@@ -138,7 +166,7 @@ export class LyricPlayer {
     this.current.status.playing = true
     this.current.status.startTime = currentTime
 
-    const offset = Math.trunc(this.options.offset + this.current.lyricInfo.meta.offset)
+    const offset = Math.trunc(this.options.getByKey('offset') + this.current.lyricInfo.meta.offset)
     this.current.status.performanceTime = handleGetNow() - offset
 
     this.current.lineInfo.now = this.handleFindCurrentLine(this.handleGetCurrentTime()) - 1
@@ -147,17 +175,6 @@ export class LyricPlayer {
 
   pause() {
     this.handleLinePause()
-  }
-
-  updateSpeed(speed: number) {
-    this.options.speed = speed
-    if (!this.current.lyricInfo.lines.length) return
-    if (!this.current.status.playing) return
-    this.play(this.handleGetCurrentTime())
-  }
-
-  updateOffset(offset: number) {
-    this.options.offset = offset
   }
 
   updateLyric(lyricInfo: LyricInfo) {
@@ -171,7 +188,7 @@ export class LyricPlayer {
   }
 
   get currentSpeed() {
-    return Number(this.options.speed) || 1
+    return Number(this.options.getByKey('offset')) || 1
   }
 
   get currentLyricInfo() {

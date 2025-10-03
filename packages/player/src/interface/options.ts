@@ -1,4 +1,4 @@
-import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
+import type { DeepRequired, LyricInfo, LyricLine } from '@music-lyric-utils/shared'
 
 export interface PlayerOptions {
   /**
@@ -25,4 +25,4 @@ export interface PlayerOptions {
   speed?: number
 }
 
-export type RequiredPlayerOptions = Required<PlayerOptions>
+export type RequiredPlayerOptions = DeepRequired<PlayerOptions>
