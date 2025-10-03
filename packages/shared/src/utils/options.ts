@@ -13,8 +13,7 @@ export class OptionsManager<T extends Record<string, any>> {
     return this.current
   }
 
-  getByKey(key: NestedKeys<T>) {
-    if (!key) return
+  getByKey<K extends NestedKeys<T>>(key: K): PathValue<T, K> {
     return get(this.current, key)
   }
 
