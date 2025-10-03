@@ -77,7 +77,7 @@ export class LyricParser {
       }
 
       // add interlude
-      if (next && next.time.start - current.time.end > this.options.getByKey('checkInterludeTime')) {
+      if (next && next.time.start - current.time.end > this.options.getByKey('interlude.checkTime')) {
         const line = cloneDeep(EMPTY_LYRIC_LINE)
         const start = current.time.end + 100
         const duration = Math.max(next.time.start - start, 0)
