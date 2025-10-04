@@ -48,14 +48,48 @@ export interface LyricLine {
   }
 }
 
+export interface LyricMeta {
+  // offset of the song
+  offset: number
+  // title of the song
+  title?: string
+  // album of the song
+  album?: string
+  // duration of the song
+  duration?: {
+    raw: string
+    // parsed time (ms)
+    parsed: number
+  }
+  // artist of the song
+  artist?: {
+    raw: string
+    // splitted with "/"
+    parsed: string[]
+  }
+  // lyricist of the song
+  lyricist?: {
+    raw: string
+    // splitted with "/"
+    parsed: string[]
+  }
+  // author of the song
+  author?: {
+    raw: string
+    // splitted with "/"
+    parsed: string[]
+  }
+  // contributor of the lyric
+  contributor?: {
+    raw: string
+    // splitted with "/"
+    parsed: string[]
+  }
+}
+
 export interface LyricInfo {
   // lyric meta
-  meta: {
-    // lyric offset
-    offset: number
-    // lyric lines total count
-    total: number
-  }
+  meta: LyricMeta
   // lyric lines
   lines: LyricLine[]
   // lyric config

@@ -28,7 +28,6 @@ export const EMPTY_LYRIC_DYNAMIC_INFO: LyricDynamicInfo = {
 export const EMPTY_LYRIC_INFO: LyricInfo = {
   meta: {
     offset: 0,
-    total: 0,
   },
   lines: [],
   config: {

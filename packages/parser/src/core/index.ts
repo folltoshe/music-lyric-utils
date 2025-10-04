@@ -1,16 +1,16 @@
 import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
 import type { ParseLyricProps, ParserOptions, RequiredParserOptions } from '../interface'
 
-import { cloneDeep } from 'lodash'
-
 import { LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 import { PARSER_DEFAULT_OPTIONS } from '../constant'
 
+import { cloneDeep } from 'lodash'
 import { OptionsManager, replaceChinesePunctuationToEnglish } from '@music-lyric-utils/shared'
 import { alignLyricWithTime } from '../utils'
 
 import { processNormalLyric } from './normal'
 import { processDynamicLyric } from './dynamic'
+import { processLyricMeta } from './meta'
 import { matchLyric } from './match'
 
 export const isInterludeLine = (line: LyricLine) => {
@@ -35,7 +35,12 @@ export class LyricParser {
     if (!matchedLyric) return null
 
     const targetLyric = processNormalLyric(matchedLyric.lines)
-    if (!targetLyric.config.isSupportAutoScroll) return targetLyric
+    const targetMeta = processLyricMeta(matchedLyric.metas)
+
+    if (!targetLyric.config.isSupportAutoScroll) {
+      targetLyric.meta = targetMeta
+      return targetLyric
+    }
 
     const matchedDynamic = matchLyric(dynamic)
     const targetDynamic = matchedDynamic && processDynamicLyric(matchedDynamic.lines)
@@ -50,7 +55,7 @@ export class LyricParser {
     const aligndTranslate = targetTranslate ? alignLyricWithTime({ base: alignTarget.lines, target: targetTranslate.lines }) : null
     const aligndRoman = targetRoman ? alignLyricWithTime({ base: alignTarget.lines, target: targetRoman.lines }) : null
 
-    const resultLyric = alignTarget
+    const resultLyric = { ...alignTarget }
     for (const line of resultLyric.lines) {
       if (aligndTranslate) {
         const target = aligndTranslate.find((v) => v.time.start === line.time.start) as LyricLine
@@ -98,6 +103,7 @@ export class LyricParser {
     }
 
     resultLyric.lines = resultLyric.lines.sort((a, b) => a.time.start - b.time.start)
+    resultLyric.meta = targetMeta
 
     return resultLyric
   }

@@ -1,13 +1,13 @@
 import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
-
-import { cloneDeep } from 'lodash'
+import type { ParsedLyricLine } from '../utils'
 
 import { EMPTY_LYRIC_LINE, EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
 
-import { ParsedLyricLine, parseLyricTagTime } from '../utils'
+import { cloneDeep } from 'lodash'
+import { parseTagTime } from '../utils'
 
 export const processNormalLine = (lineInfo: ParsedLyricLine) => {
-  const time = parseLyricTagTime(lineInfo.tag) || 0
+  const time = parseTagTime(lineInfo.tag) || 0
   const result = cloneDeep(EMPTY_LYRIC_LINE)
   result.time.start = time
   result.content.original = lineInfo.content

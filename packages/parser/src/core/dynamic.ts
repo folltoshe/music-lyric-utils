@@ -1,11 +1,10 @@
 import type { LyricTimeInfo, LyricInfo, LyricLine, LyricDynamicWord, LyricDynamicInfo } from '@music-lyric-utils/shared'
 import type { ParsedLyricLine } from '../utils'
 
-import { cloneDeep, parseInt } from 'lodash'
-
 import { EMPTY_LYRIC_INFO, EMPTY_LYRIC_DYNAMIC_INFO, EMPTY_LYRIC_DYNAMIC_WORD, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 
-import { parseLyricTagTime } from '../utils'
+import { cloneDeep, parseInt } from 'lodash'
+import { parseTagTime } from '../utils'
 
 const DYNAMIC_LINE_WORD_AND_TIME_REGEXP = /(?<time><[^>]+>)(?<content>[^<]*)/gu
 
@@ -19,14 +18,14 @@ export const processDynamicLine = (lineInfo: ParsedLyricLine) => {
   const resultWordInfo: LyricDynamicInfo = cloneDeep(EMPTY_LYRIC_DYNAMIC_INFO)
   const resultWords: LyricDynamicWord[] = []
 
-  const lineTime = parseLyricTagTime(lineInfo.tag)
+  const lineTime = parseTagTime(lineInfo.tag)
   if (lineTime === null) return
 
   for (const wordInfo of lineInfo.content.matchAll(DYNAMIC_LINE_WORD_AND_TIME_REGEXP)) {
     const wordLast = resultWords[resultWords.length - 1]
     const wordTimeTag = wordInfo.groups?.time || ''
 
-    let wordTime = parseLyricTagTime(wordTimeTag)
+    let wordTime = parseTagTime(wordTimeTag)
     let wordDuration = 0
 
     if (wordTime !== null) {
