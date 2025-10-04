@@ -3,7 +3,6 @@ import type { ParsedLyricLine } from '../utils'
 import type { RequiredParserOptions } from '../interface'
 
 import { parseTime } from '../utils'
-import { cloneDeep } from 'lodash'
 
 const LYRIC_META_REGEXP = /^\s*\[\s*(?<key>[A-Za-z0-9_-]+)\s*:\s*(?<value>[^\]]*)\s*\]\s*$/
 
