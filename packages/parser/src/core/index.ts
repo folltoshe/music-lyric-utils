@@ -35,8 +35,15 @@ export class LyricParser {
     const metaOptions = this.options.getByKey('meta')
     const matchOptions = this.options.getByKey('match')
 
-    const matchedOriginal = matchLyric(original)
-    const matchedDynamic = matchLyric(dynamic)
+    // replace chinese punctuation
+    const replaceOptions = contentOptions.replace.chinesePunctuationToEnglish
+    const replacedOriginal = replaceOptions.original ? replaceChinesePunctuationToEnglish(original) : original
+    const replacedTranslate = replaceOptions.translate ? replaceChinesePunctuationToEnglish(translate) : translate
+    const replacedRoman = replaceOptions.roman ? replaceChinesePunctuationToEnglish(roman) : roman
+    const replacedDynamic = replaceOptions.dynamic ? replaceChinesePunctuationToEnglish(dynamic) : dynamic
+
+    const matchedOriginal = matchLyric(replacedOriginal)
+    const matchedDynamic = matchLyric(replacedDynamic)
     if (!matchedDynamic && !matchedOriginal) return null
 
     const [targetLyric, targetMeta] = matchedDynamic
@@ -55,10 +62,10 @@ export class LyricParser {
       return targetLyric
     }
 
-    const matchedTranslate = matchLyric(translate)
+    const matchedTranslate = matchLyric(replacedTranslate)
     const targetTranslate = matchedTranslate && processNormalLyric(contentOptions, matchedTranslate.lines)
 
-    const matchedRoman = matchLyric(roman)
+    const matchedRoman = matchLyric(replacedRoman)
     const targetRoman = matchedRoman && processNormalLyric(contentOptions, matchedRoman.lines)
 
     const aligndTranslate = targetTranslate ? alignLyricWithTime({ base: targetLyric.lines, target: targetTranslate.lines }) : null
@@ -76,26 +83,9 @@ export class LyricParser {
       }
     }
 
-    const replaceChinesePunctuationToEnglishOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')
     for (let index = 0, length = resultLyric.lines.length; index < length; index++) {
       const current = resultLyric.lines[index]
       const next = resultLyric.lines[index + 1]
-
-      // replace chinese punctuation
-      if (replaceChinesePunctuationToEnglishOptions.original) {
-        current.content.original = replaceChinesePunctuationToEnglish(current.content.original)
-      }
-      if (replaceChinesePunctuationToEnglishOptions.translate && current.content.translated) {
-        current.content.translated = replaceChinesePunctuationToEnglish(current.content.translated)
-      }
-      if (replaceChinesePunctuationToEnglishOptions.roman && current.content.roman) {
-        current.content.roman = replaceChinesePunctuationToEnglish(current.content.roman)
-      }
-      if (replaceChinesePunctuationToEnglishOptions.dynamic && current.content.dynamic) {
-        current.content.dynamic.words = current.content.dynamic.words.map((item) => {
-          return { ...item, text: replaceChinesePunctuationToEnglish(item.text) }
-        })
-      }
 
       // add interlude when first line is time too long
       if (this.options.getByKey('interlude.show') && index === 0 && current.time.start > 5000) {
