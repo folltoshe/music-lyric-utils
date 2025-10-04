@@ -1,26 +1,23 @@
 import { cloneDeep } from 'lodash'
 import { type LyricInfo, type LyricLine, EMPTY_LYRIC_LINE, EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
-import { parseLyricLine, parseLyricTagTime } from '../utils'
+import { ParsedLyricLine, parseLyricTagTime } from '../utils'
 
-export const processNormalLine = (line: string) => {
-  const result: LyricLine[] = []
-  for (const sub of parseLyricLine(line, true)) {
-    const time = parseLyricTagTime(sub.tag) || 0
-    const item = cloneDeep(EMPTY_LYRIC_LINE)
-    item.time.start = time
-    item.content.original = sub.content
-    result.push(item)
-  }
+export const processNormalLine = (lineInfo: ParsedLyricLine) => {
+  const time = parseLyricTagTime(lineInfo.tag) || 0
+  const result = cloneDeep(EMPTY_LYRIC_LINE)
+  result.time.start = time
+  result.content.original = lineInfo.content
   return result
 }
 
-export const processNormalLyric = (lyric: string) => {
+export const processNormalLyric = (matchedLines: ParsedLyricLine[]) => {
   const result: LyricInfo = cloneDeep(EMPTY_LYRIC_INFO)
 
   const lines: LyricLine[] = []
-  for (const line of lyric.split('\n')) {
-    const items = processNormalLine(line)
-    lines.push(...items)
+  for (const line of matchedLines) {
+    const item = processNormalLine(line)
+    if (!item) continue
+    lines.push(item)
   }
 
   for (let index = 0; index < lines.length; index++) {

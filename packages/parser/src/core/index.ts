@@ -11,6 +11,7 @@ import { alignLyricWithTime } from '../utils'
 
 import { processNormalLyric } from './normal'
 import { processDynamicLyric } from './dynamic'
+import { matchLyric } from './match'
 
 export const isInterludeLine = (line: LyricLine) => {
   return line.type === LYRIC_LINE_TYPES.INTERLUDE
@@ -30,12 +31,20 @@ export class LyricParser {
   updateOptions = this.options.setAll.bind(this.options)
 
   parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): LyricInfo | null {
-    const targetLyric = processNormalLyric(original)
+    const matchedLyric = matchLyric(original)
+    if (!matchedLyric) return null
+
+    const targetLyric = processNormalLyric(matchedLyric.lines)
     if (!targetLyric.config.isSupportAutoScroll) return targetLyric
 
-    const targetDynamic = dynamic.trim().length !== 0 ? processDynamicLyric(dynamic) : null
-    const targetTranslate = translate.trim().length !== 0 ? processNormalLyric(translate) : null
-    const targetRoman = roman.trim().length !== 0 ? processNormalLyric(roman) : null
+    const matchedDynamic = matchLyric(dynamic)
+    const targetDynamic = matchedDynamic && processDynamicLyric(matchedDynamic.lines)
+
+    const matchedTranslate = matchLyric(translate)
+    const targetTranslate = matchedTranslate && processNormalLyric(matchedTranslate.lines)
+
+    const matchedRoman = matchLyric(roman)
+    const targetRoman = matchedRoman && processNormalLyric(matchedRoman.lines)
 
     const alignTarget = targetDynamic ?? targetLyric
     const aligndTranslate = targetTranslate ? alignLyricWithTime({ base: alignTarget.lines, target: targetTranslate.lines }) : null

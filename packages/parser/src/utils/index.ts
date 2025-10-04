@@ -30,6 +30,12 @@ export const parseLyricTagTime = (tag: string): number | null => {
 
 const LYRIC_TAG_REGEXP = /(?<tag>\[[^\]]*\])(?<content>[\s\S]*?)(?=(?:\[[^\]]*\])|$)/g
 
+export interface ParsedLyricLine {
+  raw: string
+  tag: string
+  content: string
+}
+
 /**
  * parse lyric line meta and content
  *
@@ -40,14 +46,14 @@ const LYRIC_TAG_REGEXP = /(?<tag>\[[^\]]*\])(?<content>[\s\S]*?)(?=(?:\[[^\]]*\]
  * @param text raw lyric line
  * @param replaceTag need replace tag
  */
-export const parseLyricLine = (text: string, replaceTag: boolean = false) => {
+export const parseLyricLine = (text: string): ParsedLyricLine[] => {
   const result = []
 
   for (const match of text.matchAll(LYRIC_TAG_REGEXP)) {
-    const tag = match.groups?.tag || ''
-    const raw = match.groups?.content || ''
-    const content = replaceTag && tag ? raw.replace(tag, '').trim() : raw.trim()
-    result.push({ tag, content })
+    const raw = match[0]
+    const tag = (match.groups?.tag || '').trim()
+    const content = (match.groups?.content || '').trim()
+    result.push({ raw, tag, content })
   }
 
   return result
