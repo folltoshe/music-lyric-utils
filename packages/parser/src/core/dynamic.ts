@@ -30,7 +30,7 @@ export const processDynamicLine = (line: string) => {
     const lineTime = parseLyricTagTime(lineInfo.tag)
     if (lineTime === null) continue
 
-    for (const wordInfo of lineInfo.line.matchAll(DYNAMIC_LINE_WORD_AND_TIME_REGEXP)) {
+    for (const wordInfo of lineInfo.content.matchAll(DYNAMIC_LINE_WORD_AND_TIME_REGEXP)) {
       const wordLast = resultWords[resultWords.length - 1]
       const wordTimeTag = wordInfo.groups?.time || ''
 

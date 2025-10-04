@@ -8,7 +8,7 @@ export const processNormalLine = (line: string) => {
     const time = parseLyricTagTime(sub.tag) || 0
     const item = cloneDeep(EMPTY_LYRIC_LINE)
     item.time.start = time
-    item.content.original = sub.line
+    item.content.original = sub.content
     result.push(item)
   }
   return result
