@@ -81,7 +81,7 @@ export const processLyricMeta = (options: RequiredParserOptions['meta'], matched
   return result
 }
 
-export const matchProductionPeople = (options: RequiredParserOptions['match']['producers'], lines: LyricLine[]) => {
+export const matchProducers = (options: RequiredParserOptions['match']['producers'], lines: LyricLine[]) => {
   if (!options.enable) {
     return {
       lines,

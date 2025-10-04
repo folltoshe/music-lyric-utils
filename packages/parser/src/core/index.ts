@@ -10,7 +10,7 @@ import { alignLyricWithTime } from '../utils'
 
 import { processNormalLyric } from './normal'
 import { processDynamicLyric } from './dynamic'
-import { processLyricMeta, matchProductionPeople } from './meta'
+import { processLyricMeta, matchProducers } from './meta'
 import { matchLyric } from './match'
 
 export const isInterludeLine = (line: LyricLine) => {
@@ -53,7 +53,7 @@ export class LyricParser {
       : [null, null]
     if (!targetLyric) return null
 
-    const { lines: targetLines, producers } = matchProductionPeople(matchOptions.producers, targetLyric.lines)
+    const { lines: targetLines, producers } = matchProducers(matchOptions.producers, targetLyric.lines)
     if (producers.length) targetMeta.producers = producers
     targetLyric.lines = targetLines
 
