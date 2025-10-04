@@ -34,19 +34,21 @@ export class LyricParser {
     const contentOptions = this.options.getByKey('content')
     const metaOptions = this.options.getByKey('meta')
 
-    const matchedLyric = matchLyric(original)
-    if (!matchedLyric) return null
+    const matchedOriginal = matchLyric(original)
+    const matchedDynamic = matchLyric(dynamic)
+    if (!matchedDynamic && !matchedOriginal) return null
 
-    const targetLyric = processNormalLyric(contentOptions, matchedLyric.lines)
-    const targetMeta = processLyricMeta(metaOptions, matchedLyric.metas)
+    const [targetLyric, targetMeta] = matchedDynamic
+      ? [processDynamicLyric(contentOptions, matchedDynamic.lines), processLyricMeta(metaOptions, matchedDynamic.metas)]
+      : matchedOriginal
+      ? [processDynamicLyric(contentOptions, matchedOriginal.lines), processLyricMeta(metaOptions, matchedOriginal.metas)]
+      : [null, null]
+    if (!targetLyric) return null
 
     if (!targetLyric.config.isSupportAutoScroll) {
       targetLyric.meta = targetMeta
       return targetLyric
     }
-
-    const matchedDynamic = matchLyric(dynamic)
-    const targetDynamic = matchedDynamic && processDynamicLyric(contentOptions, matchedDynamic.lines)
 
     const matchedTranslate = matchLyric(translate)
     const targetTranslate = matchedTranslate && processNormalLyric(contentOptions, matchedTranslate.lines)
@@ -54,11 +56,10 @@ export class LyricParser {
     const matchedRoman = matchLyric(roman)
     const targetRoman = matchedRoman && processNormalLyric(contentOptions, matchedRoman.lines)
 
-    const alignTarget = targetDynamic ?? targetLyric
-    const aligndTranslate = targetTranslate ? alignLyricWithTime({ base: alignTarget.lines, target: targetTranslate.lines }) : null
-    const aligndRoman = targetRoman ? alignLyricWithTime({ base: alignTarget.lines, target: targetRoman.lines }) : null
+    const aligndTranslate = targetTranslate ? alignLyricWithTime({ base: targetLyric.lines, target: targetTranslate.lines }) : null
+    const aligndRoman = targetRoman ? alignLyricWithTime({ base: targetLyric.lines, target: targetRoman.lines }) : null
 
-    const resultLyric = { ...alignTarget }
+    const resultLyric = { ...targetLyric }
     for (const line of resultLyric.lines) {
       if (aligndTranslate) {
         const target = aligndTranslate.find((v) => v.time.start === line.time.start) as LyricLine
