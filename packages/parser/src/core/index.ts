@@ -35,7 +35,7 @@ export class LyricParser {
     if (!matchedLyric) return null
 
     const targetLyric = processNormalLyric(matchedLyric.lines)
-    const targetMeta = processLyricMeta(matchedLyric.metas)
+    const targetMeta = processLyricMeta(this.options.getByKey('meta'), matchedLyric.metas)
 
     if (!targetLyric.config.isSupportAutoScroll) {
       targetLyric.meta = targetMeta

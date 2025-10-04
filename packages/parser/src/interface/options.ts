@@ -1,7 +1,25 @@
 import type { DeepRequired } from '@music-lyric-utils/shared'
 
 export interface ParserOptions {
-  interlude: {
+  meta?: {
+    name?: {
+      split?: {
+        /**
+         * meta split rule
+         * @default "/"
+         */
+        rule?: {
+          common?: string | RegExp
+          title?: string | RegExp
+          artist?: string | RegExp
+          author?: string | RegExp
+          lyricist?: string | RegExp
+          contributor?: string | RegExp
+        }
+      }
+    }
+  }
+  interlude?: {
     /**
      * is show interlude line
      * @default true
