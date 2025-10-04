@@ -71,7 +71,6 @@ export class LyricParser {
     }
 
     const replaceChinesePunctuationToEnglishOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')
-    console.log(resultLyric.lines.length)
     for (let index = 0, length = resultLyric.lines.length; index < length; index++) {
       const current = resultLyric.lines[index]
       const next = resultLyric.lines[index + 1]
