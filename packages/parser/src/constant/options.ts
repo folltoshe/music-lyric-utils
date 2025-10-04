@@ -30,4 +30,21 @@ export const PARSER_DEFAULT_OPTIONS: RequiredParserOptions = {
       insertSpaceToPunctuation: true,
     },
   },
+  match: {
+    producers: {
+      enable: true,
+      replace: true,
+      role: {
+        replace: {
+          enable: true,
+          rule: 'by',
+        },
+      },
+      name: {
+        split: {
+          rule: '/',
+        },
+      },
+    },
+  },
 } as const

@@ -1,8 +1,9 @@
-import type { LyricMeta } from '@music-lyric-utils/shared'
+import type { LyricLine, LyricMeta, LyricProducers } from '@music-lyric-utils/shared'
 import type { ParsedLyricLine } from '../utils'
 import type { RequiredParserOptions } from '../interface'
 
 import { parseTime } from '../utils'
+import { cloneDeep } from 'lodash'
 
 const LYRIC_META_REGEXP = /^\s*\[\s*(?<key>[A-Za-z0-9_-]+)\s*:\s*(?<value>[^\]]*)\s*\]\s*$/
 
@@ -78,4 +79,48 @@ export const processLyricMeta = (options: RequiredParserOptions['meta'], matched
   }
 
   return result
+}
+
+export const matchProductionPeople = (options: RequiredParserOptions['match']['producers'], lines: LyricLine[]) => {
+  if (!options.enable) {
+    return {
+      lines,
+      producers: [],
+    }
+  }
+
+  const resultLines: LyricLine[] = []
+  const result: LyricProducers[] = []
+
+  for (const line of lines) {
+    const [roleRaw, nameRaw] = line.content.original.split(':')
+
+    const roleTrim = roleRaw?.trim()
+    const nameTrim = nameRaw?.trim()
+
+    if (!roleTrim || !nameTrim) {
+      resultLines.push(line)
+      continue
+    }
+
+    const item: LyricProducers = {
+      raw: line.content.original,
+      role: {
+        raw: roleTrim,
+        parsed: options.role.replace.enable ? roleTrim.replaceAll(options.role.replace.rule, '') : roleTrim,
+      },
+      name: {
+        raw: nameTrim,
+        parsed: handleProcessName(options.name.split.rule, nameTrim),
+      },
+    }
+    result.push(item)
+
+    if (!options.replace) resultLines.push(line)
+  }
+
+  return {
+    lines: resultLines,
+    producers: result,
+  }
 }

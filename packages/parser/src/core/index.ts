@@ -10,7 +10,7 @@ import { alignLyricWithTime } from '../utils'
 
 import { processNormalLyric } from './normal'
 import { processDynamicLyric } from './dynamic'
-import { processLyricMeta } from './meta'
+import { processLyricMeta, matchProductionPeople } from './meta'
 import { matchLyric } from './match'
 
 export const isInterludeLine = (line: LyricLine) => {
@@ -33,6 +33,7 @@ export class LyricParser {
   parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): LyricInfo | null {
     const contentOptions = this.options.getByKey('content')
     const metaOptions = this.options.getByKey('meta')
+    const matchOptions = this.options.getByKey('match')
 
     const matchedOriginal = matchLyric(original)
     const matchedDynamic = matchLyric(dynamic)
@@ -41,9 +42,13 @@ export class LyricParser {
     const [targetLyric, targetMeta] = matchedDynamic
       ? [processDynamicLyric(contentOptions, matchedDynamic.lines), processLyricMeta(metaOptions, matchedDynamic.metas)]
       : matchedOriginal
-      ? [processDynamicLyric(contentOptions, matchedOriginal.lines), processLyricMeta(metaOptions, matchedOriginal.metas)]
+      ? [processNormalLyric(contentOptions, matchedOriginal.lines), processLyricMeta(metaOptions, matchedOriginal.metas)]
       : [null, null]
     if (!targetLyric) return null
+
+    const { lines: targetLines, producers } = matchProductionPeople(matchOptions.producers, targetLyric.lines)
+    if (producers.length) targetMeta.producers = producers
+    targetLyric.lines = targetLines
 
     if (!targetLyric.config.isSupportAutoScroll) {
       targetLyric.meta = targetMeta

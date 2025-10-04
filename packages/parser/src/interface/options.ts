@@ -60,6 +60,53 @@ export interface ParserOptions {
       insertSpaceToPunctuation?: boolean
     }
   }
+  match?: {
+    /**
+     * match producers from lyric
+     */
+    producers?: {
+      /**
+       * @default true
+       */
+      enable?: boolean
+      /**
+       * @default true
+       */
+      replace?: boolean
+      /**
+       * role name options
+       */
+      role?: {
+        /**
+         * replace from raw text
+         */
+        replace?: {
+          /**
+           * @default true
+           */
+          enable?: boolean
+          /**
+           * @default "by"
+           */
+          rule?: string | RegExp
+        }
+      }
+      /**
+       * people name options
+       */
+      name?: {
+        /**
+         * people name split options
+         */
+        split?: {
+          /**
+           * @default "/"
+           */
+          rule?: string | RegExp
+        }
+      }
+    }
+  }
 }
 
 export type RequiredParserOptions = DeepRequired<ParserOptions>

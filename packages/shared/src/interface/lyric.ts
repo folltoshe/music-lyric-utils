@@ -48,6 +48,20 @@ export interface LyricLine {
   }
 }
 
+export interface LyricProducers {
+  raw: string
+  role: {
+    raw: string
+    // replaced
+    parsed: string
+  }
+  name: {
+    raw: string
+    // splitted with "/"
+    parsed: string[]
+  }
+}
+
 export interface LyricMeta {
   // offset of the song
   offset: number
@@ -85,6 +99,8 @@ export interface LyricMeta {
     // splitted with "/"
     parsed: string[]
   }
+  // producers of the song
+  producers?: LyricProducers[]
 }
 
 export interface LyricInfo {
