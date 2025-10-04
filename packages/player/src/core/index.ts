@@ -188,7 +188,7 @@ export class LyricPlayer extends LyricPlayerOptions {
   }
 
   get currentSpeed() {
-    return Number(this.options.getByKey('offset')) || 1
+    return Number(this.options.getByKey('speed')) || 1
   }
 
   get currentLyricInfo() {
