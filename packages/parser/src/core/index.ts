@@ -67,6 +67,7 @@ export class LyricParser {
       }
     }
 
+    const replaceChinesePunctuationToEnglishOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')
     for (let index = 0, length = resultLyric.lines.length; index < length; index++) {
       const current = resultLyric.lines[index]
       const next = resultLyric.lines[index + 1]
@@ -83,8 +84,16 @@ export class LyricParser {
       }
 
       // replace chinese punctuation
-      current.content.original = replaceChinesePunctuationToEnglish(current.content.original)
-      if (current.content.dynamic) {
+      if (replaceChinesePunctuationToEnglishOptions.original) {
+        current.content.original = replaceChinesePunctuationToEnglish(current.content.original)
+      }
+      if (replaceChinesePunctuationToEnglishOptions.translate && current.content.translated) {
+        current.content.translated = replaceChinesePunctuationToEnglish(current.content.translated)
+      }
+      if (replaceChinesePunctuationToEnglishOptions.roman && current.content.roman) {
+        current.content.roman = replaceChinesePunctuationToEnglish(current.content.roman)
+      }
+      if (replaceChinesePunctuationToEnglishOptions.dynamic && current.content.dynamic) {
         current.content.dynamic.words = current.content.dynamic.words.map((item) => {
           return { ...item, text: replaceChinesePunctuationToEnglish(item.text) }
         })

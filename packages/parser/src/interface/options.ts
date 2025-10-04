@@ -31,6 +31,31 @@ export interface ParserOptions {
      */
     checkTime?: number
   }
+  content?: {
+    replace?: {
+      /**
+       * replace chinese punctuation to english
+       */
+      chinesePunctuationToEnglish?: {
+        /**
+         * @default true
+         */
+        original?: boolean
+        /**
+         * @default true
+         */
+        translate?: boolean
+        /**
+         * @default false
+         */
+        roman?: boolean
+        /**
+         * @default true
+         */
+        dynamic?: boolean
+      }
+    }
+  }
 }
 
 export type RequiredParserOptions = DeepRequired<ParserOptions>
