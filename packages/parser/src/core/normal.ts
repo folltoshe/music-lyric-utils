@@ -1,25 +1,26 @@
 import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
 import type { ParsedLyricLine } from '../utils'
+import type { RequiredParserOptions } from '../interface'
 
-import { EMPTY_LYRIC_LINE, EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
+import { EMPTY_LYRIC_LINE, EMPTY_LYRIC_INFO, insertPunctuationSpace } from '@music-lyric-utils/shared'
 
 import { cloneDeep } from 'lodash'
 import { parseTagTime } from '../utils'
 
-export const processNormalLine = (lineInfo: ParsedLyricLine) => {
+export const processNormalLine = (options: RequiredParserOptions['content'], lineInfo: ParsedLyricLine) => {
   const time = parseTagTime(lineInfo.tag) || 0
   const result = cloneDeep(EMPTY_LYRIC_LINE)
   result.time.start = time
-  result.content.original = lineInfo.content
+  result.content.original = options.replace.insertSpaceToPunctuation ? insertPunctuationSpace(lineInfo.content) : lineInfo.content
   return result
 }
 
-export const processNormalLyric = (matchedLines: ParsedLyricLine[]) => {
+export const processNormalLyric = (options: RequiredParserOptions['content'], matchedLines: ParsedLyricLine[]) => {
   const result: LyricInfo = cloneDeep(EMPTY_LYRIC_INFO)
 
   const lines: LyricLine[] = []
   for (const line of matchedLines) {
-    const item = processNormalLine(line)
+    const item = processNormalLine(options, line)
     if (!item) continue
     lines.push(item)
   }

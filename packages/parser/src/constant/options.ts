@@ -27,6 +27,7 @@ export const PARSER_DEFAULT_OPTIONS: RequiredParserOptions = {
         roman: false,
         dynamic: true,
       },
+      insertSpaceToPunctuation: true,
     },
   },
 } as const

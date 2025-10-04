@@ -31,11 +31,14 @@ export class LyricParser {
   updateOptions = this.options.setAll.bind(this.options)
 
   parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): LyricInfo | null {
+    const contentOptions = this.options.getByKey('content')
+    const metaOptions = this.options.getByKey('meta')
+
     const matchedLyric = matchLyric(original)
     if (!matchedLyric) return null
 
-    const targetLyric = processNormalLyric(matchedLyric.lines)
-    const targetMeta = processLyricMeta(this.options.getByKey('meta'), matchedLyric.metas)
+    const targetLyric = processNormalLyric(contentOptions, matchedLyric.lines)
+    const targetMeta = processLyricMeta(metaOptions, matchedLyric.metas)
 
     if (!targetLyric.config.isSupportAutoScroll) {
       targetLyric.meta = targetMeta
@@ -43,13 +46,13 @@ export class LyricParser {
     }
 
     const matchedDynamic = matchLyric(dynamic)
-    const targetDynamic = matchedDynamic && processDynamicLyric(matchedDynamic.lines)
+    const targetDynamic = matchedDynamic && processDynamicLyric(contentOptions, matchedDynamic.lines)
 
     const matchedTranslate = matchLyric(translate)
-    const targetTranslate = matchedTranslate && processNormalLyric(matchedTranslate.lines)
+    const targetTranslate = matchedTranslate && processNormalLyric(contentOptions, matchedTranslate.lines)
 
     const matchedRoman = matchLyric(roman)
-    const targetRoman = matchedRoman && processNormalLyric(matchedRoman.lines)
+    const targetRoman = matchedRoman && processNormalLyric(contentOptions, matchedRoman.lines)
 
     const alignTarget = targetDynamic ?? targetLyric
     const aligndTranslate = targetTranslate ? alignLyricWithTime({ base: alignTarget.lines, target: targetTranslate.lines }) : null

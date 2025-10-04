@@ -1,7 +1,15 @@
 import type { LyricTimeInfo, LyricInfo, LyricLine, LyricDynamicWord, LyricDynamicInfo } from '@music-lyric-utils/shared'
 import type { ParsedLyricLine } from '../utils'
+import type { RequiredParserOptions } from '../interface'
 
-import { EMPTY_LYRIC_INFO, EMPTY_LYRIC_DYNAMIC_INFO, EMPTY_LYRIC_DYNAMIC_WORD, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
+import {
+  EMPTY_LYRIC_INFO,
+  EMPTY_LYRIC_DYNAMIC_INFO,
+  EMPTY_LYRIC_DYNAMIC_WORD,
+  EMPTY_LYRIC_LINE,
+  checkEndCharIsPunctuation,
+  checkFirstCharIsPunctuation,
+} from '@music-lyric-utils/shared'
 
 import { cloneDeep, parseInt } from 'lodash'
 import { parseTagTime } from '../utils'
@@ -14,7 +22,7 @@ const DYNAMIC_LINE_WORD_SPACE_START = /^\s+/
 
 const DYNAMIC_LINE_WORD_SPACE_END = /\s+$/
 
-export const processDynamicLine = (lineInfo: ParsedLyricLine) => {
+export const processDynamicLine = (options: RequiredParserOptions['content'], lineInfo: ParsedLyricLine) => {
   const resultWordInfo: LyricDynamicInfo = cloneDeep(EMPTY_LYRIC_DYNAMIC_INFO)
   const resultWords: LyricDynamicWord[] = []
 
@@ -44,9 +52,16 @@ export const processDynamicLine = (lineInfo: ParsedLyricLine) => {
     if (!wordContent) continue
 
     const wordContentTrim = wordContent.trim()
-    if (!wordContentTrim || DYNAMIC_LINE_WORD_SPACE_START.test(wordContent)) {
-      if (wordLast) wordLast.config.needSpaceEnd = true
-      continue
+
+    if (!wordLast?.config.needSpaceEnd) {
+      if (!wordContentTrim) {
+        wordLast.config.needSpaceEnd = true
+        continue
+      } else if (DYNAMIC_LINE_WORD_SPACE_START.test(wordContent)) {
+        wordLast.config.needSpaceEnd = true
+      } else if (options.replace.insertSpaceToPunctuation && checkFirstCharIsPunctuation(wordContent)) {
+        wordLast.config.needSpaceEnd = true
+      }
     }
 
     const wordResult = cloneDeep(EMPTY_LYRIC_DYNAMIC_WORD)
@@ -57,7 +72,12 @@ export const processDynamicLine = (lineInfo: ParsedLyricLine) => {
       duration: wordDuration,
     }
     wordResult.text = wordContentTrim
-    wordResult.config.needSpaceEnd = DYNAMIC_LINE_WORD_SPACE_END.test(wordContent)
+
+    if (DYNAMIC_LINE_WORD_SPACE_END.test(wordContent)) {
+      wordResult.config.needSpaceEnd = true
+    } else if (options.replace.insertSpaceToPunctuation && checkEndCharIsPunctuation(wordContentTrim)) {
+      wordResult.config.needSpaceEnd = true
+    }
 
     resultWords.push(wordResult)
   }
@@ -81,12 +101,12 @@ export const processDynamicLine = (lineInfo: ParsedLyricLine) => {
   return resultLine
 }
 
-export const processDynamicLyric = (matchedLines: ParsedLyricLine[]) => {
+export const processDynamicLyric = (options: RequiredParserOptions['content'], matchedLines: ParsedLyricLine[]) => {
   const result: LyricInfo = cloneDeep(EMPTY_LYRIC_INFO)
 
   const lines: LyricLine[] = []
   for (const line of matchedLines) {
-    const item = processDynamicLine(line)
+    const item = processDynamicLine(options, line)
     if (!item) continue
     lines.push(item)
   }

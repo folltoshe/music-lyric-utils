@@ -54,6 +54,10 @@ export interface ParserOptions {
          */
         dynamic?: boolean
       }
+      /**
+       * insert space to some punctuation
+       */
+      insertSpaceToPunctuation?: boolean
     }
   }
 }
