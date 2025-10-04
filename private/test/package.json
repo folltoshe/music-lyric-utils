@@ -11,7 +11,7 @@
   },
   "repository": {
     "url": "https://github.com/folltoshe/music-lyric-utils.git",
-    "directory": "packages/test",
+    "directory": "private/test",
     "type": "git"
   },
   "dependencies": {
