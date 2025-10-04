@@ -1,5 +1,9 @@
+import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
+
 import { cloneDeep } from 'lodash'
-import { type LyricInfo, type LyricLine, EMPTY_LYRIC_LINE, EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
+
+import { EMPTY_LYRIC_LINE, EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
+
 import { ParsedLyricLine, parseLyricTagTime } from '../utils'
 
 export const processNormalLine = (lineInfo: ParsedLyricLine) => {

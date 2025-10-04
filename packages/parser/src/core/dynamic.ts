@@ -1,17 +1,11 @@
-import { cloneDeep, parseInt } from 'lodash'
-import {
-  type LyricTimeInfo,
-  type LyricInfo,
-  type LyricLine,
-  EMPTY_LYRIC_INFO,
-  type LyricDynamicWord,
-  type LyricDynamicInfo,
-  EMPTY_LYRIC_DYNAMIC_INFO,
-  EMPTY_LYRIC_DYNAMIC_WORD,
-  EMPTY_LYRIC_LINE,
-} from '@music-lyric-utils/shared'
+import type { LyricTimeInfo, LyricInfo, LyricLine, LyricDynamicWord, LyricDynamicInfo } from '@music-lyric-utils/shared'
+import type { ParsedLyricLine } from '../utils'
 
-import { type ParsedLyricLine, parseLyricTagTime } from '../utils'
+import { cloneDeep, parseInt } from 'lodash'
+
+import { EMPTY_LYRIC_INFO, EMPTY_LYRIC_DYNAMIC_INFO, EMPTY_LYRIC_DYNAMIC_WORD, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
+
+import { parseLyricTagTime } from '../utils'
 
 const DYNAMIC_LINE_WORD_AND_TIME_REGEXP = /(?<time><[^>]+>)(?<content>[^<]*)/gu
 

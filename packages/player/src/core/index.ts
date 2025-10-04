@@ -1,7 +1,7 @@
-import { cloneDeep } from 'lodash'
+import type { LyricInfo } from '@music-lyric-utils/shared'
+import type { PlayerOptions, RequiredPlayerOptions } from '../interface'
 
-import { type LyricInfo } from '@music-lyric-utils/shared'
-import { type PlayerOptions, type RequiredPlayerOptions } from '../interface'
+import { cloneDeep } from 'lodash'
 
 import { EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
 import { PLAYER_DEFAULT_OPTIONS } from '../constant'

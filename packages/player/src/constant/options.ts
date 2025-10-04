@@ -1,4 +1,5 @@
-import { type RequiredPlayerOptions } from '../interface'
+import type { RequiredPlayerOptions } from '../interface'
+
 import { EMPTY_CALLBACK } from '../utils'
 
 export const PLAYER_DEFAULT_OPTIONS: RequiredPlayerOptions = {

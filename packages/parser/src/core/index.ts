@@ -1,10 +1,10 @@
+import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
+import type { ParseLyricProps, ParserOptions, RequiredParserOptions } from '../interface'
+
 import { cloneDeep } from 'lodash'
 
 import { LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 import { PARSER_DEFAULT_OPTIONS } from '../constant'
-
-import { type LyricInfo, type LyricLine } from '@music-lyric-utils/shared'
-import { type ParseLyricProps, type ParserOptions, type RequiredParserOptions } from '../interface'
 
 import { OptionsManager, replaceChinesePunctuationToEnglish } from '@music-lyric-utils/shared'
 import { alignLyricWithTime } from '../utils'

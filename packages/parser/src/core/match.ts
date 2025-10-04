@@ -1,4 +1,6 @@
-import { type ParsedLyricLine, parseLyricLine } from '../utils'
+import type { ParsedLyricLine } from '../utils'
+
+import { parseLyricLine } from '../utils'
 
 export interface MatchedLyric {
   metas: ParsedLyricLine[]

@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash'
+
 import { type LyricTimeInfo } from '@music-lyric-utils/shared'
 
 const LYRIC_TAG_CONTENT_REGEXP = /^[<\[]([^>\]]+)[>\]]$/
