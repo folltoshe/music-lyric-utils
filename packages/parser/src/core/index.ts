@@ -71,20 +71,10 @@ export class LyricParser {
     }
 
     const replaceChinesePunctuationToEnglishOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')
+    console.log(resultLyric.lines.length)
     for (let index = 0, length = resultLyric.lines.length; index < length; index++) {
       const current = resultLyric.lines[index]
       const next = resultLyric.lines[index + 1]
-
-      // check first line is time too long
-      if (index === 0 && current.time.start > 5000) {
-        const line = cloneDeep(EMPTY_LYRIC_LINE)
-        const start = 500
-        const duration = current.time.start - start
-        const end = current.time.start + duration
-        line.time = { start, end, duration }
-        line.type = LYRIC_LINE_TYPES.INTERLUDE
-        resultLyric.lines.unshift(line)
-      }
 
       // replace chinese punctuation
       if (replaceChinesePunctuationToEnglishOptions.original) {
@@ -102,8 +92,18 @@ export class LyricParser {
         })
       }
 
+      // add interlude when first line is time too long
+      if (this.options.getByKey('interlude.show') && index === 0 && current.time.start > 5000) {
+        const line = cloneDeep(EMPTY_LYRIC_LINE)
+        const start = 500
+        const duration = current.time.start - start
+        const end = current.time.start + duration
+        line.time = { start, end, duration }
+        line.type = LYRIC_LINE_TYPES.INTERLUDE
+        resultLyric.lines.unshift(line)
+      }
       // add interlude
-      if (next && this.options.getByKey('interlude.show') === true && next.time.start - current.time.end > this.options.getByKey('interlude.checkTime')) {
+      if (this.options.getByKey('interlude.show') && next && next.time.start - current.time.end > this.options.getByKey('interlude.checkTime')) {
         const line = cloneDeep(EMPTY_LYRIC_LINE)
         const start = current.time.end + 100
         const duration = Math.max(next.time.start - start, 0)
