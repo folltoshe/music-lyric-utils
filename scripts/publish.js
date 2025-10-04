@@ -15,7 +15,7 @@ const main = async () => {
       console.log(`try publish for ${target.id}`)
 
       const args = ['publish', '--access', 'public', ...(releaseTag ? ['--tag', releaseTag] : []), '--no-git-checks']
-      exec('pnpm', args, {
+      await exec('pnpm', args, {
         stdio: 'inherit',
         cwd: target.root,
       })
