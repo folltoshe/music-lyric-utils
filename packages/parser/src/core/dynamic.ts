@@ -53,7 +53,7 @@ export const processDynamicLine = (options: RequiredParserOptions['content'], li
 
     const wordContentTrim = wordContent.trim()
 
-    if (!wordLast?.config.needSpaceEnd) {
+    if (wordLast && !wordLast.config.needSpaceEnd) {
       if (!wordContentTrim) {
         wordLast.config.needSpaceEnd = true
         continue
