@@ -93,7 +93,7 @@ export const matchProductionPeople = (options: RequiredParserOptions['match']['p
   const result: LyricProducers[] = []
 
   for (const line of lines) {
-    const [roleRaw, nameRaw] = line.content.original.split(':')
+    const [roleRaw, nameRaw] = line.content.original.split(/[：︰:]/)
 
     const roleTrim = roleRaw?.trim()
     const nameTrim = nameRaw?.trim()
