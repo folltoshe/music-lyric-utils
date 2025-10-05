@@ -9,6 +9,7 @@ import {
   EMPTY_LYRIC_LINE,
   checkEndCharIsPunctuation,
   checkFirstCharIsPunctuation,
+  insertPunctuationSpace,
 } from '@music-lyric-utils/shared'
 
 import { cloneDeep, parseInt } from 'lodash'
@@ -71,7 +72,7 @@ export const processDynamicLine = (options: RequiredParserOptions['content'], li
       end: wordTime + wordDuration,
       duration: wordDuration,
     }
-    wordResult.text = wordContentTrim
+    wordResult.text = options.replace.insertSpaceToPunctuation ? insertPunctuationSpace(wordContentTrim) : wordContentTrim
 
     if (DYNAMIC_LINE_WORD_SPACE_END.test(wordContent)) {
       wordResult.config.needSpaceEnd = true
