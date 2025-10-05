@@ -2,16 +2,9 @@ import type { LyricTimeInfo, LyricInfo, LyricLine, LyricDynamicWord, LyricDynami
 import type { ParsedLyricLine } from '../utils'
 import type { RequiredParserOptions } from '../interface'
 
-import {
-  EMPTY_LYRIC_INFO,
-  EMPTY_LYRIC_DYNAMIC_INFO,
-  EMPTY_LYRIC_DYNAMIC_WORD,
-  EMPTY_LYRIC_LINE,
-  checkEndCharIsPunctuation,
-  checkFirstCharIsPunctuation,
-  insertPunctuationSpace,
-} from '@music-lyric-utils/shared'
+import { EMPTY_LYRIC_INFO, EMPTY_LYRIC_DYNAMIC_INFO, EMPTY_LYRIC_DYNAMIC_WORD, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 
+import { checkEndCharIsPunctuation, checkFirstCharIsPunctuation, insertPunctuationSpace } from '@music-lyric-utils/shared'
 import { cloneDeep, parseInt } from 'lodash'
 import { parseTagTime } from '../utils'
 
