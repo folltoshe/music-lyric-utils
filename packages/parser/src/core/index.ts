@@ -16,18 +16,32 @@ export const isInterludeLine = (line: LyricLine) => {
   return line.type === LYRIC_LINE_TYPES.INTERLUDE
 }
 
-export class LyricParser {
-  private options = new OptionsManager<RequiredParserOptions>(DEFAULT_PARSER_OPTIONS)
+abstract class LyricParserOptions {
+  protected options = new OptionsManager<RequiredParserOptions>(DEFAULT_PARSER_OPTIONS)
 
   constructor(opt?: ParserOptions) {
-    if (opt) {
-      this.options.setAll(opt)
-    }
+    if (opt) this.options.setAll(opt)
   }
 
-  updateOptionsWithKey = this.options.setByKey.bind(this.options)
+  protected abstract onUpdateOptions(): void
 
-  updateOptions = this.options.setAll.bind(this.options)
+  updateOptionsWithKey(...args: Parameters<typeof this.options.setByKey>) {
+    this.options.setByKey(...args)
+    this.onUpdateOptions()
+  }
+
+  updateOptions(...args: Parameters<typeof this.options.setAll>) {
+    this.options.setAll(...args)
+    this.onUpdateOptions()
+  }
+}
+
+export class LyricParser extends LyricParserOptions {
+  constructor(opt?: ParserOptions) {
+    super(opt)
+  }
+
+  protected override onUpdateOptions(): void {}
 
   parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): LyricInfo | null {
     const contentOptions = this.options.getByKey('content')
