@@ -34,16 +34,10 @@ export class LyricParser {
     const contentOptions = this.options.getByKey('content')
     const metaOptions = this.options.getByKey('meta')
     const matchOptions = this.options.getByKey('match')
+    const replaceOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')
 
-    // replace chinese punctuation
-    const replaceOptions = contentOptions.replace.chinesePunctuationToEnglish
-    const replacedOriginal = replaceOptions.original ? replaceChinesePunctuationToEnglish(original) : original
-    const replacedTranslate = replaceOptions.translate ? replaceChinesePunctuationToEnglish(translate) : translate
-    const replacedRoman = replaceOptions.roman ? replaceChinesePunctuationToEnglish(roman) : roman
-    const replacedDynamic = replaceOptions.dynamic ? replaceChinesePunctuationToEnglish(dynamic) : dynamic
-
-    const matchedOriginal = matchLyric(replacedOriginal)
-    const matchedDynamic = matchLyric(replacedDynamic)
+    const matchedOriginal = matchLyric(original, replaceOptions.original)
+    const matchedDynamic = matchLyric(dynamic, replaceOptions.dynamic)
     if (!matchedDynamic && !matchedOriginal) return null
 
     const [targetLyric, targetMeta] = matchedDynamic
@@ -62,10 +56,10 @@ export class LyricParser {
       return targetLyric
     }
 
-    const matchedTranslate = matchLyric(replacedTranslate)
+    const matchedTranslate = matchLyric(translate, replaceOptions.translate)
     const targetTranslate = matchedTranslate && processNormalLyric(contentOptions, matchedTranslate.lines)
 
-    const matchedRoman = matchLyric(replacedRoman)
+    const matchedRoman = matchLyric(roman, replaceOptions.roman)
     const targetRoman = matchedRoman && processNormalLyric(contentOptions, matchedRoman.lines)
 
     const aligndTranslate = targetTranslate ? alignLyricWithTime({ base: targetLyric.lines, target: targetTranslate.lines }) : null

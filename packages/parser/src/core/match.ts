@@ -1,5 +1,6 @@
 import type { ParsedLyricLine } from '../utils'
 
+import { replaceChinesePunctuationToEnglish } from '@music-lyric-utils/shared'
 import { parseLyricLine } from '../utils'
 
 export interface MatchedLyric {
@@ -7,7 +8,7 @@ export interface MatchedLyric {
   lines: ParsedLyricLine[]
 }
 
-export const matchLyric = (lyric: string): MatchedLyric | null => {
+export const matchLyric = (lyric: string, replacePunctuation: boolean = false): MatchedLyric | null => {
   if (!lyric.trim().length) return null
 
   const metas = []
@@ -18,7 +19,10 @@ export const matchLyric = (lyric: string): MatchedLyric | null => {
     for (const parsed of result) {
       if (!parsed.tag) continue
       if (!parsed.content) metas.push(parsed)
-      else lines.push(parsed)
+      else {
+        if (replacePunctuation) parsed.content = replaceChinesePunctuationToEnglish(parsed.content)
+        lines.push(parsed)
+      }
     }
   }
 
