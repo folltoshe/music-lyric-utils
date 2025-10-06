@@ -78,6 +78,15 @@ export interface ParserOptions {
        */
       role?: {
         /**
+         * only when it is matched will it be used as the correct role
+         */
+        match?: {
+          /**
+           * @default
+           */
+          rule?: RegExp[]
+        }
+        /**
          * replace from raw text
          */
         replace?: {

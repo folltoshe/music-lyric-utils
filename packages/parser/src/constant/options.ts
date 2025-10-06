@@ -35,6 +35,9 @@ export const PARSER_DEFAULT_OPTIONS: RequiredParserOptions = {
       enable: true,
       replace: true,
       role: {
+        match: {
+          rule: [],
+        },
         replace: {
           enable: true,
           rule: 'by',

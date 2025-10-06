@@ -1,0 +1,108 @@
+export const DEFAULT_PRODUCER_RULES: RegExp[] = [
+  // personnel
+  /(?:主唱|演唱|领唱|和声|歌手|演唱者|伴唱|vocalist|vocals?|lead\s*singer|lead\s*vocal|singer|performed|sung)/iu,
+  /(?:vocal\s*group|\s*组合|vocalists)/iu,
+  /(?:vocal\s*coach|声乐教练|声乐指导)/iu,
+  /(?:vocal\s*arrangement|和声编写|vocal\s*arranger)/iu,
+
+  /(?:band|乐队|组合|团体|group|groups)/iu,
+  /(?:bandleader|乐队领队|队长|leader)/iu,
+  /(?:member|成员|成员名单|members)/iu,
+
+  /(?:choir|合唱|合唱团|chorus|choruses|choristers)/iu,
+  /(?:\s*choir|\s*合唱\s*)/iu,
+
+  /(?:soloist|独奏|独唱|solo|独唱者|独奏者)/iu,
+  /(?:session\s*musician|session|伴奏|伴奏者|session\s*players)/iu,
+  /(?:quartet|四重奏|quintet|五重奏|trio|三重奏|duet|二重唱|duo)/iu,
+  /(?:featured\s*artist|featured|feat\.|featuring|客串|嘉宾|guest\s*artist|guest)/iu,
+
+  /(?:supporting\s*artists|配角|伴奏人员|supporting\s*musicians)/iu,
+  /(?:orchestration|配器|orchestrator)/iu,
+
+  /(?:orchestra|orchestral|symphony|philharmonic|ensemble|\s*乐团)/iu,
+  /(?:producer\s*team|制作团队|制作组|production\s*team)/iu,
+  /(?:conductor|指挥|指挥者|conducted\s*by)/iu,
+  /(?:arranger|编曲|编配|arrangement|orchestration|配器)/iu,
+  /(?:composer|作曲|作曲者|music\s*by)/iu,
+  /(?:lyricist|作词|作词者|lyrics)/iu,
+  /(?:producer|制作人|制作|music\s*producer|record\s*producer)/iu,
+  /(?:executive\s*producer|监制|执行制片|executive\s*prod)/iu,
+  /(?:recording\s*engineer|录音工程|录音师|录制)/iu,
+  /(?:mixing\s*engineer|mixing|混音|混缩|混音师)/iu,
+  /(?:mastering\s*engineer|mastering|母带|母带工程)/iu,
+  /(?:sound\s*designer|音效|音效设计|sound\s*design)/iu,
+  /(?:曲绘|曲繪|曲绘者|曲繪者|曲绘师|曲繪師|曲畫|quhui|qu\s*hui)/iu,
+  /(?:美工|美术|美術|美术师|美術師|美术设计|美術設計|插画|插畫|画师|繪師|绘师|illustrator|illustration|artwork|cover\s*art|graphic\s*design|art\s*design)/iu,
+  /(?:视频|影片|影像|mv|pv|music\s*video|musicvideo|video|video\s*editor|video\s*director|视频剪辑|剪辑|剪辑师|后期|后期制作|post[-\s]?production)/iu,
+  /(?:music\s*director|音乐总监|音乐导演)/iu,
+  /(?:string\s*section|弦乐组|弦乐|strings\s*section)/iu,
+  /(?:brass\s*section|铜管|brass\s*section)/iu,
+  /(?:woodwind\s*section|木管|woodwind)/iu,
+  /(?:rhythm\s*section|节奏组|rhythm\s*section)/iu,
+  /(?:\s*players|\s*musicians|\s*音乐家)/iu,
+  /(?:label|厂牌|唱片公司|record\s*label|publisher)/iu,
+  /(?:A&R|A\s*&\s*R|A\s*and\s*R)/iu,
+
+  // instruments
+  /(?:piano|钢琴|琴|keys|keyboard|kbd|electric\s*piano|rhodes|wurlitzer|clavinet)/iu,
+  /(?:synth(?:esizer)?|synths|合成器|电子琴|pad|pads|arp)/iu,
+  /(?:organ|管风琴|hammond|风琴|org)/iu,
+  /(?:violin|小提琴|violins?)/iu,
+  /(?:viola|中提琴|violas?)/iu,
+  /(?:cello|大提琴|cellos?)/iu,
+  /(?:double\s*bass|upright\s*bass|低音提琴|低音贝斯|contrabass)/iu,
+  /(?:bass(?:\s*guitar)?|贝斯|bassist|e-?bass|电贝斯)/iu,
+  /(?:guitar|吉他|gtr|gt|electric\s*guitar|acoustic\s*guitar|classical\s*guitar|12-?string|slide\s*guitar)/iu,
+  /(?:harp|竖琴|harps?)/iu,
+  /(?:banjo|班卓|banjos?)/iu,
+  /(?:mandolin|曼陀林|mandolins?)/iu,
+  /(?:ukulele|尤克里里|uke|ukes?)/iu,
+  /(?:accordion|手风琴)/iu,
+  /(?:harmonica|口琴)/iu,
+  /(?:melodica|口风琴)/iu,
+  /(?:flute|长笛|piccolo|短笛)/iu,
+  /(?:clarinet|单簧管)/iu,
+  /(?:oboe|双簧管)/iu,
+  /(?:bassoon|巴松)/iu,
+  /(?:sax(?:ophone)?|萨克斯|saxes?)/iu,
+  /(?:trumpet|小号|trpts?|trp)/iu,
+  /(?:trombone|长号|tbn)/iu,
+  /(?:french\s*horn|horn|圆号|法式号)/iu,
+  /(?:tuba|大号)/iu,
+  /(?:drums?|鼓|drumkit|drum\s*kit|kit|drs?)/iu,
+  /(?:snare|小军鼓|军鼓)/iu,
+  /(?:kick|bass\s*drum|低音鼓|kickdrum)/iu,
+  /(?:hi-?hat|嗨帽|hi hat)/iu,
+  /(?:tom(?:s)?|落地鼓|tomtom)/iu,
+  /(?:cymbal(?:s)?|钹|镲)/iu,
+  /(?:percussion|打击乐|perc|打击)/iu,
+  /(?:conga|康加鼓|congas?)/iu,
+  /(?:bongo(?:s)?|邦戈)/iu,
+  /(?:cajon|卡洪)/iu,
+  /(?:djembe|非洲鼓)/iu,
+  /(?:tabla|塔布拉)/iu,
+  /(?:vibraphone|vibes|颤音琴)/iu,
+  /(?:marimba|马林巴)/iu,
+  /(?:xylophone|木琴)/iu,
+  /(?:glockenspiel|钟琴)/iu,
+  /(?:steelpan|steel\s*drum|钢鼓|pan)/iu,
+  /(?:timpani|定音鼓)/iu,
+  /(?:sitar|锡塔尔)/iu,
+  /(?:erhu|二胡)/iu,
+  /(?:guzheng|古筝)/iu,
+  /(?:pipa|琵琶)/iu,
+  /(?:shamisen|三味线)/iu,
+  /(?:guqin|古琴|琴)/iu,
+  /(?:其他|乐器|instrument|played|演奏|演奏者|performance)/iu,
+] as const
+
+export const DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS: string[] = (() => {
+  const src = DEFAULT_PRODUCER_RULES.map((r) => r.source).join(' ')
+  const raw = src.match(/[A-Za-z\u4e00-\u9fff]{2,}/g) || []
+
+  const uniq = Array.from(new Set(raw.map((s) => s.toLowerCase())))
+  uniq.sort((a, b) => b.length - a.length)
+
+  return uniq
+})()

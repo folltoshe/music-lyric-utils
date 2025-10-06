@@ -2,6 +2,9 @@ import type { LyricLine, LyricMeta, LyricProducers } from '@music-lyric-utils/sh
 import type { ParsedLyricLine } from '../utils'
 import type { RequiredParserOptions } from '../interface'
 
+import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS } from '../constant'
+
+import { matchTextIsValid } from '@music-lyric-utils/shared'
 import { parseTime } from '../utils'
 
 const LYRIC_META_REGEXP = /^\s*\[\s*(?<key>[A-Za-z0-9_-]+)\s*:\s*(?<value>[^\]]*)\s*\]\s*$/
@@ -91,6 +94,7 @@ export const matchProducers = (options: RequiredParserOptions['match']['producer
   const resultLines: LyricLine[] = []
   const result: LyricProducers[] = []
 
+  const rules = [...DEFAULT_PRODUCER_RULES, ...options.role.match.rule]
   for (const line of lines) {
     const [roleRaw, nameRaw] = line.content.original.split(/[：︰:]/)
 
@@ -98,6 +102,12 @@ export const matchProducers = (options: RequiredParserOptions['match']['producer
     const nameTrim = nameRaw?.trim()
 
     if (!roleTrim || !nameTrim) {
+      resultLines.push(line)
+      continue
+    }
+
+    const isMatch = matchTextIsValid(roleTrim, rules, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS)
+    if (!isMatch) {
       resultLines.push(line)
       continue
     }
