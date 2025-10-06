@@ -5,7 +5,7 @@ import { LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 import { DEFAULT_PARSER_OPTIONS } from '../constant/options'
 
 import { cloneDeep } from 'lodash'
-import { OptionsManager, replaceChinesePunctuationToEnglish } from '@music-lyric-utils/shared'
+import { OptionsManager } from '@music-lyric-utils/shared'
 import { alignLyricWithTime } from '../utils'
 
 import { processNormalLyric } from './normal'
