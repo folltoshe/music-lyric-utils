@@ -40,7 +40,7 @@ export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
         },
         replace: {
           enable: true,
-          rule: 'by',
+          rule: ['by'],
         },
       },
       name: {

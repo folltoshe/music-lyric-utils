@@ -7,7 +7,7 @@ import { isRegExp } from 'lodash'
  * @param rules match rules
  * @param quick quick match words
  */
-export const matchTextIsValid = (text: string, rules: string | RegExp[], quick: string[] = []) => {
+export const matchTextIsValid = (text: string, rules: (string | RegExp)[], quick: string[] = []) => {
   const pre = String(text).trim()
   if (!pre) return false
 

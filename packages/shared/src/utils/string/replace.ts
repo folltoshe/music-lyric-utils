@@ -8,7 +8,7 @@ import { isRegExp } from 'lodash'
  * @param rules replace rule
  * @param flag regexp flag
  */
-export const replaceFromText = (text: string, target: string, rules: string | RegExp[], flag: string = 'giu') => {
+export const replaceFromText = (text: string, target: string, rules: (string | RegExp)[], flag: string = 'giu') => {
   let result = text
   for (const rule of rules) {
     try {

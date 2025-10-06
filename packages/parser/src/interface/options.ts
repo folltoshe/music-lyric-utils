@@ -84,7 +84,7 @@ export interface ParserOptions {
           /**
            * @default
            */
-          rule?: RegExp[]
+          rule?: (string | RegExp)[]
         }
         /**
          * replace from raw text
@@ -97,7 +97,7 @@ export interface ParserOptions {
           /**
            * @default "by"
            */
-          rule?: string | RegExp[]
+          rule?: (string | RegExp)[]
         }
       }
       /**
