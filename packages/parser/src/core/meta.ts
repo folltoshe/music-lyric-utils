@@ -4,7 +4,7 @@ import type { RequiredParserOptions } from '../interface'
 
 import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS } from '../constant/producer'
 
-import { matchTextIsValid } from '@music-lyric-utils/shared'
+import { matchTextIsValid, replaceFromText } from '@music-lyric-utils/shared'
 import { parseTime } from '../utils'
 
 const LYRIC_META_REGEXP = /^\s*\[\s*(?<key>[A-Za-z0-9_-]+)\s*:\s*(?<value>[^\]]*)\s*\]\s*$/
@@ -116,7 +116,7 @@ export const matchProducers = (options: RequiredParserOptions['match']['producer
       raw: line.content.original,
       role: {
         raw: roleTrim,
-        parsed: options.role.replace.enable ? roleTrim.replaceAll(options.role.replace.rule, '') : roleTrim,
+        parsed: options.role.replace.enable ? replaceFromText(roleTrim, '', options.role.replace.rule).trim() : roleTrim,
       },
       name: {
         raw: nameTrim,

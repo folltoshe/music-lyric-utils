@@ -97,7 +97,7 @@ export interface ParserOptions {
           /**
            * @default "by"
            */
-          rule?: string | RegExp
+          rule?: string | RegExp[]
         }
       }
       /**
