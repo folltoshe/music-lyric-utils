@@ -1,4 +1,4 @@
-const CHINESE_SYMBOLS_MAP: [RegExp, string][] = [
+const CHINESE_PUBCTUATIONS_MAP: [RegExp, string][] = [
   [/([。．｡])/g, '.'],
 
   [/([，､、﹐])/g, ','],
@@ -54,14 +54,13 @@ const CHINESE_SYMBOLS_MAP: [RegExp, string][] = [
 
 export const replaceChinesePunctuationToEnglish = (content: string) => {
   let output = content
-  for (const [regexp, target] of CHINESE_SYMBOLS_MAP) {
+  for (const [regexp, target] of CHINESE_PUBCTUATIONS_MAP) {
     output = output.replaceAll(regexp, target)
   }
   return output
 }
 
 const SAME_QUOTE_CHARS = [`"`]
-
 const PAIRED_QUOTES = [
   ['“', '”'],
   ['‘', '’'], // unicode
@@ -69,10 +68,8 @@ const PAIRED_QUOTES = [
   ['『', '』'],
   ['«', '»'],
 ]
-
 const LEFT_CHARS = ['(', '[', '{', '（', '【', '「', '『', '〈', '《', '“', '"', '‘']
 const RIGHT_CHARS = [')', ']', '}', '）', '】', '」', '』', '〉', '》', '”', '"', '’']
-
 const BOTH_SIDES_CHARS = ['-', '/', '—', '–']
 
 const findSameQuoteRanges = (text: string, char: string) => {

@@ -1,3 +1,2 @@
-export * from './language'
-export * from './match'
+export * from './text'
 export * from './options'
