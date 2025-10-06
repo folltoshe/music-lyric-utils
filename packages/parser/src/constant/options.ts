@@ -45,7 +45,7 @@ export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
       },
       name: {
         split: {
-          rule: '/',
+          rule: /(?:[/]|[,，])/,
         },
       },
     },
