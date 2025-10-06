@@ -1,12 +1,10 @@
 import type { LyricInfo } from '@music-lyric-utils/shared'
 import type { PlayerOptions, RequiredPlayerOptions } from '../interface'
 
-import { cloneDeep } from 'lodash'
-
 import { EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
 import { DEFAULT_PLAYER_OPTIONS } from '../constant/options'
 
-import { OptionsManager } from '@music-lyric-utils/shared'
+import { cloneDeep, OptionsManager } from '@music-lyric-utils/shared'
 import { handleGetNow, TimeoutTools } from '../utils'
 
 abstract class LyricPlayerOptions {

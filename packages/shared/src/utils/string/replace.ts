@@ -1,4 +1,4 @@
-import { isRegExp } from 'lodash'
+import { isRegExp } from '../regexp'
 
 /**
  * replace matched text to target

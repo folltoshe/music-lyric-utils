@@ -2,9 +2,9 @@ import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
 import type { ParsedLyricLine } from '../utils'
 import type { RequiredParserOptions } from '../interface'
 
-import { EMPTY_LYRIC_LINE, EMPTY_LYRIC_INFO, insertPunctuationSpace } from '@music-lyric-utils/shared'
+import { EMPTY_LYRIC_LINE, EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
 
-import { cloneDeep } from 'lodash'
+import { cloneDeep, insertPunctuationSpace } from '@music-lyric-utils/shared'
 import { parseTagTime } from '../utils'
 
 export const processNormalLine = (options: RequiredParserOptions['content'], lineInfo: ParsedLyricLine) => {

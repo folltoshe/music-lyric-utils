@@ -4,8 +4,7 @@ import type { RequiredParserOptions } from '../interface'
 
 import { EMPTY_LYRIC_INFO, EMPTY_LYRIC_DYNAMIC_INFO, EMPTY_LYRIC_DYNAMIC_WORD, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 
-import { checkEndCharIsPunctuation, checkFirstCharIsPunctuation, insertPunctuationSpace } from '@music-lyric-utils/shared'
-import { cloneDeep, parseInt } from 'lodash'
+import { cloneDeep, checkEndCharIsPunctuation, checkFirstCharIsPunctuation, insertPunctuationSpace } from '@music-lyric-utils/shared'
 import { parseTagTime } from '../utils'
 
 const DYNAMIC_LINE_WORD_AND_TIME_REGEXP = /(?<time><[^>]+>)(?<content>[^<]*)/gu

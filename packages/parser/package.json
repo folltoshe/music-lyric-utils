@@ -26,10 +26,6 @@
     "dist"
   ],
   "dependencies": {
-    "@music-lyric-utils/shared": "workspace:*",
-    "lodash": "^4.17.21"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.17.20"
+    "@music-lyric-utils/shared": "workspace:*"
   }
 }

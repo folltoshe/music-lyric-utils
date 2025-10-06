@@ -1,4 +1,4 @@
-import { get, set, merge } from 'lodash'
+import { get, set, merge } from './object'
 
 import { type DeepPartial, type PathValue, type NestedKeys } from '../types'
 

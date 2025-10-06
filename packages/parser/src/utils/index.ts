@@ -1,6 +1,6 @@
-import { cloneDeep } from 'lodash'
+import type { LyricTimeInfo } from '@music-lyric-utils/shared'
 
-import { type LyricTimeInfo } from '@music-lyric-utils/shared'
+import { cloneDeep } from '@music-lyric-utils/shared'
 
 const LYRIC_TIME_REGEXP = /^(?:(?<hour>\d+):)?(?<minute>\d+):(?<second>\d+)(?:\.(?<milliSecond>\d{1,3}))?$/u
 
