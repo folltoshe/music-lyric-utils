@@ -4,13 +4,13 @@ import type { PlayerOptions, RequiredPlayerOptions } from '../interface'
 import { cloneDeep } from 'lodash'
 
 import { EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
-import { PLAYER_DEFAULT_OPTIONS } from '../constant'
+import { DEFAULT_PLAYER_OPTIONS } from '../constant/options'
 
 import { OptionsManager } from '@music-lyric-utils/shared'
 import { handleGetNow, TimeoutTools } from '../utils'
 
 abstract class LyricPlayerOptions {
-  protected options = new OptionsManager<RequiredPlayerOptions>(PLAYER_DEFAULT_OPTIONS)
+  protected options = new OptionsManager<RequiredPlayerOptions>(DEFAULT_PLAYER_OPTIONS)
 
   constructor(opt?: PlayerOptions) {
     if (opt) this.options.setAll(opt)

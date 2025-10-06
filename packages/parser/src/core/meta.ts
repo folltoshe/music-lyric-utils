@@ -2,7 +2,7 @@ import type { LyricLine, LyricMeta, LyricProducers } from '@music-lyric-utils/sh
 import type { ParsedLyricLine } from '../utils'
 import type { RequiredParserOptions } from '../interface'
 
-import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS } from '../constant'
+import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS } from '../constant/producer'
 
 import { matchTextIsValid } from '@music-lyric-utils/shared'
 import { parseTime } from '../utils'

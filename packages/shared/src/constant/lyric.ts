@@ -9,7 +9,7 @@ export const EMPTY_LYRIC_TIME_INFO: LyricTimeInfo = {
   start: 0,
   end: 0,
   duration: 0,
-}
+} as const
 
 export const EMPTY_LYRIC_DYNAMIC_WORD: LyricDynamicWord = {
   time: EMPTY_LYRIC_TIME_INFO,
@@ -18,12 +18,12 @@ export const EMPTY_LYRIC_DYNAMIC_WORD: LyricDynamicWord = {
     needSpaceEnd: false,
     needTrailing: false,
   },
-}
+} as const
 
 export const EMPTY_LYRIC_DYNAMIC_INFO: LyricDynamicInfo = {
   time: EMPTY_LYRIC_TIME_INFO,
   words: [],
-}
+} as const
 
 export const EMPTY_LYRIC_INFO: LyricInfo = {
   meta: {

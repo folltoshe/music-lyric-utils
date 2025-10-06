@@ -1,6 +1,6 @@
 import { type RequiredParserOptions } from '../interface'
 
-export const PARSER_DEFAULT_OPTIONS: RequiredParserOptions = {
+export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
   meta: {
     name: {
       split: {
