@@ -48,8 +48,8 @@ export class EventListener<TEvents extends EventMap> {
     for (const handler of handlers.slice()) {
       try {
         handler(data)
-      } catch (error) {
-        console.error(`Error in event handler for "${String(event)}":`, error)
+      } catch {
+        continue
       }
     }
   }

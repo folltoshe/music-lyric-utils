@@ -136,5 +136,3 @@ export const DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS: string[] = (() => {
 
   return uniq
 })()
-
-console.log(DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS)
