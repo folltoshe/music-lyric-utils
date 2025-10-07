@@ -94,7 +94,7 @@ export const matchProducers = (options: RequiredParserOptions['match']['producer
   const resultLines: LyricLine[] = []
   const result: LyricProducers[] = []
 
-  const rules = [...DEFAULT_PRODUCER_RULES, ...options.role.match.rule]
+  const rules = [...(options.role.match.useDefault ? DEFAULT_PRODUCER_RULES : []), ...options.role.match.rule]
   for (const line of lines) {
     const [roleRaw, nameRaw] = line.content.original.split(/[：︰:]/)
 

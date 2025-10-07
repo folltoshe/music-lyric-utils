@@ -91,7 +91,11 @@ export interface ParserOptions {
          */
         match?: {
           /**
-           * @default
+           * @default true
+           */
+          useDefault?: boolean
+          /**
+           * @default []
            */
           rule?: (string | RegExp)[]
         }
