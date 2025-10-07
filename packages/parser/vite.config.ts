@@ -20,5 +20,10 @@ export default defineConfig({
     minify: false,
     reportCompressedSize: false,
   },
+  resolve: {
+    alias: {
+      '@root': src,
+    },
+  },
   plugins: [PluginDts({ rollupTypes: true })],
 })

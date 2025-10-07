@@ -1,5 +1,5 @@
 import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
-import type { ParseLyricProps, ParserOptions, RequiredParserOptions } from '../interface'
+import type { ParseLyricProps, ParserOptions, RequiredParserOptions } from '@root/interface'
 
 import { LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 import { DEFAULT_PARSER_OPTIONS } from '../constant/options'
@@ -7,9 +7,9 @@ import { DEFAULT_PARSER_OPTIONS } from '../constant/options'
 import { cloneDeep, OptionsManager } from '@music-lyric-utils/shared'
 import { alignLyricWithTime } from '../utils'
 
-import { processNormalLyric } from './normal'
-import { processDynamicLyric } from './dynamic'
-import { processLyricMeta, matchProducers } from './meta'
+import { LineParser } from './line'
+import { MetaParser } from './meta'
+
 import { matchLyric } from './match'
 import { insertSpaceForLines } from './space'
 
@@ -38,6 +38,9 @@ abstract class LyricParserOptions {
 }
 
 export class LyricParser extends LyricParserOptions {
+  protected line = new LineParser(this.options)
+  protected meta = new MetaParser(this.options)
+
   constructor(opt?: ParserOptions) {
     super(opt)
   }
@@ -45,9 +48,6 @@ export class LyricParser extends LyricParserOptions {
   protected override onUpdateOptions(): void {}
 
   parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): LyricInfo | null {
-    const contentOptions = this.options.getByKey('content')
-    const metaOptions = this.options.getByKey('meta')
-    const matchOptions = this.options.getByKey('match')
     const replaceOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')
     const insertSpaceOptions = this.options.getByKey('content.insertSpace')
 
@@ -55,15 +55,14 @@ export class LyricParser extends LyricParserOptions {
     const matchedDynamic = matchLyric(dynamic, replaceOptions.dynamic)
     if (!matchedDynamic && !matchedOriginal) return null
 
-    const [targetLyric, targetMeta] = matchedDynamic
-      ? [processDynamicLyric(contentOptions, matchedDynamic.lines), processLyricMeta(metaOptions, matchedDynamic.metas)]
+    const [targetLyric, targetMatched] = matchedDynamic
+      ? [this.line.parseDynamic(matchedDynamic.lines), matchedDynamic]
       : matchedOriginal
-      ? [processNormalLyric(contentOptions, matchedOriginal.lines), processLyricMeta(metaOptions, matchedOriginal.metas)]
+      ? [this.line.parseNormal(matchedOriginal.lines), matchedOriginal]
       : [null, null]
     if (!targetLyric) return null
 
-    const { lines: targetLines, producers } = matchProducers(matchOptions.producers, targetLyric.lines)
-    if (producers.length) targetMeta.producers = producers
+    const [targetMeta, targetLines] = this.meta.parse(targetMatched.metas, targetLyric.lines)
     targetLyric.lines = targetLines
 
     if (!targetLyric.config.isSupportAutoScroll) {
@@ -72,10 +71,10 @@ export class LyricParser extends LyricParserOptions {
     }
 
     const matchedTranslate = matchLyric(translate, replaceOptions.translate)
-    const targetTranslate = matchedTranslate && processNormalLyric(contentOptions, matchedTranslate.lines)
+    const targetTranslate = matchedTranslate && this.line.parseNormal(matchedTranslate.lines)
 
     const matchedRoman = matchLyric(roman, replaceOptions.roman)
-    const targetRoman = matchedRoman && processNormalLyric(contentOptions, matchedRoman.lines)
+    const targetRoman = matchedRoman && this.line.parseNormal(matchedRoman.lines)
 
     const aligndTranslate = targetTranslate ? alignLyricWithTime({ base: targetLyric.lines, target: targetTranslate.lines }) : null
     const aligndRoman = targetRoman ? alignLyricWithTime({ base: targetLyric.lines, target: targetRoman.lines }) : null

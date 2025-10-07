@@ -1,6 +1,6 @@
-import type { RequiredPlayerOptions } from '../interface'
+import type { RequiredPlayerOptions } from '@root/interface'
 
-import { EMPTY_CALLBACK } from '../utils'
+import { EMPTY_CALLBACK } from '@root/utils'
 
 export const DEFAULT_PLAYER_OPTIONS: RequiredPlayerOptions = {
   offset: 150,

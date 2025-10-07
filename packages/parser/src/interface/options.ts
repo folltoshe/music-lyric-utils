@@ -1,4 +1,4 @@
-import type { DeepRequired, InsertTextSpaceTypes } from '@music-lyric-utils/shared'
+import type { DeepRequired, InsertTextSpaceTypes, OptionsManager } from '@music-lyric-utils/shared'
 
 export interface ParserOptions {
   meta?: {
@@ -132,6 +132,8 @@ export interface ParserOptions {
 }
 
 export type RequiredParserOptions = DeepRequired<ParserOptions>
+
+export type ParserOptionsWithManager = OptionsManager<RequiredParserOptions>
 
 export interface ParseLyricProps {
   original?: string

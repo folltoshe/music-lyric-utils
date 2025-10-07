@@ -1,11 +1,11 @@
 import type { LyricInfo } from '@music-lyric-utils/shared'
-import type { PlayerOptions, RequiredPlayerOptions } from '../interface'
+import type { PlayerOptions, RequiredPlayerOptions } from '@root/interface'
 
 import { EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
-import { DEFAULT_PLAYER_OPTIONS } from '../constant/options'
+import { DEFAULT_PLAYER_OPTIONS } from '@root/constant/options'
 
 import { cloneDeep, OptionsManager } from '@music-lyric-utils/shared'
-import { handleGetNow, TimeoutTools } from '../utils'
+import { handleGetNow, TimeoutTools } from '@root/utils'
 
 abstract class LyricPlayerOptions {
   protected options = new OptionsManager<RequiredPlayerOptions>(DEFAULT_PLAYER_OPTIONS)

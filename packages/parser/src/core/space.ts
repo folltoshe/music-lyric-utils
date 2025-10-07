@@ -1,12 +1,11 @@
 import type { LyricLine } from '@music-lyric-utils/shared'
-import type { RequiredParserOptions } from '../interface'
+import type { RequiredParserOptions } from '@root/interface'
 
 import { checkEndCharIsPunctuation, checkFirstCharIsPunctuation, INSERT_TEXT_SPACE_TYPES, insertSpace } from '@music-lyric-utils/shared'
 
 export const insertSpaceForLines = (options: RequiredParserOptions['content']['insertSpace'], lines: LyricLine[]) => {
   if (!options.enable) return lines
 
-  console.log('inserting...')
   for (const line of lines) {
     if (line.content.dynamic) {
       line.content.dynamic.words = line.content.dynamic.words.map((item, index, array) => {

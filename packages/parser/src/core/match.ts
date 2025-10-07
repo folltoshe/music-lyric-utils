@@ -1,7 +1,7 @@
-import type { ParsedLyricLine } from '../utils'
+import type { ParsedLyricLine } from '@root/utils'
 
 import { replaceChinesePunctuationToEnglish } from '@music-lyric-utils/shared'
-import { parseLyricLine } from '../utils'
+import { parseLyricLine } from '@root/utils'
 
 export interface MatchedLyric {
   metas: ParsedLyricLine[]
