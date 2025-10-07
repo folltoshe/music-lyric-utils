@@ -1,16 +1,25 @@
 import type { LyricLine } from '@music-lyric-utils/shared'
+import type { RequiredParserOptions } from '../interface'
 
-import { TEXT_SPACER_PROCESS_TYPE } from '@music-lyric-utils/shared'
+import { checkEndCharIsPunctuation, checkFirstCharIsPunctuation, INSERT_TEXT_SPACE_TYPES, insertSpace } from '@music-lyric-utils/shared'
 
-import { TextSpacer } from '@music-lyric-utils/shared'
+export const insertSpaceForLines = (options: RequiredParserOptions['content']['insertSpace'], lines: LyricLine[]) => {
+  if (!options.enable) return lines
 
-const spacer = new TextSpacer(TEXT_SPACER_PROCESS_TYPE.PUNCTUATION)
-
-export const insertSpace = (lines: LyricLine[]) => {
-  return lines.map((line) => {
+  console.log('inserting...')
+  for (const line of lines) {
     if (line.content.dynamic) {
-      line.content.dynamic.words = line.content.dynamic.words.map((item) => {
-        item.text = spacer.process(item.text)
+      line.content.dynamic.words = line.content.dynamic.words.map((item, index, array) => {
+        item.text = insertSpace(item.text, options.types)
+        if (options.types.includes(INSERT_TEXT_SPACE_TYPES.PUNCTUATION)) {
+          const last = array[index]
+          if (!last.config.needSpaceEnd && checkFirstCharIsPunctuation(item.text)) {
+            last.config.needSpaceEnd = true
+          }
+          if (!item.config.needSpaceEnd && checkEndCharIsPunctuation(item.text)) {
+            item.config.needSpaceEnd = true
+          }
+        }
         return item
       })
       line.content.original = line.content.dynamic.words
@@ -19,14 +28,15 @@ export const insertSpace = (lines: LyricLine[]) => {
         })
         .join('')
     } else {
-      line.content.original = spacer.process(line.content.original)
+      line.content.original = insertSpace(line.content.original, options.types)
     }
     if (line.content.translated) {
-      line.content.translated = spacer.process(line.content.translated)
+      line.content.translated = insertSpace(line.content.translated, options.types)
     }
     if (line.content.roman) {
-      line.content.roman = spacer.process(line.content.roman)
+      line.content.roman = insertSpace(line.content.roman, options.types)
     }
-    return line
-  })
+  }
+
+  return lines
 }

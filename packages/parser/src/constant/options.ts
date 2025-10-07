@@ -1,4 +1,6 @@
-import { type RequiredParserOptions } from '../interface'
+import type { RequiredParserOptions } from '../interface'
+
+import { INSERT_TEXT_SPACE_TYPES } from '@music-lyric-utils/shared'
 
 export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
   meta: {
@@ -27,7 +29,10 @@ export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
         roman: false,
         dynamic: true,
       },
-      insertSpaceToPunctuation: true,
+    },
+    insertSpace: {
+      enable: true,
+      types: [INSERT_TEXT_SPACE_TYPES.ALL],
     },
   },
   match: {

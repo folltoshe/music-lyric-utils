@@ -11,7 +11,7 @@ import { processNormalLyric } from './normal'
 import { processDynamicLyric } from './dynamic'
 import { processLyricMeta, matchProducers } from './meta'
 import { matchLyric } from './match'
-import { insertSpace } from './space'
+import { insertSpaceForLines } from './space'
 
 export const isInterludeLine = (line: LyricLine) => {
   return line.type === LYRIC_LINE_TYPES.INTERLUDE
@@ -49,6 +49,7 @@ export class LyricParser extends LyricParserOptions {
     const metaOptions = this.options.getByKey('meta')
     const matchOptions = this.options.getByKey('match')
     const replaceOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')
+    const insertSpaceOptions = this.options.getByKey('content.insertSpace')
 
     const matchedOriginal = matchLyric(original, replaceOptions.original)
     const matchedDynamic = matchLyric(dynamic, replaceOptions.dynamic)
@@ -117,10 +118,7 @@ export class LyricParser extends LyricParserOptions {
       }
     }
 
-    if (this.options.getByKey('content.replace.insertSpaceToPunctuation')) {
-      resultLyric.lines = insertSpace(resultLyric.lines)
-    }
-
+    resultLyric.lines = insertSpaceForLines(insertSpaceOptions, resultLyric.lines)
     resultLyric.lines = resultLyric.lines.sort((a, b) => a.time.start - b.time.start)
     resultLyric.meta = targetMeta
 

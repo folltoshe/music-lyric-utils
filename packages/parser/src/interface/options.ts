@@ -1,4 +1,4 @@
-import type { DeepRequired } from '@music-lyric-utils/shared'
+import type { DeepRequired, InsertTextSpaceTypes } from '@music-lyric-utils/shared'
 
 export interface ParserOptions {
   meta?: {
@@ -54,10 +54,19 @@ export interface ParserOptions {
          */
         dynamic?: boolean
       }
+    }
+    /**
+     * insert space
+     */
+    insertSpace?: {
       /**
-       * insert space to some punctuation
+       * @default true
        */
-      insertSpaceToPunctuation?: boolean
+      enable?: boolean
+      /**
+       * @default TextSpacerProcessType.ALL
+       */
+      types?: InsertTextSpaceTypes[]
     }
   }
   match?: {

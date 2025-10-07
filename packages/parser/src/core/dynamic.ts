@@ -4,7 +4,7 @@ import type { RequiredParserOptions } from '../interface'
 
 import { EMPTY_LYRIC_INFO, EMPTY_LYRIC_DYNAMIC_INFO, EMPTY_LYRIC_DYNAMIC_WORD, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 
-import { cloneDeep, checkEndCharIsPunctuation, checkFirstCharIsPunctuation } from '@music-lyric-utils/shared'
+import { cloneDeep } from '@music-lyric-utils/shared'
 import { parseTagTime } from '../utils'
 
 const DYNAMIC_LINE_WORD_AND_TIME_REGEXP = /(?<time><[^>]+>)(?<content>[^<]*)/gu
@@ -52,8 +52,6 @@ export const processDynamicLine = (options: RequiredParserOptions['content'], li
         continue
       } else if (DYNAMIC_LINE_WORD_SPACE_START.test(wordContent)) {
         wordLast.config.needSpaceEnd = true
-      } else if (options.replace.insertSpaceToPunctuation && checkFirstCharIsPunctuation(wordContent)) {
-        wordLast.config.needSpaceEnd = true
       }
     }
 
@@ -67,8 +65,6 @@ export const processDynamicLine = (options: RequiredParserOptions['content'], li
     wordResult.text = wordContentTrim
 
     if (DYNAMIC_LINE_WORD_SPACE_END.test(wordContent)) {
-      wordResult.config.needSpaceEnd = true
-    } else if (options.replace.insertSpaceToPunctuation && checkEndCharIsPunctuation(wordContentTrim)) {
       wordResult.config.needSpaceEnd = true
     }
 
