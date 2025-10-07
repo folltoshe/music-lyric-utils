@@ -49,3 +49,5 @@ export type DeepRequired<T> = T extends (...args: any[]) => any
   : T extends object
   ? { [K in keyof T]-?: DeepRequired<NonNullable<T[K]>> }
   : NonNullable<T>
+
+export type ValueOf<T extends object> = T[keyof T]

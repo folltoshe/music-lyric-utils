@@ -11,6 +11,7 @@ import { processNormalLyric } from './normal'
 import { processDynamicLyric } from './dynamic'
 import { processLyricMeta, matchProducers } from './meta'
 import { matchLyric } from './match'
+import { insertSpace } from './space'
 
 export const isInterludeLine = (line: LyricLine) => {
   return line.type === LYRIC_LINE_TYPES.INTERLUDE
@@ -114,6 +115,10 @@ export class LyricParser extends LyricParserOptions {
         line.type = LYRIC_LINE_TYPES.INTERLUDE
         resultLyric.lines.push(line)
       }
+    }
+
+    if (this.options.getByKey('content.replace.insertSpaceToPunctuation')) {
+      resultLyric.lines = insertSpace(resultLyric.lines)
     }
 
     resultLyric.lines = resultLyric.lines.sort((a, b) => a.time.start - b.time.start)

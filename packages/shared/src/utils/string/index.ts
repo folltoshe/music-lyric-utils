@@ -1,3 +1,4 @@
 export * from './punctuation'
+export * from './space'
 export * from './match'
 export * from './replace'

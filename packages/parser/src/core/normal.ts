@@ -4,14 +4,14 @@ import type { RequiredParserOptions } from '../interface'
 
 import { EMPTY_LYRIC_LINE, EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
 
-import { cloneDeep, insertPunctuationSpace } from '@music-lyric-utils/shared'
+import { cloneDeep } from '@music-lyric-utils/shared'
 import { parseTagTime } from '../utils'
 
 export const processNormalLine = (options: RequiredParserOptions['content'], lineInfo: ParsedLyricLine) => {
   const time = parseTagTime(lineInfo.tag) || 0
   const result = cloneDeep(EMPTY_LYRIC_LINE)
   result.time.start = time
-  result.content.original = options.replace.insertSpaceToPunctuation ? insertPunctuationSpace(lineInfo.content) : lineInfo.content
+  result.content.original = lineInfo.content
   return result
 }
 
