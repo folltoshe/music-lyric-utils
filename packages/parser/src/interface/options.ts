@@ -2,10 +2,13 @@ import type { DeepRequired, InsertTextSpaceTypes, OptionsManager } from '@music-
 
 export interface ParserOptions {
   meta?: {
+    /**
+     * match name from lyric
+     */
     name?: {
       split?: {
         /**
-         * meta split rule
+         * name split rule
          * @default "/"
          */
         rule?: {
@@ -15,6 +18,71 @@ export interface ParserOptions {
           author?: string | RegExp
           lyricist?: string | RegExp
           contributor?: string | RegExp
+        }
+      }
+    }
+    /**
+     * match producers from lyric
+     */
+    producers?: {
+      /**
+       * @default true
+       */
+      enable?: boolean
+      /**
+       * @default true
+       */
+      replace?: boolean
+      /**
+       * role name options
+       */
+      role?: {
+        /**
+         * only when it is matched will it be used as the correct role
+         */
+        match?: {
+          /**
+           * match rule
+           */
+          rule?: {
+            /**
+             * is use default rule
+             * @default true
+             */
+            useDefault?: boolean
+            /**
+             * custom rule, it will be merge with default when useDefault is enable
+             * @default []
+             */
+            custom?: (string | RegExp)[]
+          }
+        }
+        /**
+         * replace from raw text
+         */
+        replace?: {
+          /**
+           * @default true
+           */
+          enable?: boolean
+          /**
+           * @default "by"
+           */
+          rule?: (string | RegExp)[]
+        }
+      }
+      /**
+       * people name options
+       */
+      name?: {
+        /**
+         * people name split options
+         */
+        split?: {
+          /**
+           * @default "/"
+           */
+          rule?: string | RegExp
         }
       }
     }
@@ -67,66 +135,6 @@ export interface ParserOptions {
        * @default TextSpacerProcessType.ALL
        */
       types?: InsertTextSpaceTypes[]
-    }
-  }
-  match?: {
-    /**
-     * match producers from lyric
-     */
-    producers?: {
-      /**
-       * @default true
-       */
-      enable?: boolean
-      /**
-       * @default true
-       */
-      replace?: boolean
-      /**
-       * role name options
-       */
-      role?: {
-        /**
-         * only when it is matched will it be used as the correct role
-         */
-        match?: {
-          /**
-           * @default true
-           */
-          useDefault?: boolean
-          /**
-           * @default []
-           */
-          rule?: (string | RegExp)[]
-        }
-        /**
-         * replace from raw text
-         */
-        replace?: {
-          /**
-           * @default true
-           */
-          enable?: boolean
-          /**
-           * @default "by"
-           */
-          rule?: (string | RegExp)[]
-        }
-      }
-      /**
-       * people name options
-       */
-      name?: {
-        /**
-         * people name split options
-         */
-        split?: {
-          /**
-           * @default "/"
-           */
-          rule?: string | RegExp
-        }
-      }
     }
   }
 }

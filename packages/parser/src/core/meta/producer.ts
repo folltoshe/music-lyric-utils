@@ -21,13 +21,13 @@ export class ProducerParser {
   }
 
   private onConfigUpdate() {
-    const options = this.options.getByKey('match.producers')
+    const options = this.options.getByKey('meta.producers')
 
     this.isEnable = options.enable
     this.isReplaceLine = options.replace
 
-    const roleMatchCustomRules = options.role.match.rule
-    this.roleMatchRules = [...(options.role.match.useDefault ? DEFAULT_PRODUCER_RULES : []), ...roleMatchCustomRules]
+    const roleMatchCustomRules = options.role.match.rule.custom
+    this.roleMatchRules = [...(options.role.match.rule.useDefault ? DEFAULT_PRODUCER_RULES : []), ...roleMatchCustomRules]
     this.roleReplaceRules = options.role.replace.rule
 
     this.nameSplitRule = options.name.split.rule

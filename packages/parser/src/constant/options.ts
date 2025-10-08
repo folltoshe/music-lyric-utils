@@ -16,6 +16,27 @@ export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
         },
       },
     },
+    producers: {
+      enable: true,
+      replace: true,
+      role: {
+        match: {
+          rule: {
+            useDefault: true,
+            custom: [],
+          },
+        },
+        replace: {
+          enable: true,
+          rule: ['by'],
+        },
+      },
+      name: {
+        split: {
+          rule: /(?:[/]|[,，])/,
+        },
+      },
+    },
   },
   interlude: {
     show: true,
@@ -33,27 +54,6 @@ export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
     insertSpace: {
       enable: true,
       types: [INSERT_TEXT_SPACE_TYPES.ALL],
-    },
-  },
-  match: {
-    producers: {
-      enable: true,
-      replace: true,
-      role: {
-        match: {
-          useDefault: true,
-          rule: [],
-        },
-        replace: {
-          enable: true,
-          rule: ['by'],
-        },
-      },
-      name: {
-        split: {
-          rule: /(?:[/]|[,，])/,
-        },
-      },
     },
   },
 } as const
