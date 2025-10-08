@@ -4,6 +4,7 @@ import { INSERT_TEXT_SPACE_TYPES } from '@music-lyric-utils/shared'
 
 export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
   meta: {
+    enable: true,
     name: {
       split: {
         rule: {

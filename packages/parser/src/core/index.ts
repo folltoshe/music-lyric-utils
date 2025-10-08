@@ -65,7 +65,7 @@ export class LyricParser extends LyricParserOptions {
     const [targetMeta, targetLines] = this.meta.parse(targetMatched.metas, targetLyric.lines)
     targetLyric.lines = targetLines
 
-    if (!targetLyric.config.isSupportAutoScroll) {
+    if (!targetLyric.config.isSupportAutoScroll && targetMeta) {
       targetLyric.meta = targetMeta
       return targetLyric
     }
@@ -119,7 +119,10 @@ export class LyricParser extends LyricParserOptions {
 
     resultLyric.lines = insertSpaceForLines(insertSpaceOptions, resultLyric.lines)
     resultLyric.lines = resultLyric.lines.sort((a, b) => a.time.start - b.time.start)
-    resultLyric.meta = targetMeta
+
+    if (targetMeta) {
+      resultLyric.meta = targetMeta
+    }
 
     return resultLyric
   }

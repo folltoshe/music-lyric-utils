@@ -14,18 +14,12 @@ export class MetaParser {
     this.producer = new ProducerParser(options)
   }
 
-  parseBase(matched: ParsedLyricLine[]) {
-    return this.base.parse(matched)
-  }
+  parse(matched: ParsedLyricLine[], lines: LyricLine[]): [LyricMeta | null, LyricLine[]] {
+    if (!this.options.getByKey('meta.enable')) return [null, lines]
 
-  parseProducer(lines: LyricLine[]) {
-    return this.producer.parse(lines)
-  }
+    const [newLines, producers] = this.producer.parse(lines)
 
-  parse(matched: ParsedLyricLine[], lines: LyricLine[]): [LyricMeta, LyricLine[]] {
-    const [newLines, producers] = this.parseProducer(lines)
-
-    const base = this.parseBase(matched)
+    const base = this.base.parse(matched)
     if (producers.length) base.producers = producers
 
     return [base, newLines]

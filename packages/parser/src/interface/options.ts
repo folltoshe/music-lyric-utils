@@ -2,9 +2,7 @@ import type { DeepRequired, InsertTextSpaceTypes, OptionsManager } from '@music-
 
 export interface ParserOptions {
   meta?: {
-    /**
-     * match name from lyric
-     */
+    enable?: boolean
     name?: {
       split?: {
         /**
@@ -21,9 +19,6 @@ export interface ParserOptions {
         }
       }
     }
-    /**
-     * match producers from lyric
-     */
     producers?: {
       /**
        * @default true
@@ -41,9 +36,6 @@ export interface ParserOptions {
          * only when it is matched will it be used as the correct role
          */
         match?: {
-          /**
-           * match rule
-           */
           rule?: {
             /**
              * is use default rule
