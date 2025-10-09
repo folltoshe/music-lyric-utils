@@ -5,6 +5,8 @@ import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS } from '@
 
 import { matchTextIsValid, replaceFromText } from '@music-lyric-utils/shared'
 
+const MATCH_REGEXP = /(?:(?:\([^)]*\)|\[[^\]]*\]|\{[^}]*\}|（[^）]*）|【[^】]*】|「[^」]*」)|[^(:：()\[\]{}（）【】「」])*?[:：]/
+
 export class ProducerParser {
   private isEnable = false
   private isReplaceLine = false
@@ -47,17 +49,24 @@ export class ProducerParser {
     const result: LyricProducers[] = []
 
     for (const line of lines) {
-      const [roleRaw, nameRaw] = line.content.original.split(/[：︰:]/)
+      if (!line.content.original.trim()) continue
 
-      const roleTrim = roleRaw?.trim()
-      const nameTrim = nameRaw?.trim()
+      const colonCount = (line.content.original.match(/[:：]/g) || []).length
+      if (!colonCount) continue
 
-      if (!roleTrim || !nameTrim) {
+      const match = MATCH_REGEXP.exec(line.content.original)
+      if (!match) continue
+
+      const colonIndex = match.index + match[0].length - 1
+      const role = line.content.original.substring(0, colonIndex).trim()
+      const name = line.content.original.substring(colonIndex + 1).trim()
+
+      if (!role || !name) {
         resultLines.push(line)
         continue
       }
 
-      const isMatch = matchTextIsValid(roleTrim, this.roleMatchRules, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS)
+      const isMatch = matchTextIsValid(role, this.roleMatchRules, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS)
       if (!isMatch) {
         resultLines.push(line)
         continue
@@ -66,12 +75,12 @@ export class ProducerParser {
       const item: LyricProducers = {
         raw: line.content.original,
         role: {
-          raw: roleTrim,
-          parsed: this.roleEnableReplace ? replaceFromText(roleTrim, '', this.roleReplaceRules).trim() : roleTrim,
+          raw: role,
+          parsed: this.roleEnableReplace ? replaceFromText(role, '', this.roleReplaceRules).trim() : role,
         },
         name: {
-          raw: nameTrim,
-          parsed: this.processName(nameTrim),
+          raw: name,
+          parsed: this.processName(name),
         },
       }
       result.push(item)
