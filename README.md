@@ -22,8 +22,9 @@
 
   - [x] Parse Normal Line
   - [x] Parse Dynamic Line
-  - [x] Parse Meta
-  - [x] Parse Producer
+  - [x] Parse Meta Info
+  - [x] Auto Match Producer
+  - [ ] Purification Lyrics
 
 - Other
 
