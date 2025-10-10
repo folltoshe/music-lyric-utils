@@ -49,13 +49,22 @@ export class ProducerParser {
     const result: LyricProducers[] = []
 
     for (const line of lines) {
-      if (!line.content.original.trim()) continue
+      if (!line.content.original.trim()) {
+        resultLines.push(line)
+        continue
+      }
 
       const colonCount = (line.content.original.match(/[:：]/g) || []).length
-      if (!colonCount) continue
+      if (!colonCount) {
+        resultLines.push(line)
+        continue
+      }
 
       const match = MATCH_REGEXP.exec(line.content.original)
-      if (!match) continue
+      if (!match) {
+        resultLines.push(line)
+        continue
+      }
 
       const colonIndex = match.index + match[0].length - 1
       const role = line.content.original.substring(0, colonIndex).trim()
