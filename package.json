@@ -15,7 +15,9 @@
   },
   "keywords": [
     "music",
-    "lyric"
+    "lyric",
+    "parser",
+    "player"
   ],
   "homepage": "https://github.com/folltoshe/music-lyric-utils#readme",
   "bugs": {
