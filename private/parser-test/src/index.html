@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Lyric Utils - Test</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        color: #fff;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 800px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      .input-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .input-field {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 1.1rem;
+      }
+
+      textarea {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        color: white;
+        font-size: 1rem;
+        resize: vertical;
+        min-height: 120px;
+        transition: all 0.3s ease;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: #4cc9f0;
+        box-shadow: 0 0 0 2px rgba(76, 201, 240, 0.3);
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      button {
+        background: linear-gradient(135deg, #4cc9f0, #4361ee);
+        border: none;
+        border-radius: 50px;
+        padding: 15px 40px;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      button:active {
+        transform: translateY(1px);
+      }
+
+      .result-container {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+        display: none;
+      }
+
+      .result-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .copy-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .copy-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      pre {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        overflow-x: auto;
+        font-family: 'Consolas', monospace;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .example-text {
+        font-size: 0.9rem;
+        margin-top: 5px;
+        opacity: 0.7;
+        font-style: italic;
+      }
+
+      @media (max-width: 768px) {
+        .input-group {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+    <script type="module" src="./index.ts"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="input-group">
+        <div class="input-field">
+          <label for="original">Original</label>
+          <textarea id="original"> </textarea>
+          <div class="example-text">Example: [1:114.514]content</div>
+        </div>
+
+        <div class="input-field">
+          <label for="translate">Translate</label>
+          <textarea id="translate"></textarea>
+          <div class="example-text">Example: [1:114.514]content</div>
+        </div>
+
+        <div class="input-field">
+          <label for="roman">Roman</label>
+          <textarea id="roman"></textarea>
+          <div class="example-text">Example: [1:114.514]content</div>
+        </div>
+
+        <div class="input-field">
+          <label for="dynamic">Dynamic</label>
+          <textarea id="dynamic"></textarea>
+          <div class="example-text">Example: [1:114.514]content</div>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button id="parse-btn">Parse</button>
+      </div>
+
+      <div class="result-container" id="result-container">
+        <div class="result-header">
+          <h2>Result</h2>
+        </div>
+        <pre id="result"></pre>
+      </div>
+    </div>
+  </body>
+</html>

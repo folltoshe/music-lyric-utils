@@ -6,7 +6,7 @@ const root = join(process.cwd())
 const src = join(root, 'src')
 
 export default defineConfig({
-  root,
+  root: src,
   build: {
     outDir: join(root, 'dist'),
     lib: {
@@ -16,5 +16,9 @@ export default defineConfig({
     },
     minify: false,
     reportCompressedSize: false,
+  },
+  server: {
+    port: 9090,
+    strictPort: false,
   },
 })

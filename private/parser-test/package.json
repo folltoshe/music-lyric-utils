@@ -1,22 +1,21 @@
 {
-  "name": "@music-lyric-utils/test",
+  "name": "@music-lyric-utils/parser-test",
   "version": "0.0.1",
   "private": true,
-  "description": "Music Lyric Test",
+  "description": "Music Lyric Parser Test",
   "author": "Folltoshe",
   "license": "MIT",
   "scripts": {
     "build": "vite build",
-    "dev": "pnpm run build && node ./dist/index.mjs"
+    "dev": "vite dev"
   },
   "repository": {
     "url": "https://github.com/folltoshe/music-lyric-utils.git",
-    "directory": "private/test",
+    "directory": "private/parser-test",
     "type": "git"
   },
   "dependencies": {
     "@music-lyric-utils/shared": "workspace:^",
-    "@music-lyric-utils/parser": "workspace:^",
-    "@music-lyric-utils/player": "workspace:^"
+    "@music-lyric-utils/parser": "workspace:^"
   }
 }
