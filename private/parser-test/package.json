@@ -6,7 +6,6 @@
   "author": "Folltoshe",
   "license": "MIT",
   "scripts": {
-    "build": "vite build",
     "dev": "vite dev"
   },
   "repository": {

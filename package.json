@@ -7,7 +7,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build --filter={./packages/*}",
     "dev": "turbo run dev",
     "publish": "node scripts/publish.js",
     "update-version": "node scripts/update-version.js",
