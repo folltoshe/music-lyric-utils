@@ -1,4 +1,4 @@
-import type { DeepRequired, Lyric } from '@music-lyric-utils/shared'
+import type { DeepRequired, OptionsManager, Lyric } from '@music-lyric-utils/shared'
 
 export interface PlayerOptions {
   /**
@@ -26,3 +26,5 @@ export interface PlayerOptions {
 }
 
 export type RequiredPlayerOptions = DeepRequired<PlayerOptions>
+
+export type PlayerOptionsWithManager = OptionsManager<RequiredPlayerOptions>

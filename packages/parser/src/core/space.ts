@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { RequiredParserOptions } from '@root/types'
+import type { RequiredParserOptions } from '@root/types/options'
 
 import { checkEndCharIsPunctuation, checkFirstCharIsPunctuation, INSERT_TEXT_SPACE_TYPES, insertSpace } from '@music-lyric-utils/shared'
 

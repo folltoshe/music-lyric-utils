@@ -24,13 +24,13 @@ export class OptionsManager<T extends Record<string, any>> extends EventListener
     return get(this.current, key)
   }
 
-  setAll(opt: DeepPartial<T>) {
+  updateAll(opt: DeepPartial<T>) {
     if (!opt) return
     this.current = merge(this.current, opt)
     this.emit('config-update')
   }
 
-  setByKey<K extends NestedKeys<T>>(key: K, value: PathValue<T, K>) {
+  updateByKey<K extends NestedKeys<T>>(key: K, value: PathValue<T, K>) {
     if (!key || !value) return
     this.current = set(this.current, key, value)
     this.emit('config-update')

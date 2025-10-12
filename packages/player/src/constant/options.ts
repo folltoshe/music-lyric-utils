@@ -1,4 +1,4 @@
-import type { RequiredPlayerOptions } from '@root/types'
+import type { RequiredPlayerOptions } from '@root/types/options'
 
 import { EMPTY_CALLBACK } from '@root/utils'
 

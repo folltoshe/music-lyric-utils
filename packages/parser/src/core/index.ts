@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { ParseLyricProps, ParserOptions, RequiredParserOptions } from '@root/types'
+import type { ParseLyricProps, ParserOptions, ParserOptionsWithManager } from '@root/types/options'
 
 import { LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 import { DEFAULT_PARSER_OPTIONS } from '../constant/options'
@@ -17,35 +17,22 @@ export const isInterludeLine = (line: Lyric.Line.Info) => {
   return line.type === LYRIC_LINE_TYPES.INTERLUDE
 }
 
-abstract class LyricParserOptions {
-  protected options = new OptionsManager<RequiredParserOptions>(DEFAULT_PARSER_OPTIONS)
+export class LyricParser {
+  private options: ParserOptionsWithManager = new OptionsManager(DEFAULT_PARSER_OPTIONS)
+  private line = new LineParser(this.options)
+  private meta = new MetaParser(this.options)
 
   constructor(opt?: ParserOptions) {
-    if (opt) this.options.setAll(opt)
+    if (opt) this.options.updateAll(opt)
   }
 
-  protected abstract onUpdateOptions(): void
-
-  updateOptionsWithKey(...args: Parameters<typeof this.options.setByKey>) {
-    this.options.setByKey(...args)
-    this.onUpdateOptions()
+  updateOptionsWithKey(...args: Parameters<ParserOptionsWithManager['updateByKey']>) {
+    this.options.updateByKey(...args)
   }
 
-  updateOptions(...args: Parameters<typeof this.options.setAll>) {
-    this.options.setAll(...args)
-    this.onUpdateOptions()
+  updateOptions(...args: Parameters<ParserOptionsWithManager['updateAll']>) {
+    this.options.updateAll(...args)
   }
-}
-
-export class LyricParser extends LyricParserOptions {
-  protected line = new LineParser(this.options)
-  protected meta = new MetaParser(this.options)
-
-  constructor(opt?: ParserOptions) {
-    super(opt)
-  }
-
-  protected override onUpdateOptions(): void {}
 
   parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): Lyric.Info | null {
     const replaceOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')

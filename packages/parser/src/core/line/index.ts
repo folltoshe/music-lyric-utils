@@ -1,4 +1,4 @@
-import type { ParserOptionsWithManager } from '@root/types'
+import type { ParserOptionsWithManager } from '@root/types/options'
 import type { ParsedLyricLine } from '@root/utils'
 
 import { NormalParser } from './normal'

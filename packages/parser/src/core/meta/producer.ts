@@ -1,4 +1,4 @@
-import type { ParserOptionsWithManager } from '@root/types'
+import type { ParserOptionsWithManager } from '@root/types/options'
 import type { Lyric } from '@music-lyric-utils/shared'
 
 import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS } from '@root/constant/producer'

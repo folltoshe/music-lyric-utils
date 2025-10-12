@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { ParserOptionsWithManager, RequiredParserOptions } from '@root/types'
+import type { ParserOptionsWithManager, RequiredParserOptions } from '@root/types/options'
 
 import { DEFAULT_PARSER_OPTIONS } from '@root/constant/options'
 

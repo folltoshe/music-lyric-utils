@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { PlayerOptions, RequiredPlayerOptions } from '@root/types'
+import type { PlayerOptions, PlayerOptionsWithManager } from '@root/types/options'
 
 import { EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
 import { DEFAULT_PLAYER_OPTIONS } from '@root/constant/options'
@@ -7,31 +7,11 @@ import { DEFAULT_PLAYER_OPTIONS } from '@root/constant/options'
 import { cloneDeep, OptionsManager } from '@music-lyric-utils/shared'
 import { handleGetNow, TimeoutTools } from '@root/utils'
 
-abstract class LyricPlayerOptions {
-  protected options = new OptionsManager<RequiredPlayerOptions>(DEFAULT_PLAYER_OPTIONS)
-
-  constructor(opt?: PlayerOptions) {
-    if (opt) this.options.setAll(opt)
-  }
-
-  protected abstract onUpdateOptions(): void
-
-  updateOptionsWithKey(...args: Parameters<typeof this.options.setByKey>) {
-    this.options.setByKey(...args)
-    this.onUpdateOptions()
-  }
-
-  updateOptions(...args: Parameters<typeof this.options.setAll>) {
-    this.options.setAll(...args)
-    this.onUpdateOptions()
-  }
-}
-
-export class LyricPlayer extends LyricPlayerOptions {
+export class LyricPlayer {
+  private options: PlayerOptionsWithManager = new OptionsManager(DEFAULT_PLAYER_OPTIONS)
   private timeout: {
     line: TimeoutTools
   }
-
   private current: {
     status: {
       playing: boolean
@@ -46,7 +26,12 @@ export class LyricPlayer extends LyricPlayerOptions {
   }
 
   constructor(opt?: PlayerOptions) {
-    super(opt)
+    this.options.on('config-update', () => {
+      if (!this.current.status.playing) return
+      this.play(this.handleGetCurrentTime())
+    })
+
+    if (opt) this.options.updateAll(opt)
 
     this.timeout = {
       line: new TimeoutTools(),
@@ -68,11 +53,13 @@ export class LyricPlayer extends LyricPlayerOptions {
     this.handleUpdateLyric()
   }
 
-  protected override onUpdateOptions() {
-    if (!this.current.status.playing) return
-    this.play(this.handleGetCurrentTime())
+  updateOptionsWithKey(...args: Parameters<PlayerOptionsWithManager['updateByKey']>) {
+    this.options.updateByKey(...args)
   }
 
+  updateOptions(...args: Parameters<PlayerOptionsWithManager['updateAll']>) {
+    this.options.updateAll(...args)
+  }
   handleGetCurrentTime() {
     const now = handleGetNow()
     return (now - this.current.status.performanceTime) * this.currentSpeed + this.current.status.startTime
