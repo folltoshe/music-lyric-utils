@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { PlayerOptions, RequiredPlayerOptions } from '@root/interface'
+import type { PlayerOptions, RequiredPlayerOptions } from '@root/types'
 
 import { EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
 import { DEFAULT_PLAYER_OPTIONS } from '@root/constant/options'

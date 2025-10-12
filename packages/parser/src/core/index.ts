@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { ParseLyricProps, ParserOptions, RequiredParserOptions } from '@root/interface'
+import type { ParseLyricProps, ParserOptions, RequiredParserOptions } from '@root/types'
 
 import { LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 import { DEFAULT_PARSER_OPTIONS } from '../constant/options'

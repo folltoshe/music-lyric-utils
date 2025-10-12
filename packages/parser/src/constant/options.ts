@@ -1,4 +1,4 @@
-import type { RequiredParserOptions } from '@root/interface'
+import type { RequiredParserOptions } from '@root/types'
 
 import { INSERT_TEXT_SPACE_TYPES } from '@music-lyric-utils/shared'
 

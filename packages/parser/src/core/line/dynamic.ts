@@ -1,6 +1,6 @@
 import type { Lyric } from '@music-lyric-utils/shared'
 import type { ParsedLyricLine } from '@root/utils'
-import type { ParserOptionsWithManager, RequiredParserOptions } from '@root/interface'
+import type { ParserOptionsWithManager, RequiredParserOptions } from '@root/types'
 
 import { EMPTY_LYRIC_INFO, EMPTY_LYRIC_DYNAMIC_INFO, EMPTY_LYRIC_DYNAMIC_WORD, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 
