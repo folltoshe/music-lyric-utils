@@ -1,29 +1,7 @@
-import { join } from 'node:path'
-
-import { defineConfig } from 'vite'
+import { generateConfig } from '../../private/config/vite'
 
 import PluginDts from 'vite-plugin-dts'
 
-const root = join(process.cwd())
-const src = join(root, 'src')
-
-export default defineConfig({
-  root,
-  build: {
-    outDir: join(root, 'dist'),
-    lib: {
-      entry: join(src, 'index.ts'),
-      formats: ['es', 'cjs', 'iife'],
-      name: 'MuricLyricShared',
-      fileName: 'index',
-    },
-    minify: false,
-    reportCompressedSize: false,
-  },
-  resolve: {
-    alias: {
-      '@root': src,
-    },
-  },
+export default generateConfig({
   plugins: [PluginDts({ rollupTypes: true })],
 })
