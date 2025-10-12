@@ -1,9 +1,9 @@
-import type { LyricLine } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 import type { RequiredParserOptions } from '@root/interface'
 
 import { checkEndCharIsPunctuation, checkFirstCharIsPunctuation, INSERT_TEXT_SPACE_TYPES, insertSpace } from '@music-lyric-utils/shared'
 
-export const insertSpaceForLines = (options: RequiredParserOptions['content']['insertSpace'], lines: LyricLine[]) => {
+export const insertSpaceForLines = (options: RequiredParserOptions['content']['insertSpace'], lines: Lyric.Line.Info[]) => {
   if (!options.enable) return lines
 
   for (const line of lines) {

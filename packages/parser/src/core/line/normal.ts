@@ -1,4 +1,4 @@
-import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 import type { ParsedLyricLine } from '@root/utils'
 import type { ParserOptionsWithManager, RequiredParserOptions } from '@root/interface'
 
@@ -29,9 +29,9 @@ export class NormalParser {
   }
 
   parse(matched: ParsedLyricLine[]) {
-    const result: LyricInfo = cloneDeep(EMPTY_LYRIC_INFO)
+    const result: Lyric.Info = cloneDeep(EMPTY_LYRIC_INFO)
 
-    const lines: LyricLine[] = []
+    const lines: Lyric.Line.Info[] = []
     for (const line of matched) {
       const item = this.parseLine(line)
       if (!item) continue

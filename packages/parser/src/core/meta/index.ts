@@ -1,4 +1,4 @@
-import type { LyricLine, LyricMeta } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 import type { ParserOptionsWithManager } from '@root/interface'
 import type { ParsedLyricLine } from '@root/utils'
 
@@ -14,7 +14,7 @@ export class MetaParser {
     this.producer = new ProducerParser(options)
   }
 
-  parse(matched: ParsedLyricLine[], lines: LyricLine[]): [LyricMeta | null, LyricLine[]] {
+  parse(matched: ParsedLyricLine[], lines: Lyric.Line.Info[]): [Lyric.Meta.Info | null, Lyric.Line.Info[]] {
     if (!this.options.getByKey('meta.enable')) return [null, lines]
 
     const [newLines, producers] = this.producer.parse(lines)

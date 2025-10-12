@@ -1,4 +1,4 @@
-import type { LyricTimeInfo } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 
 import { cloneDeep } from '@music-lyric-utils/shared'
 
@@ -90,7 +90,7 @@ const nearestIndex = (base: number[], time: number) => {
 }
 
 interface AlignLyricLine {
-  time: LyricTimeInfo
+  time: Lyric.Time
   [k: string]: any
 }
 

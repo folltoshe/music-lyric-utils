@@ -1,4 +1,4 @@
-import type { DeepRequired, LyricInfo, LyricLine } from '@music-lyric-utils/shared'
+import type { DeepRequired, Lyric } from '@music-lyric-utils/shared'
 
 export interface PlayerOptions {
   /**
@@ -6,13 +6,13 @@ export interface PlayerOptions {
    * @param line line number of current play
    * @param info line info
    */
-  onLinePlay?: (lineNum: number, info: LyricLine) => void
+  onLinePlay?: (lineNum: number, info: Lyric.Line.Info) => void
 
   /**
    * listening lyrics seting event
    * @param lines array of all lyric text
    */
-  onSetLyric?: (info: LyricInfo) => void
+  onSetLyric?: (info: Lyric.Info) => void
 
   /**
    * offset time(ms), default is 150 ms

@@ -1,5 +1,5 @@
 import type { ParserOptionsWithManager } from '@root/interface'
-import type { LyricLine, LyricProducers } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 
 import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS } from '@root/constant/producer'
 
@@ -42,11 +42,11 @@ export class ProducerParser {
       .filter((item) => !!item)
   }
 
-  parse(lines: LyricLine[]): [LyricLine[], LyricProducers[]] {
+  parse(lines: Lyric.Line.Info[]): [Lyric.Line.Info[], Lyric.Meta.Producer[]] {
     if (!this.isEnable) [lines, []]
 
-    const resultLines: LyricLine[] = []
-    const result: LyricProducers[] = []
+    const resultLines: Lyric.Line.Info[] = []
+    const result: Lyric.Meta.Producer[] = []
 
     for (const line of lines) {
       if (!line.content.original.trim()) {
@@ -81,7 +81,7 @@ export class ProducerParser {
         continue
       }
 
-      const item: LyricProducers = {
+      const item: Lyric.Meta.Producer = {
         raw: line.content.original,
         role: {
           raw: role,

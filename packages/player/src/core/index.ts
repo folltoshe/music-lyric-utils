@@ -1,4 +1,4 @@
-import type { LyricInfo } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 import type { PlayerOptions, RequiredPlayerOptions } from '@root/interface'
 
 import { EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
@@ -38,7 +38,7 @@ export class LyricPlayer extends LyricPlayerOptions {
       startTime: number
       performanceTime: number
     }
-    lyricInfo: LyricInfo
+    lyricInfo: Lyric.Info
     lineInfo: {
       now: number
       max: number
@@ -175,7 +175,7 @@ export class LyricPlayer extends LyricPlayerOptions {
     this.handleLinePause()
   }
 
-  updateLyric(lyricInfo: LyricInfo) {
+  updateLyric(lyricInfo: Lyric.Info) {
     if (this.current.status.playing) this.pause()
     this.current.lyricInfo = lyricInfo
     this.handleUpdateLyric()

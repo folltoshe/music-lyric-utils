@@ -1,4 +1,4 @@
-import type { DeepPartial, PathValue, NestedKeys } from '../types'
+import type { DeepPartial, PathValue, NestedKeys } from '../types/utils'
 
 import { get, set, merge } from './object'
 

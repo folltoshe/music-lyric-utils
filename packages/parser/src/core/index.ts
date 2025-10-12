@@ -1,4 +1,4 @@
-import type { LyricInfo, LyricLine } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 import type { ParseLyricProps, ParserOptions, RequiredParserOptions } from '@root/interface'
 
 import { LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
@@ -13,7 +13,7 @@ import { MetaParser } from './meta'
 import { matchLyric } from './match'
 import { insertSpaceForLines } from './space'
 
-export const isInterludeLine = (line: LyricLine) => {
+export const isInterludeLine = (line: Lyric.Line.Info) => {
   return line.type === LYRIC_LINE_TYPES.INTERLUDE
 }
 
@@ -47,7 +47,7 @@ export class LyricParser extends LyricParserOptions {
 
   protected override onUpdateOptions(): void {}
 
-  parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): LyricInfo | null {
+  parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): Lyric.Info | null {
     const replaceOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')
     const insertSpaceOptions = this.options.getByKey('content.insertSpace')
 
@@ -82,11 +82,11 @@ export class LyricParser extends LyricParserOptions {
     const resultLyric = { ...targetLyric }
     for (const line of resultLyric.lines) {
       if (aligndTranslate) {
-        const target = aligndTranslate.find((v) => v.time.start === line.time.start) as LyricLine
+        const target = aligndTranslate.find((v) => v.time.start === line.time.start) as Lyric.Line.Info
         if (target) line.content.translated = target.content.original
       }
       if (aligndRoman) {
-        const target = aligndRoman.find((v) => v.time.start === line.time.start) as LyricLine
+        const target = aligndRoman.find((v) => v.time.start === line.time.start) as Lyric.Line.Info
         if (target) line.content.roman = target.content.original
       }
     }

@@ -1,4 +1,4 @@
-import type { LyricMeta } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 import type { ParserOptionsWithManager, RequiredParserOptions } from '@root/interface'
 
 import { DEFAULT_PARSER_OPTIONS } from '@root/constant/options'
@@ -27,7 +27,7 @@ export class BaseParser {
       .filter((item) => !!item)
   }
 
-  parseItem(target: LyricMeta, key: string, value: string) {
+  parseItem(target: Lyric.Meta.Info, key: string, value: string) {
     switch (key) {
       case 'offset':
         target.offset = Number(value) || 0
@@ -79,7 +79,7 @@ export class BaseParser {
   }
 
   parse(lines: ParsedLyricLine[]) {
-    const result: LyricMeta = { offset: 0 }
+    const result: Lyric.Meta.Info = { offset: 0 }
 
     for (const meta of lines) {
       if (!meta.tag) continue

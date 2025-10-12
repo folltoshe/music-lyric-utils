@@ -1,4 +1,4 @@
-import type { LyricTimeInfo, LyricInfo, LyricLine, LyricDynamicWord, LyricDynamicInfo } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 import type { ParsedLyricLine } from '@root/utils'
 import type { ParserOptionsWithManager, RequiredParserOptions } from '@root/interface'
 
@@ -27,8 +27,8 @@ export class DynamicParser {
   }
 
   parseLine(lineInfo: ParsedLyricLine) {
-    const resultWordInfo: LyricDynamicInfo = cloneDeep(EMPTY_LYRIC_DYNAMIC_INFO)
-    const resultWords: LyricDynamicWord[] = []
+    const resultWordInfo: Lyric.Line.Dynamic.Info = cloneDeep(EMPTY_LYRIC_DYNAMIC_INFO)
+    const resultWords: Lyric.Line.Dynamic.Word[] = []
 
     const lineTime = parseTagTime(lineInfo.tag)
     if (lineTime === null) return
@@ -89,7 +89,7 @@ export class DynamicParser {
     const start = resultWords[0]?.time.start ?? lineTime
     const duration = resultWords.map((v) => v.time.duration).reduce((a, b) => a + b, 0)
 
-    const timeInfo: LyricTimeInfo = {
+    const timeInfo: Lyric.Time = {
       start,
       end: start + duration,
       duration,
@@ -106,9 +106,9 @@ export class DynamicParser {
   }
 
   parse(matched: ParsedLyricLine[]) {
-    const result: LyricInfo = cloneDeep(EMPTY_LYRIC_INFO)
+    const result: Lyric.Info = cloneDeep(EMPTY_LYRIC_INFO)
 
-    const lines: LyricLine[] = []
+    const lines: Lyric.Line.Info[] = []
     for (const line of matched) {
       const item = this.parseLine(line)
       if (!item) continue
