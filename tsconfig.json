@@ -1,13 +1,11 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["esnext"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "strict": true,
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "skipLibCheck": true
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules", "scripts", "**/dist"]
 }
