@@ -1,0 +1,18 @@
+{
+  // use project typescript version
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // first use prettier
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // format it on save file
+  "editor.formatOnSave": true
+}
