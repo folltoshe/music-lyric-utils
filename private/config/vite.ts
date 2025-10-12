@@ -17,6 +17,7 @@ const DefaultConfig = defineConfig({
     minify: false,
     reportCompressedSize: false,
     emptyOutDir: true,
+    sourcemap: true,
   },
   resolve: {
     alias: {
