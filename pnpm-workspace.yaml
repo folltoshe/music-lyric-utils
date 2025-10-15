@@ -1,3 +1,6 @@
 packages:
   - packages/*
   - private/*
+
+ignoredBuiltDependencies:
+  - esbuild

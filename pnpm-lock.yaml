@@ -60,9 +60,6 @@ importers:
       '@music-lyric-utils/parser':
         specifier: workspace:^
         version: link:../../packages/parser
-      '@music-lyric-utils/player':
-        specifier: workspace:^
-        version: link:../../packages/player
       '@music-lyric-utils/shared':
         specifier: workspace:^
         version: link:../../packages/shared

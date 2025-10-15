@@ -28,7 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/folltoshe/music-lyric-utils.git"
   },
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.18.3",
   "devDependencies": {
     "@types/node": "^24.5.2",
     "conventional-changelog-cli": "^5.0.0",
