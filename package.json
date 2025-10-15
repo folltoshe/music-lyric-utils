@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "build": "turbo run build --filter={./packages/*}",
-    "dev": "turbo run dev",
+    "dev": "turbo watch dev",
     "publish": "node scripts/publish.js",
     "update-version": "node scripts/update-version.js",
     "build-change-log": "conventional-changelog -p angular -i CHANGELOG.md -s",
