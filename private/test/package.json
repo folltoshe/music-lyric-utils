@@ -1,8 +1,8 @@
 {
-  "name": "@music-lyric-utils/parser-test",
+  "name": "@music-lyric-utils/test",
   "version": "0.0.1",
   "private": true,
-  "description": "Music Lyric Parser Test",
+  "description": "Music Lyric Utils Test",
   "author": "Folltoshe",
   "license": "MIT",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "url": "https://github.com/folltoshe/music-lyric-utils.git",
-    "directory": "private/parser-test",
+    "directory": "private/test",
     "type": "git"
   },
   "dependencies": {
