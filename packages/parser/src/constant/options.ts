@@ -1,32 +1,40 @@
-import type { RequiredParserOptions } from '@root/types/options'
+import type { ParserOptions, ContentNormalOptionsRequired } from '@root/types/options'
+import type { DeepRequired } from '@music-lyric-utils/shared'
 
 import { INSERT_TEXT_SPACE_TYPES } from '@music-lyric-utils/shared'
 
-export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
+const NORMAL_LINE_BASE_OPTIONS: ContentNormalOptionsRequired = {
+  replace: {
+    punctuation: true,
+  },
+  insert: {
+    space: {
+      enable: true,
+      types: [INSERT_TEXT_SPACE_TYPES.ALL],
+    },
+  },
+}
+
+export const DEFAULT_PARSER_OPTIONS: DeepRequired<ParserOptions> = {
   meta: {
-    enable: true,
-    name: {
-      split: {
-        rule: {
-          common: '/',
-          title: '',
-          artist: '',
-          author: '',
-          lyricist: '',
-          contributor: '',
+    tag: {
+      enable: true,
+      name: {
+        split: {
+          rule: '/',
         },
       },
     },
-    producers: {
+    producer: {
       enable: true,
       replace: true,
-      role: {
-        match: {
-          rule: {
-            useDefault: true,
-            custom: [],
-          },
+      match: {
+        rule: {
+          useDefault: true,
+          custom: [],
         },
+      },
+      role: {
         replace: {
           enable: true,
           rule: ['by'],
@@ -34,27 +42,21 @@ export const DEFAULT_PARSER_OPTIONS: RequiredParserOptions = {
       },
       name: {
         split: {
-          rule: /(?:[/]|[,，])/,
+          rule: /(?:[/]|[,，])/iu,
         },
       },
     },
   },
-  interlude: {
-    show: true,
-    checkTime: 16000,
-  },
   content: {
-    replace: {
-      chinesePunctuationToEnglish: {
-        original: true,
-        translate: true,
-        roman: false,
-        dynamic: true,
-      },
+    interlude: {
+      show: true,
+      checkTime: 16000,
     },
-    insertSpace: {
-      enable: true,
-      types: [INSERT_TEXT_SPACE_TYPES.ALL],
+    normal: {
+      original: NORMAL_LINE_BASE_OPTIONS,
+      dynamic: NORMAL_LINE_BASE_OPTIONS,
+      translate: NORMAL_LINE_BASE_OPTIONS,
+      roman: NORMAL_LINE_BASE_OPTIONS,
     },
   },
 } as const

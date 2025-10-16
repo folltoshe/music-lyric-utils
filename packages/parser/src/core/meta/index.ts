@@ -1,27 +1,23 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { ParserOptionsWithManager } from '@root/types/options'
-import type { ParsedLyricLine } from '@root/utils'
+import type { Context, MatchItem } from '@root/types'
 
-import { BaseParser } from './base'
-import { ProducerParser } from './producer'
+import { processTag } from './tag'
+import { processProducer } from './producer'
 
-export class MetaParser {
-  protected base
-  protected producer
+export class Meta {
+  private context: Context
 
-  constructor(protected options: ParserOptionsWithManager) {
-    this.base = new BaseParser(options)
-    this.producer = new ProducerParser(options)
+  constructor(ctx: Context) {
+    this.context = ctx
   }
 
-  parse(matched: ParsedLyricLine[], lines: Lyric.Line.Info[]): [Lyric.Meta.Info | null, Lyric.Line.Info[]] {
-    if (!this.options.getByKey('meta.enable')) return [null, lines]
+  parseTag(lyric: Lyric.Info, metas: MatchItem[]) {
+    const result = processTag(this.context, metas)
+    lyric.meta = result
+    return lyric
+  }
 
-    const [newLines, producers] = this.producer.parse(lines)
-
-    const base = this.base.parse(matched)
-    if (producers.length) base.producers = producers
-
-    return [base, newLines]
+  parseProducer(lyric: Lyric.Info) {
+    return processProducer(this.context, lyric)
   }
 }

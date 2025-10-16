@@ -17,7 +17,6 @@ export namespace Lyric {
 
   export namespace Meta {
     export interface Producer {
-      raw: string
       role: {
         raw: string
         /** replaced */
@@ -67,7 +66,7 @@ export namespace Lyric {
         parsed: string[]
       }
       /** producers of the song */
-      producers?: Producer[]
+      producer?: Producer[]
     }
   }
 
@@ -106,13 +105,15 @@ export namespace Lyric {
         /** original text */
         original: string
         /** translated text */
-        translated?: string
+        translate?: string
         /** roman text */
         roman?: string
         /** dynamic content */
         dynamic?: Dynamic.Info
       }
     }
+
+    export type ContentKey = keyof Info['content']
   }
 
   export interface Info {

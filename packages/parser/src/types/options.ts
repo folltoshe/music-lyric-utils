@@ -1,25 +1,51 @@
 import type { DeepRequired, InsertTextSpaceTypes, OptionsManager } from '@music-lyric-utils/shared'
 
+export interface ContentNormalOptions {
+  replace?: {
+    /**
+     * replace chinese punctuation to english
+     */
+    punctuation?: boolean
+  }
+  insert?: {
+    /**
+     * insert space
+     */
+    space?: {
+      /**
+       * @default true
+       */
+      enable?: boolean
+      /**
+       * @default TextSpacerProcessType.ALL
+       */
+      types?: InsertTextSpaceTypes[]
+    }
+  }
+}
+
+export type ContentNormalOptionsRequired = DeepRequired<ContentNormalOptions>
+
 export interface ParserOptions {
   meta?: {
-    enable?: boolean
-    name?: {
-      split?: {
-        /**
-         * name split rule
-         * @default "/"
-         */
-        rule?: {
-          common?: string | RegExp
-          title?: string | RegExp
-          artist?: string | RegExp
-          author?: string | RegExp
-          lyricist?: string | RegExp
-          contributor?: string | RegExp
+    tag?: {
+      /**
+       * @default true
+       */
+      enable?: boolean
+      /**
+       * people name
+       */
+      name?: {
+        split?: {
+          /**
+           * @default "/"
+           */
+          rule?: string | RegExp
         }
       }
     }
-    producers?: {
+    producer?: {
       /**
        * @default true
        */
@@ -29,29 +55,26 @@ export interface ParserOptions {
        */
       replace?: boolean
       /**
+       * only when it is matched will it be used as the correct role
+       */
+      match?: {
+        rule?: {
+          /**
+           * is use default rule
+           * @default true
+           */
+          useDefault?: boolean
+          /**
+           * custom rule, it will be merge with default when useDefault is enable
+           * @default []
+           */
+          custom?: (string | RegExp)[]
+        }
+      }
+      /**
        * role name options
        */
       role?: {
-        /**
-         * only when it is matched will it be used as the correct role
-         */
-        match?: {
-          rule?: {
-            /**
-             * is use default rule
-             * @default true
-             */
-            useDefault?: boolean
-            /**
-             * custom rule, it will be merge with default when useDefault is enable
-             * @default []
-             */
-            custom?: (string | RegExp)[]
-          }
-        }
-        /**
-         * replace from raw text
-         */
         replace?: {
           /**
            * @default true
@@ -67,9 +90,6 @@ export interface ParserOptions {
        * people name options
        */
       name?: {
-        /**
-         * people name split options
-         */
         split?: {
           /**
            * @default "/"
@@ -79,65 +99,40 @@ export interface ParserOptions {
       }
     }
   }
-  interlude?: {
-    /**
-     * is show interlude line
-     * @default true
-     */
-    show?: boolean
-    /**
-     * If the interval between lyrics lines exceeds this number, it is considered an interlude
-     * @default 16000
-     */
-    checkTime?: number
-  }
   content?: {
-    replace?: {
+    interlude?: {
       /**
-       * replace chinese punctuation to english
-       */
-      chinesePunctuationToEnglish?: {
-        /**
-         * @default true
-         */
-        original?: boolean
-        /**
-         * @default true
-         */
-        translate?: boolean
-        /**
-         * @default false
-         */
-        roman?: boolean
-        /**
-         * @default true
-         */
-        dynamic?: boolean
-      }
-    }
-    /**
-     * insert space
-     */
-    insertSpace?: {
-      /**
+       * is show interlude line
        * @default true
        */
-      enable?: boolean
+      show?: boolean
       /**
-       * @default TextSpacerProcessType.ALL
+       * If the interval between lyrics lines exceeds this number, it is considered an interlude
+       * @default 16000
        */
-      types?: InsertTextSpaceTypes[]
+      checkTime?: number
+    }
+    normal?: {
+      /**
+       * original line
+       */
+      original?: ContentNormalOptions
+      /**
+       * dynamic line
+       */
+      dynamic?: ContentNormalOptions
+      /**
+       * translate line
+       */
+      translate?: ContentNormalOptions
+      /**
+       * roman line
+       */
+      roman?: ContentNormalOptions
     }
   }
 }
 
-export type RequiredParserOptions = DeepRequired<ParserOptions>
+export type ParserOptionsRequired = DeepRequired<ParserOptions>
 
-export type ParserOptionsWithManager = OptionsManager<RequiredParserOptions>
-
-export interface ParseLyricProps {
-  original?: string
-  translate?: string
-  roman?: string
-  dynamic?: string
-}
+export type ParserOptionsManager = OptionsManager<DeepRequired<ParserOptions>>

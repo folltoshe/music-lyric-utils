@@ -89,7 +89,7 @@ const nearestIndex = (base: number[], time: number) => {
   return Math.abs(base[lo] - time) <= Math.abs(base[hi] - time) ? lo : hi
 }
 
-interface AlignLyricLine {
+export interface AlignLyricLine {
   time: Lyric.Time
   [k: string]: any
 }

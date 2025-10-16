@@ -1,116 +1,55 @@
-import type { Lyric } from '@music-lyric-utils/shared'
-import type { ParseLyricProps, ParserOptions, ParserOptionsWithManager } from '@root/types/options'
+import type { Context, ParserOptions, ParserProps } from '@root/types'
 
-import { LYRIC_LINE_TYPES, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
-import { DEFAULT_PARSER_OPTIONS } from '../constant/options'
+import { DEFAULT_PARSER_OPTIONS } from '@root/constant'
 
-import { cloneDeep, OptionsManager } from '@music-lyric-utils/shared'
-import { alignLyricWithTime } from '../utils'
+import { OptionsManager } from '@music-lyric-utils/shared'
 
-import { LineParser } from './line'
-import { MetaParser } from './meta'
-
-import { matchLyric } from './match'
-import { insertSpaceForLines } from './space'
-
-export const isInterludeLine = (line: Lyric.Line.Info) => {
-  return line.type === LYRIC_LINE_TYPES.INTERLUDE
-}
+import { Matcher } from './match'
+import { Line } from './line'
+import { Meta } from './meta'
 
 export class LyricParser {
-  private options: ParserOptionsWithManager = new OptionsManager(DEFAULT_PARSER_OPTIONS)
-  private line = new LineParser(this.options)
-  private meta = new MetaParser(this.options)
+  private context: Context
+
+  private matcher: Matcher
+
+  private line: Line
+  private meta: Meta
 
   constructor(opt?: ParserOptions) {
-    if (opt) this.options.updateAll(opt)
+    this.context = {
+      options: new OptionsManager(DEFAULT_PARSER_OPTIONS),
+    }
+
+    this.matcher = new Matcher(this.context)
+
+    this.line = new Line(this.context)
+    this.meta = new Meta(this.context)
+
+    if (opt) {
+      this.context.options.updateAll(opt)
+    }
   }
 
-  updateOptionsWithKey(...args: Parameters<ParserOptionsWithManager['updateByKey']>) {
-    this.options.updateByKey(...args)
-  }
+  parse(props: ParserProps) {
+    const original = this.matcher.parse(props.original)
+    const dynamic = this.matcher.parse(props.dynamic)
+    const translate = this.matcher.parse(props.translate)
+    const roman = this.matcher.parse(props.roman)
 
-  updateOptions(...args: Parameters<ParserOptionsWithManager['updateAll']>) {
-    this.options.updateAll(...args)
-  }
-
-  parse({ original = '', translate = '', roman = '', dynamic = '' }: ParseLyricProps): Lyric.Info | null {
-    const replaceOptions = this.options.getByKey('content.replace.chinesePunctuationToEnglish')
-    const insertSpaceOptions = this.options.getByKey('content.insertSpace')
-
-    const matchedOriginal = matchLyric(original, replaceOptions.original)
-    const matchedDynamic = matchLyric(dynamic, replaceOptions.dynamic)
-    if (!matchedDynamic && !matchedOriginal) return null
-
-    const [targetLyric, targetMatched] = matchedDynamic
-      ? [this.line.parseDynamic(matchedDynamic.lines), matchedDynamic]
-      : matchedOriginal
-      ? [this.line.parseNormal(matchedOriginal.lines), matchedOriginal]
-      : [null, null]
-    if (!targetLyric) return null
-
-    const [targetMeta, targetLines] = this.meta.parse(targetMatched.metas, targetLyric.lines)
-    targetLyric.lines = targetLines
-
-    if (!targetLyric.config.isSupportAutoScroll && targetMeta) {
-      targetLyric.meta = targetMeta
-      return targetLyric
+    let target = this.line.parse({ original, dynamic, translate, roman })
+    if (!target) {
+      return null
     }
 
-    const matchedTranslate = matchLyric(translate, replaceOptions.translate)
-    const targetTranslate = matchedTranslate && this.line.parseNormal(matchedTranslate.lines)
+    // parse meta tag
+    target = this.meta.parseTag(target, original.meta)
+    // parse producer
+    target = this.meta.parseProducer(target)
 
-    const matchedRoman = matchLyric(roman, replaceOptions.roman)
-    const targetRoman = matchedRoman && this.line.parseNormal(matchedRoman.lines)
+    // insert interlude
+    target = this.line.insertInterlude(target)
 
-    const aligndTranslate = targetTranslate ? alignLyricWithTime({ base: targetLyric.lines, target: targetTranslate.lines }) : null
-    const aligndRoman = targetRoman ? alignLyricWithTime({ base: targetLyric.lines, target: targetRoman.lines }) : null
-
-    const resultLyric = { ...targetLyric }
-    for (const line of resultLyric.lines) {
-      if (aligndTranslate) {
-        const target = aligndTranslate.find((v) => v.time.start === line.time.start) as Lyric.Line.Info
-        if (target) line.content.translated = target.content.original
-      }
-      if (aligndRoman) {
-        const target = aligndRoman.find((v) => v.time.start === line.time.start) as Lyric.Line.Info
-        if (target) line.content.roman = target.content.original
-      }
-    }
-
-    for (let index = 0, length = resultLyric.lines.length; index < length; index++) {
-      const current = resultLyric.lines[index]
-      const next = resultLyric.lines[index + 1]
-
-      // add interlude when first line is time too long
-      if (this.options.getByKey('interlude.show') && index === 0 && current.time.start > 5000) {
-        const line = cloneDeep(EMPTY_LYRIC_LINE)
-        const start = 500
-        const duration = current.time.start - start
-        const end = current.time.start + duration
-        line.time = { start, end, duration }
-        line.type = LYRIC_LINE_TYPES.INTERLUDE
-        resultLyric.lines.unshift(line)
-      }
-      // add interlude
-      if (this.options.getByKey('interlude.show') && next && next.time.start - current.time.end > this.options.getByKey('interlude.checkTime')) {
-        const line = cloneDeep(EMPTY_LYRIC_LINE)
-        const start = current.time.end + 100
-        const duration = Math.max(next.time.start - start, 0)
-        const end = current.time.end + duration
-        line.time = { start, end, duration }
-        line.type = LYRIC_LINE_TYPES.INTERLUDE
-        resultLyric.lines.push(line)
-      }
-    }
-
-    resultLyric.lines = insertSpaceForLines(insertSpaceOptions, resultLyric.lines)
-    resultLyric.lines = resultLyric.lines.sort((a, b) => a.time.start - b.time.start)
-
-    if (targetMeta) {
-      resultLyric.meta = targetMeta
-    }
-
-    return resultLyric
+    return target
   }
 }
