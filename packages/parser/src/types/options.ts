@@ -111,6 +111,11 @@ export interface ParserOptions {
        * @default 16000
        */
       checkTime?: number
+      /**
+       * If the first line lasts longer than this number, add an interlude line forward.
+       * @default 5000
+       */
+      firstLineCheckTime?: number
     }
     normal?: {
       /**

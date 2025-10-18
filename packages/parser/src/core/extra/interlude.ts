@@ -18,7 +18,7 @@ export const insertInterlude = (context: Context, info: Lyric.Info) => {
     const next = info.lines[index + 1]
 
     // add interlude when first line is time too long
-    if (index === 0 && current.time.start > 5000) {
+    if (index === 0 && current.time.start > options.firstLineCheckTime) {
       const line = cloneDeep(EMPTY_LYRIC_LINE)
       const start = 500
       const duration = current.time.start - start
@@ -26,6 +26,7 @@ export const insertInterlude = (context: Context, info: Lyric.Info) => {
       line.time = { start, end, duration }
       line.type = LYRIC_LINE_TYPES.INTERLUDE
       result.lines.push(line)
+      continue
     }
 
     // add interlude

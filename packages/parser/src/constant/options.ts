@@ -51,6 +51,7 @@ export const DEFAULT_PARSER_OPTIONS: DeepRequired<ParserOptions> = {
     interlude: {
       show: true,
       checkTime: 16000,
+      firstLineCheckTime: 5000,
     },
     normal: {
       original: NORMAL_LINE_BASE_OPTIONS,
