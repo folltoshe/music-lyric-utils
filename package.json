@@ -12,7 +12,7 @@
     "publish": "node scripts/publish.js",
     "update-version": "node scripts/update-version.js",
     "build-change-log": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "build-current-change-log": "rimraf CURRENT_CHANGELOG.md && conventional-changelog -p angular -i CURRENT_CHANGELOG.md -r 1 -s"
+    "build-current-change-log": "rimraf CURRENT_CHANGELOG.md && conventional-changelog -p angular -i CURRENT_CHANGELOG.md -r 2 -s"
   },
   "keywords": [
     "music",
