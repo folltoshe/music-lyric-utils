@@ -4,6 +4,8 @@ import { DEFAULT_PARSER_OPTIONS } from '@root/constant'
 
 import { OptionsManager } from '@music-lyric-utils/shared'
 
+import { sortLines } from '@root/utils'
+
 // pre match
 import { matchLyric } from './match'
 // line process
@@ -37,6 +39,8 @@ export class LyricParser {
     target = processMeta(this.context, original.meta, target)
     // insert interlude
     target = insertInterlude(this.context, target)
+    // sort lines
+    target.lines = sortLines(target.lines)
 
     return target
   }

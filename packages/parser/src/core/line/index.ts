@@ -1,7 +1,10 @@
-import { cloneDeep, EMPTY_LYRIC_INFO, type Lyric } from '@music-lyric-utils/shared'
+import type { Lyric } from '@music-lyric-utils/shared'
 import type { Context, MatchInfo } from '@root/types'
 
-import { alignLyricWithTime } from '@root/utils'
+import { EMPTY_LYRIC_INFO } from '@music-lyric-utils/shared'
+
+import { cloneDeep } from '@music-lyric-utils/shared'
+import { alignLyricWithTime, sortLines } from '@root/utils'
 
 import { processDynamic } from './dynamic'
 import { processNormal } from './normal'
@@ -66,6 +69,6 @@ export const processLyric = (context: Context, params: Params) => {
     }
   }
 
-  result.lines = target.sort((a, b) => a.time.start - b.time.start)
+  result.lines = sortLines(target)
   return result
 }

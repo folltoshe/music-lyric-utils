@@ -185,3 +185,7 @@ export const splitNameWithRule = (name: string, rule: string | RegExp) => {
     .map((item) => item.trim())
     .filter((item) => !!item)
 }
+
+export const sortLines = (lines: Lyric.Line.Info[]) => {
+  return lines.sort((a, b) => a.time.start - b.time.start)
+}
