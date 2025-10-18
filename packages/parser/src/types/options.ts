@@ -1,4 +1,5 @@
-import type { DeepRequired, InsertTextSpaceTypes, OptionsManager } from '@music-lyric-utils/shared'
+import type { DeepRequired, InsertTextSpaceTypes, OptionsManager, ValueOf } from '@music-lyric-utils/shared'
+import type { PRODUCER_MATCH_MODE } from '@root/constant'
 
 export interface ContentNormalOptions {
   replace?: {
@@ -58,6 +59,28 @@ export interface ParserOptions {
        * only when it is matched will it be used as the correct role
        */
       match?: {
+        /**
+         * match mode
+         * @default PRODUCER_MATCH_MODE.FUZZY
+         */
+        mode?: ValueOf<typeof PRODUCER_MATCH_MODE>
+        /**
+         * exact mode options
+         */
+        exact?: {
+          /**
+           * need more than this percentage
+           * @default 60
+           */
+          checkPercentage?: number
+        }
+        /**
+         * fuzzy mode options
+         */
+        fuzzy?: {}
+        /**
+         * common check rules
+         */
         rule?: {
           /**
            * is use default rule

@@ -1,9 +1,9 @@
 import type { Lyric } from '@music-lyric-utils/shared'
 import type { Context } from '@root/types'
 
-import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS } from '@root/constant/producer'
+import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS, PRODUCER_MATCH_MODE } from '@root/constant/producer'
 
-import { matchTextIsValid, replaceFromText } from '@music-lyric-utils/shared'
+import { matchTextIsValid, matchTextWithPercentage, replaceFromText } from '@music-lyric-utils/shared'
 import { splitNameWithRule } from '@root/utils'
 
 const MATCH_REGEXP = /(?:(?:\([^)]*\)|\[[^\]]*\]|\{[^}]*\}|（[^）]*）|【[^】]*】|「[^」]*」)|[^(:：()\[\]{}（）【】「」])*?[:：]/
@@ -47,10 +47,18 @@ export const processProducer = (context: Context, lyric: Lyric.Info) => {
       continue
     }
 
-    const isMatch = matchTextIsValid(role, matchRules, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS)
-    if (!isMatch) {
-      lines.push(line)
-      continue
+    if (options.match.mode === PRODUCER_MATCH_MODE.EXACT) {
+      const percentage = matchTextWithPercentage(role, matchRules)
+      if (percentage < options.match.exact.checkPercentage) {
+        lines.push(line)
+        continue
+      }
+    } else {
+      const isMatch = matchTextIsValid(role, matchRules, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS)
+      if (!isMatch) {
+        lines.push(line)
+        continue
+      }
     }
 
     const item: Lyric.Meta.Producer = {

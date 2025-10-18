@@ -1,3 +1,8 @@
+export const PRODUCER_MATCH_MODE = {
+  EXACT: 'EXACT',
+  FUZZY: 'FUZZY',
+} as const
+
 export const DEFAULT_PRODUCER_RULES: RegExp[] = [
   // Instruments
   /(?:钢琴|Pno|Piano)/iu,

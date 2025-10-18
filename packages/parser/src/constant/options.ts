@@ -2,6 +2,7 @@ import type { ParserOptions, ContentNormalOptionsRequired } from '@root/types/op
 import type { DeepRequired } from '@music-lyric-utils/shared'
 
 import { INSERT_TEXT_SPACE_TYPES } from '@music-lyric-utils/shared'
+import { PRODUCER_MATCH_MODE } from './producer'
 
 const NORMAL_LINE_BASE_OPTIONS: ContentNormalOptionsRequired = {
   replace: {
@@ -29,6 +30,11 @@ export const DEFAULT_PARSER_OPTIONS: DeepRequired<ParserOptions> = {
       enable: true,
       replace: true,
       match: {
+        mode: PRODUCER_MATCH_MODE.FUZZY,
+        exact: {
+          checkPercentage: 60,
+        },
+        fuzzy: {},
         rule: {
           useDefault: true,
           custom: [],
