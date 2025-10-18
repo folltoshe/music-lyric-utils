@@ -9,27 +9,28 @@ import { isRegExp } from '../regexp'
  */
 export const matchTextIsValid = (text: string, rules: (string | RegExp)[], quick: string[] = []) => {
   const pre = String(text).trim()
-  if (!pre) return false
+  if (pre.length <= 0) return false
 
   const normalize = pre
-    .replace(/[\u0000-\u001F\u007F]+/g, ' ')
-    .replace(/\s+/g, ' ')
+    .replaceAll(/[\u0000-\u001F\u007F]+/g, '')
+    .replaceAll(/\s+/g, '')
     .trim()
-  const lower = normalize.toLowerCase()
+    .toLowerCase()
+  if (!normalize.length) return false
 
   // check quic key word
   for (let i = 0; i < quick.length; i++) {
     const word = quick[i]
-    if (word.length > lower.length) continue
-    if (lower.indexOf(word) >= 0) return true
+    if (word.length > normalize.length) continue
+    if (normalize.indexOf(word) >= 0) return true
   }
 
   // check regex rule
   for (let i = 0; i < rules.length; i++) {
     try {
       const original = rules[i]
-      const regex = isRegExp(original) ? original : new RegExp(original, 'iu')
-      if (regex.test(lower)) return true
+      const regex = isRegExp(original) ? (original.global ? new RegExp(original.source, 'iu') : original) : new RegExp(original, 'iu')
+      if (regex.test(normalize)) return true
     } catch {
       continue
     }
@@ -53,7 +54,6 @@ export const matchTextWithPercentage = (text: string, rules: (string | RegExp)[]
     .replaceAll(/\s+/g, '')
     .trim()
     .toLowerCase()
-
   if (!normalize.length) return 0
 
   let percentage = 0
