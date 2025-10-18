@@ -5,7 +5,14 @@ import { processTag } from './tag'
 import { processProducer } from './producer'
 
 export const processMeta = (context: Context, metas: MatchItem[], lyric: Lyric.Info) => {
-  const result = processProducer(context, lyric)
-  result.meta = processTag(context, metas)
+  const [lines, producer] = processProducer(context, lyric.lines)
+
+  const meta = processTag(context, metas)
+  meta.producer = producer
+
+  const result = lyric
+  result.lines = lines
+  result.meta = meta
+
   return result
 }

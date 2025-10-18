@@ -8,19 +8,18 @@ import { splitNameWithRule } from '@root/utils'
 
 const MATCH_REGEXP = /(?:(?:\([^)]*\)|\[[^\]]*\]|\{[^}]*\}|（[^）]*）|【[^】]*】|「[^」]*」)|[^(:：()\[\]{}（）【】「」])*?[:：]/
 
-export const processProducer = (context: Context, lyric: Lyric.Info) => {
+export const processProducer = (context: Context, infos: Lyric.Line.Info[]): [Lyric.Line.Info[], Lyric.Meta.Producer[]] => {
   const options = context.options.getByKey('meta.producer')
   if (!options.enable) {
-    return lyric
+    return [infos, []]
   }
 
-  const target = lyric
   const result: Lyric.Meta.Producer[] = []
   const lines: Lyric.Line.Info[] = []
 
   const needReplace = options.replace
   const matchRules = [...(options.match.rule.useDefault ? DEFAULT_PRODUCER_RULES : []), ...options.match.rule.custom]
-  for (const line of lyric.lines) {
+  for (const line of infos) {
     if (!line.content.original.trim()) {
       lines.push(line)
       continue
@@ -73,11 +72,10 @@ export const processProducer = (context: Context, lyric: Lyric.Info) => {
     }
     result.push(item)
 
-    if (!needReplace) lines.push(line)
+    if (!needReplace) {
+      lines.push(line)
+    }
   }
 
-  target.meta.producer = result
-  target.lines = lines
-
-  return target
+  return [lines, result]
 }
