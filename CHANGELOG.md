@@ -1,3 +1,27 @@
+# [1.1.0](https://github.com/folltoshe/music-lyric-utils/compare/v1.0.5...v1.1.0) (2025-10-18)
+
+
+### Bug Fixes
+
+* comments are not preserved in the output type file ([f9a6191](https://github.com/folltoshe/music-lyric-utils/commit/f9a61911e57f2b39083a1780c69f15e159100d25))
+* **parser:** error return when add producer to meta ([bb06f69](https://github.com/folltoshe/music-lyric-utils/commit/bb06f69bae7eab95eb3b3374046fdbfaf02466aa))
+* **parser:** global regex rule make bad return when match producer ([65f1967](https://github.com/folltoshe/music-lyric-utils/commit/65f1967bc2bbc98f5f357951013d196691dc20f1))
+* **parser:** lyric lines are not sorted after inserting the interlude ([c290b78](https://github.com/folltoshe/music-lyric-utils/commit/c290b78497a505a9beea5c58d39eb5a848242a85))
+* wrong export type ([fb9164e](https://github.com/folltoshe/music-lyric-utils/commit/fb9164e3b5bbae42e45d60fe4dd908bad0c283b0))
+
+
+### Features
+
+* **parser:** add exact match mode when check is valid producer ([b81e796](https://github.com/folltoshe/music-lyric-utils/commit/b81e796a4479691b593cb741154d346859a7e753))
+* **parser:** add first line check time option when insert interlude line ([af98de2](https://github.com/folltoshe/music-lyric-utils/commit/af98de2740f98fdbbcd0807ef4e8e907a9f6486f))
+* **parser:** change enable option key for interlude and duet ([d437527](https://github.com/folltoshe/music-lyric-utils/commit/d4375277086875670a92aa4e45598a97d5bf8ece))
+* **parser:** support insert duet info to lyric lines ([df27db2](https://github.com/folltoshe/music-lyric-utils/commit/df27db2d3b2ce355699f77ff24721001bd064896))
+* **parser:** update default producer match rules ([b720164](https://github.com/folltoshe/music-lyric-utils/commit/b720164b3759317d3711c97510c0ae7faa0a9941))
+* **player:** change export content ([8f445c9](https://github.com/folltoshe/music-lyric-utils/commit/8f445c9bd44eb12f29732287de32d777a270f7f4))
+* **test:** support save and load last parse content ([09644a5](https://github.com/folltoshe/music-lyric-utils/commit/09644a54bc26e38ae3a20daf439d9e2be76e49db))
+
+
+
 ## [1.0.5](https://github.com/folltoshe/music-lyric-utils/compare/v1.0.4...v1.0.5) (2025-10-10)
 
 
