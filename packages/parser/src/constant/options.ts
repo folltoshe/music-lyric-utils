@@ -59,6 +59,10 @@ export const DEFAULT_PARSER_OPTIONS: DeepRequired<ParserOptions> = {
       checkTime: 16000,
       firstLineCheckTime: 5000,
     },
+    duet: {
+      insert: true,
+      replace: true,
+    },
     normal: {
       original: NORMAL_LINE_BASE_OPTIONS,
       dynamic: NORMAL_LINE_BASE_OPTIONS,

@@ -12,7 +12,7 @@ import { matchLyric } from './match'
 import { processLyric } from './line'
 import { processMeta } from './meta'
 // extra process
-import { insertInterlude } from './extra'
+import { insertDuet, insertInterlude } from './extra'
 
 export class LyricParser {
   private context: Context
@@ -35,10 +35,14 @@ export class LyricParser {
       return null
     }
 
-    // process meta
+    // meta
     target = processMeta(this.context, original.meta, target)
-    // insert interlude
+
+    // duet
+    target = insertDuet(this.context, target)
+    // interlude
     target = insertInterlude(this.context, target)
+
     // sort lines
     target.lines = sortLines(target.lines)
 

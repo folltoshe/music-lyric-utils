@@ -15,6 +15,15 @@ export namespace Lyric {
     isSupportAutoScroll: boolean
   }
 
+  export namespace Group {
+    export interface Item {
+      /** group id (crc32) */
+      id: string
+      /** group name */
+      name: string
+    }
+  }
+
   export namespace Meta {
     export interface Producer {
       role: {
@@ -100,6 +109,8 @@ export namespace Lyric {
       type: Type
       /** time info (relative to the time of this lyrics) */
       time: Time
+      /** belong to a duet group id */
+      group: string
       /** line content */
       content: {
         /** original text */
@@ -121,6 +132,8 @@ export namespace Lyric {
     meta: Meta.Info
     /** lyric lines */
     lines: Line.Info[]
+    /** lyric groups */
+    groups: Group.Item[]
     /** lyric config */
     config: Config
   }

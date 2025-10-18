@@ -1,3 +1,4 @@
+export * from './hash'
 export * from './object'
 export * from './string'
 export * from './options'

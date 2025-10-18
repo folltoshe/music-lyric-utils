@@ -140,6 +140,18 @@ export interface ParserOptions {
        */
       firstLineCheckTime?: number
     }
+    duet?: {
+      /**
+       * is enable insert duet info
+       * @default true
+       */
+      insert?: boolean
+      /**
+       * replace match line when enable
+       * @default true
+       */
+      replace?: boolean
+    }
     normal?: {
       /**
        * original line
