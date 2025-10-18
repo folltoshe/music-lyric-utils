@@ -55,12 +55,12 @@ export const DEFAULT_PARSER_OPTIONS: DeepRequired<ParserOptions> = {
   },
   content: {
     interlude: {
-      show: true,
+      enable: true,
       checkTime: 16000,
       firstLineCheckTime: 5000,
     },
     duet: {
-      insert: true,
+      enable: true,
       replace: true,
     },
     normal: {

@@ -128,7 +128,7 @@ export interface ParserOptions {
        * is show interlude line
        * @default true
        */
-      show?: boolean
+      enable?: boolean
       /**
        * If the interval between lyrics lines exceeds this number, it is considered an interlude
        * @default 16000
@@ -145,7 +145,7 @@ export interface ParserOptions {
        * is enable insert duet info
        * @default true
        */
-      insert?: boolean
+      enable?: boolean
       /**
        * replace match line when enable
        * @default true

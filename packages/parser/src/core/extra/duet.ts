@@ -12,7 +12,7 @@ const createGroupId = (name: string) => {
 
 export const insertDuet = (context: Context, info: Lyric.Info) => {
   const options = context.options.getByKey('content.duet')
-  if (!options.insert) {
+  if (!options.enable) {
     return info
   }
 

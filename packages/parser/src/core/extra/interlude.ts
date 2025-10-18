@@ -7,7 +7,7 @@ import { cloneDeep } from '@music-lyric-utils/shared'
 
 export const insertInterlude = (context: Context, info: Lyric.Info) => {
   const options = context.options.getByKey('content.interlude')
-  if (!options.show) {
+  if (!options.enable) {
     return info
   }
 
