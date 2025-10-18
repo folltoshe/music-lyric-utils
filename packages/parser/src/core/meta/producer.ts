@@ -4,7 +4,7 @@ import type { Context } from '@root/types'
 import { DEFAULT_PRODUCER_RULES, DEFAULT_PRODUCER_RULES_QUICK_KEYWORDS } from '@root/constant/producer'
 
 import { matchTextIsValid, replaceFromText } from '@music-lyric-utils/shared'
-import { processName } from './utils'
+import { splitNameWithRule } from '@root/utils'
 
 const MATCH_REGEXP = /(?:(?:\([^)]*\)|\[[^\]]*\]|\{[^}]*\}|（[^）]*）|【[^】]*】|「[^」]*」)|[^(:：()\[\]{}（）【】「」])*?[:：]/
 
@@ -60,7 +60,7 @@ export const processProducer = (context: Context, lyric: Lyric.Info) => {
       },
       name: {
         raw: name,
-        parsed: processName(name, options.name.split.rule),
+        parsed: splitNameWithRule(name, options.name.split.rule),
       },
     }
     result.push(item)

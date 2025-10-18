@@ -4,27 +4,21 @@ import { DEFAULT_PARSER_OPTIONS } from '@root/constant'
 
 import { OptionsManager } from '@music-lyric-utils/shared'
 
-import { Matcher } from './match'
-import { Line } from './line'
-import { Meta } from './meta'
+// pre match
+import { matchLyric } from './match'
+// line process
+import { processLyric } from './line'
+import { processMeta } from './meta'
+// extra process
+import { insertInterlude } from './extra'
 
 export class LyricParser {
   private context: Context
-
-  private matcher: Matcher
-
-  private line: Line
-  private meta: Meta
 
   constructor(opt?: ParserOptions) {
     this.context = {
       options: new OptionsManager(DEFAULT_PARSER_OPTIONS),
     }
-
-    this.matcher = new Matcher(this.context)
-
-    this.line = new Line(this.context)
-    this.meta = new Meta(this.context)
 
     if (opt) {
       this.context.options.updateAll(opt)
@@ -32,23 +26,17 @@ export class LyricParser {
   }
 
   parse(props: ParserProps) {
-    const original = this.matcher.parse(props.original)
-    const dynamic = this.matcher.parse(props.dynamic)
-    const translate = this.matcher.parse(props.translate)
-    const roman = this.matcher.parse(props.roman)
+    const [original, dynamic, translate, roman] = [matchLyric(props.original), matchLyric(props.dynamic), matchLyric(props.translate), matchLyric(props.roman)]
 
-    let target = this.line.parse({ original, dynamic, translate, roman })
+    let target = processLyric(this.context, { original, dynamic, translate, roman })
     if (!target) {
       return null
     }
 
-    // parse meta tag
-    target = this.meta.parseTag(target, original.meta)
-    // parse producer
-    target = this.meta.parseProducer(target)
-
+    // process meta
+    target = processMeta(this.context, original.meta, target)
     // insert interlude
-    target = this.line.insertInterlude(target)
+    target = insertInterlude(this.context, target)
 
     return target
   }

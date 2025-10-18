@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { ContentNormalOptionsRequired, MatchItem } from '@root/types'
+import type { Context, MatchItem, ContentNormalOptionsRequired } from '@root/types'
 
 import { EMPTY_LYRIC_DYNAMIC_WORD, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 
@@ -12,7 +12,7 @@ const TIME_TAG_2 = /<(?<start>[0-9]+),(?<duration>[0-9]+)\>/
 const SPACE_START = /^\s+/
 const SPACE_END = /\s+$/
 
-export const processLine = (options: ContentNormalOptionsRequired, line: MatchItem) => {
+const processLine = (options: ContentNormalOptionsRequired, line: MatchItem) => {
   const targetWords: Lyric.Line.Dynamic.Word[] = []
 
   const lineTime = parseTagTime(line.tag)
@@ -89,4 +89,18 @@ export const processLine = (options: ContentNormalOptionsRequired, line: MatchIt
   }
 
   return target
+}
+
+export const processDynamic = (context: Context, matched: MatchItem[]) => {
+  if (matched.length <= 0) return null
+
+  const options = context.options.getByKey('content.normal.dynamic')
+  const result: Lyric.Line.Info[] = []
+  for (const line of matched) {
+    const item = processLine(options, line)
+    if (!item) continue
+    result.push(item)
+  }
+
+  return result
 }

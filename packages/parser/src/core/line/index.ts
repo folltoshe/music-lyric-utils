@@ -1,11 +1,14 @@
-import { cloneDeep, type Lyric } from '@music-lyric-utils/shared'
+import { cloneDeep, EMPTY_LYRIC_INFO, type Lyric } from '@music-lyric-utils/shared'
 import type { Context, MatchInfo } from '@root/types'
 
 import { alignLyricWithTime } from '@root/utils'
 
 import { processDynamic } from './dynamic'
 import { processNormal } from './normal'
-import { insertInterlude } from './interlude'
+
+const checkIsValid = (lines: Lyric.Line.Info[]) => {
+  return lines.length > 0
+}
 
 interface Params {
   original: MatchInfo
@@ -14,68 +17,55 @@ interface Params {
   roman: MatchInfo
 }
 
-export class Line {
-  private context: Context
-
-  constructor(ctx: Context) {
-    this.context = ctx
+export const processLyric = (context: Context, params: Params) => {
+  const original = processNormal(context, 'original', params.original.line)
+  if (!original || !checkIsValid(original)) {
+    return null
   }
 
-  private checkIsValid(info: Lyric.Info) {
-    return info.lines.length > 0
-  }
+  const dynamic = processDynamic(context, params.dynamic.line)
 
-  parse(params: Params) {
-    const original = processNormal(this.context, 'original', params.original.line)
-    if (!original || !this.checkIsValid(original)) {
-      return null
-    }
+  const target = dynamic && checkIsValid(dynamic) ? dynamic : original
+  const result: Lyric.Info = cloneDeep(EMPTY_LYRIC_INFO)
 
-    const dynamic = processDynamic(this.context, params.dynamic.line)
-    const target = dynamic && this.checkIsValid(dynamic) ? dynamic : original
-    target.config.isSupportAutoScroll = !!target.lines.find((line) => line.time.start > 0)
+  const isSupportAutoScroll = !!target.find((line) => line.time.start > 0)
+  result.config.isSupportAutoScroll = isSupportAutoScroll
 
-    // if no time tag, skip align extended lyric
-    if (!target.config.isSupportAutoScroll) {
-      return target
-    }
-
-    const translate = processNormal(this.context, 'translate', params.translate.line)
-    const translateAlign =
-      translate && this.checkIsValid(translate)
-        ? alignLyricWithTime({
-            base: target.lines,
-            target: translate.lines,
-          })
-        : null
-
-    const roman = processNormal(this.context, 'roman', params.roman.line)
-    const romanAlign =
-      roman && this.checkIsValid(roman)
-        ? alignLyricWithTime({
-            base: target.lines,
-            target: roman.lines,
-          })
-        : null
-
-    for (const line of target.lines) {
-      if (translateAlign) {
-        const target = translateAlign.find((v) => v.time.start === line.time.start) as Lyric.Line.Info
-        if (target) line.content.translate = target.content.original
-      }
-      if (romanAlign) {
-        const target = romanAlign.find((v) => v.time.start === line.time.start) as Lyric.Line.Info
-        if (target) line.content.roman = target.content.original
-      }
-    }
-
-    target.lines = target.lines.sort((a, b) => a.time.start - b.time.start)
-    return target
-  }
-
-  insertInterlude(lyric: Lyric.Info) {
-    const result = insertInterlude(this.context, lyric)
-    result.lines = result.lines.sort((a, b) => a.time.start - b.time.start)
+  // if no time tag, skip align extended lyric
+  if (!isSupportAutoScroll) {
+    result.lines = target
     return result
   }
+
+  const translate = processNormal(context, 'translate', params.translate.line)
+  const translateAlign =
+    translate && checkIsValid(translate)
+      ? alignLyricWithTime({
+          base: target,
+          target: translate,
+        })
+      : null
+
+  const roman = processNormal(context, 'roman', params.roman.line)
+  const romanAlign =
+    roman && checkIsValid(roman)
+      ? alignLyricWithTime({
+          base: target,
+          target: roman,
+        })
+      : null
+
+  for (const line of target) {
+    if (translateAlign) {
+      const target = translateAlign.find((v) => v.time.start === line.time.start) as Lyric.Line.Info
+      if (target) line.content.translate = target.content.original
+    }
+    if (romanAlign) {
+      const target = romanAlign.find((v) => v.time.start === line.time.start) as Lyric.Line.Info
+      if (target) line.content.roman = target.content.original
+    }
+  }
+
+  result.lines = target.sort((a, b) => a.time.start - b.time.start)
+  return result
 }
