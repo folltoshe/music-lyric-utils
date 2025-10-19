@@ -1,4 +1,4 @@
-import type { ParserOptions, ContentNormalOptionsRequired } from '@root/types/options'
+import type { ParserOptions, ContentNormalOptionsRequired, ContentDynamicOptionsRequired } from '@root/types/options'
 import type { DeepRequired } from '@music-lyric-utils/shared'
 
 import { INSERT_TEXT_SPACE_TYPES } from '@music-lyric-utils/shared'
@@ -15,6 +15,13 @@ const NORMAL_LINE_BASE_OPTIONS: ContentNormalOptionsRequired = {
       enable: true,
       types: [INSERT_TEXT_SPACE_TYPES.ALL],
     },
+  },
+}
+
+const NORMAL_LINE_DYNAMIC_OPTIONS: ContentDynamicOptionsRequired = {
+  ...NORMAL_LINE_BASE_OPTIONS,
+  trailing: {
+    checkTime: 1000,
   },
 }
 
@@ -67,7 +74,7 @@ export const DEFAULT_PARSER_OPTIONS: DeepRequired<ParserOptions> = {
     },
     normal: {
       original: NORMAL_LINE_BASE_OPTIONS,
-      dynamic: NORMAL_LINE_BASE_OPTIONS,
+      dynamic: NORMAL_LINE_DYNAMIC_OPTIONS,
       translate: NORMAL_LINE_BASE_OPTIONS,
       roman: NORMAL_LINE_BASE_OPTIONS,
     },
