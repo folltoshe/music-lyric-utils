@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { Context, MusicInfoProps, ParserOptions, ParserProps } from '@root/types'
+import type { Context, MusicInfoProps, ParserOptions, ParserOptionsManager, ParserProps } from '@root/types'
 
 import { DEFAULT_PARSER_OPTIONS } from '@root/constant'
 
@@ -27,6 +27,14 @@ export class LyricParser {
     if (opt) {
       this.context.options.updateAll(opt)
     }
+  }
+
+  updateOptionsWithKey(...args: Parameters<ParserOptionsManager['updateByKey']>) {
+    this.context.options.updateByKey(...args)
+  }
+
+  updateOptions(...args: Parameters<ParserOptionsManager['updateAll']>) {
+    this.context.options.updateAll(...args)
   }
 
   parse(props: ParserProps, musicInfo?: MusicInfoProps): Lyric.Info | null {
