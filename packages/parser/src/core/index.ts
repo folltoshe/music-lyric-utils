@@ -1,3 +1,4 @@
+import type { Lyric } from '@music-lyric-utils/shared'
 import type { Context, ParserOptions, ParserProps } from '@root/types'
 
 import { DEFAULT_PARSER_OPTIONS } from '@root/constant'
@@ -27,7 +28,7 @@ export class LyricParser {
     }
   }
 
-  parse(props: ParserProps) {
+  parse(props: ParserProps): Lyric.Info | null {
     const [original, dynamic, translate, roman] = [matchLyric(props.original), matchLyric(props.dynamic), matchLyric(props.translate), matchLyric(props.roman)]
 
     let target = processLyric(this.context, { original, dynamic, translate, roman })
