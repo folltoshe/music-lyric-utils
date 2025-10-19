@@ -9,6 +9,10 @@ const handleProcessName = (content: string) => {
   return content.replaceAll(/\s/g, '').trim().toLowerCase()
 }
 
+const handleProcessMusicInfoRules = (musicInfo: MusicInfoProps) => {
+  return [handleProcessName(musicInfo.name), ...musicInfo.singer.map((item) => handleProcessName(item))]
+}
+
 export const purificationLyric = (context: Context, info: Lyric.Info, key: Lyric.Line.ContentKey, musicInfo?: MusicInfoProps) => {
   const options = context.options.getByKey(`content.normal.${key}.purification`)
   if (!options.enable) {
@@ -43,22 +47,19 @@ export const purificationLyric = (context: Context, info: Lyric.Info, key: Lyric
       continue
     }
 
-    if (musicInfo && index === 0 && options.firstLine.enable) {
-      const percentage = matchTextWithPercentage(content, [handleProcessName(musicInfo.name), ...musicInfo.singer.map((item) => handleProcessName(item))])
-      if (percentage > options.firstLine.checkPercentage) {
-        handleMatched(line)
-        continue
-      }
-    }
+    const isFirstLine = index === 0
+    const extraRules = isFirstLine && musicInfo && options.firstLine.useMusicInfo ? handleProcessMusicInfoRules(musicInfo) : []
+    const targetRules = [...matchRules, ...extraRules]
 
     if (options.match.mode === PURIFICATION_MATCH_MODE.EXACT) {
-      const percentage = matchTextWithPercentage(content, matchRules)
-      if (percentage > options.match.exact.check.percentage) {
+      const percentage = matchTextWithPercentage(content, targetRules)
+      const check = isFirstLine ? options.firstLine.exact.check.percentage : options.match.exact.check.percentage
+      if (percentage > check) {
         handleMatched(line)
         continue
       }
     } else {
-      const isMatch = matchTextIsValid(content, matchRules, DEFAULT_PURIFICATION_RULES_QUICK_KEYWORDS)
+      const isMatch = matchTextIsValid(content, targetRules, DEFAULT_PURIFICATION_RULES_QUICK_KEYWORDS)
       if (isMatch) {
         handleMatched(line)
         continue

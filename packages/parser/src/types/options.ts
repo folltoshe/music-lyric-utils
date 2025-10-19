@@ -54,19 +54,28 @@ export interface ContentNormalOptions {
     }
     /**
      * some lyrics have the song title and singer as the first line
-     * if the match exceeds the threshold, delete the row
-     * use user-supplied rules
      */
     firstLine: {
       /**
-       * is enable purification first line
+       * is use music info to match
        * @default true
        */
-      enable?: boolean
+      useMusicInfo?: boolean
       /**
-       * @default 50
+       * it will be override exact options
        */
-      checkPercentage?: number
+      exact?: {
+        /**
+         * check options
+         */
+        check?: {
+          /**
+           * need more than this percentage
+           * @default 30
+           */
+          percentage?: number
+        }
+      }
     }
   }
   replace?: {

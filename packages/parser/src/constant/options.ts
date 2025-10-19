@@ -24,8 +24,12 @@ const NORMAL_LINE_BASE_OPTIONS: ContentNormalOptionsRequired = {
       },
     },
     firstLine: {
-      enable: true,
-      checkPercentage: 50,
+      useMusicInfo: true,
+      exact: {
+        check: {
+          percentage: 30,
+        },
+      },
     },
   },
   replace: {
