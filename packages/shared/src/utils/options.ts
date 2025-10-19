@@ -1,6 +1,6 @@
 import type { DeepPartial, PathValue, NestedKeys } from '../types/utils'
 
-import { get, set, merge } from './object'
+import { get, set, merge, cloneDeep } from './object'
 
 import { EventListener } from './event'
 
@@ -13,7 +13,7 @@ export class OptionsManager<T extends Record<string, any>> extends EventListener
 
   constructor(def: T) {
     super()
-    this.current = def
+    this.current = cloneDeep(def)
   }
 
   getAll() {
