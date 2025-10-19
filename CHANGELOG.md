@@ -1,3 +1,28 @@
+# [1.2.0](https://github.com/folltoshe/music-lyric-utils/compare/v1.1.0...v1.2.0) (2025-10-19)
+
+
+### Bug Fixes
+
+* **parser:** dynamic line options error ([d4c5c22](https://github.com/folltoshe/music-lyric-utils/commit/d4c5c227e4245e050854069f39a752a83f915c17))
+* **parser:** return type error ([4327bdc](https://github.com/folltoshe/music-lyric-utils/commit/4327bdcb700378646749e4823e759b84489156f2))
+* **parser:** wrong behavior when aligning extended lyric ([7af5096](https://github.com/folltoshe/music-lyric-utils/commit/7af50964a55f8bf3bf3222d4ab31384adc10a251))
+* **parser:** wrong start time when add interlude ([77cbd9d](https://github.com/folltoshe/music-lyric-utils/commit/77cbd9de26143b490faf3117abcc4a701ed5d934))
+
+
+### Features
+
+* freeze export constants ([645e78e](https://github.com/folltoshe/music-lyric-utils/commit/645e78ee2efe3762808c2422ccc112e88c34bdcc))
+* **parser:** add global and block index in line duet info ([0600ae2](https://github.com/folltoshe/music-lyric-utils/commit/0600ae2821ed046af96d5ed596663df38c8aa454))
+* **parser:** add need space start config in dynamic word ([742400f](https://github.com/folltoshe/music-lyric-utils/commit/742400f6e64d1c06e5671b13bd373ab671baab53))
+* **parser:** add trailing config in dynamic word ([9bedd16](https://github.com/folltoshe/music-lyric-utils/commit/9bedd166bd64c03e9d66d4c7892d599a95347ae4))
+* **parser:** optimize process order ([1293555](https://github.com/folltoshe/music-lyric-utils/commit/12935554f1dde56e14043be7d11409dfac460746))
+* **parser:** optimize rule check when purification first line ([cc252b7](https://github.com/folltoshe/music-lyric-utils/commit/cc252b7947976d4a4231494b911705e0c14ec2a3))
+* **parser:** support purification first lyric line ([e245f99](https://github.com/folltoshe/music-lyric-utils/commit/e245f9908db8ec009eed8d27601bd123146b5e29))
+* **parser:** support purification other line and custom match rule ([151b4f1](https://github.com/folltoshe/music-lyric-utils/commit/151b4f1548db60856ada624d93780024f36a11ee))
+* **parser:** update default purification match rules ([e236973](https://github.com/folltoshe/music-lyric-utils/commit/e236973c3baa769fe70ae854d713225e05af8f72))
+
+
+
 # [1.1.0](https://github.com/folltoshe/music-lyric-utils/compare/v1.0.5...v1.1.0) (2025-10-18)
 
 
