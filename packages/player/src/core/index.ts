@@ -60,6 +60,7 @@ export class LyricPlayer {
   updateOptions(...args: Parameters<PlayerOptionsWithManager['updateAll']>) {
     this.options.updateAll(...args)
   }
+
   handleGetCurrentTime() {
     const now = handleGetNow()
     return (now - this.current.status.performanceTime) * this.currentSpeed + this.current.status.startTime
