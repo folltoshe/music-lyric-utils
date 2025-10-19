@@ -1,1 +1,5 @@
-# Music Lyric Utils - Shared
+## Usage
+
+```shell
+npm install @music-lyric-utils/shared
+```

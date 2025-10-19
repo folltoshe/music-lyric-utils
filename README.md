@@ -2,9 +2,41 @@
   <img src="https://socialify.git.ci/folltoshe/music-lyric-utils/image?custom_description=A+Music+Lyric+Utils&description=1&font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Plus&pulls=1&stargazers=1&theme=Auto" />
 </div>
 
-<div align="center"> 
-  <img src="https://img.shields.io/github/repo-size/folltoshe/music-lyric-utils?style=for-the-badge" />
-</div>
+## Install
+
+```shell
+npm install @music-lyric-utils/parser @music-lyric-utils/player
+```
+
+## Usage
+
+```js
+import { LyricParser } from '@music-lyric-utils/parser'
+import { LyricPlayer } from '@music-lyric-utils/player'
+
+const parser = new LyricParser()
+const player = new LyricPlayer({
+  onLinePlay(num, line) {
+    console.log('on line play')
+    console.log(num, line)
+  },
+  onSetLyric(info) {
+    console.log('on set lyric')
+    console.log(info)
+  },
+})
+
+const origin = ''
+const dynamic = ''
+const translate = ''
+const roman = ''
+
+const info = parser.parse({ original, dynamic, translate, roman })
+
+player.updateLyric(info)
+
+player.play()
+```
 
 ## Features
 
@@ -20,15 +52,22 @@
 
 - Parse Lyric
 
-  - [x] Parse Normal Line
-  - [x] Parse Dynamic Line
-  - [x] Parse Meta Info
+  - [x] Original
+  - [x] Dynamic
+  - [x] Translate
+  - [x] Roman
+
+- Parse Meta
+
+  - [x] Meta Tag
   - [x] Auto Match Producer
-  - [ ] Purification Lyrics
 
-- Other
+- Extra
 
-  - [x] Auto Insert Space Of Punctuation
+  - [x] Insert Space
+  - [x] Insert Interlude Line
+  - [x] Insert Duet Info
+  - [x] Purification Lyrics
 
 ## Contributor
 
