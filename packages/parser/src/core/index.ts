@@ -10,7 +10,7 @@ import { sortLines } from '@root/utils'
 // pre match
 import { matchLyric } from './match'
 // line process
-import { processLyric } from './line'
+import { processMainLyric, processExtendedLyric } from './line'
 import { processMeta } from './meta'
 // extra process
 import { insertDuet, insertInterlude } from './extra'
@@ -31,7 +31,7 @@ export class LyricParser {
   parse(props: ParserProps): Lyric.Info | null {
     const [original, dynamic, translate, roman] = [matchLyric(props.original), matchLyric(props.dynamic), matchLyric(props.translate), matchLyric(props.roman)]
 
-    let target = processLyric(this.context, { original, dynamic, translate, roman })
+    let target = processMainLyric(this.context, { original, dynamic })
     if (!target) {
       return null
     }
@@ -46,6 +46,9 @@ export class LyricParser {
 
     // sort lines
     target.lines = sortLines(target.lines)
+
+    // extended
+    target = processExtendedLyric(this.context, target, { translate, roman })
 
     return target
   }

@@ -13,14 +13,12 @@ const checkIsValid = (lines: Lyric.Line.Info[]) => {
   return lines.length > 0
 }
 
-interface Params {
+interface MainParams {
   original: MatchInfo
   dynamic: MatchInfo
-  translate: MatchInfo
-  roman: MatchInfo
 }
 
-export const processLyric = (context: Context, params: Params) => {
+export const processMainLyric = (context: Context, params: MainParams) => {
   const original = processNormal(context, 'original', params.original.line)
   if (!original || !checkIsValid(original)) {
     return null
@@ -39,6 +37,23 @@ export const processLyric = (context: Context, params: Params) => {
     result.lines = target
     return result
   }
+
+  result.lines = sortLines(target)
+  return result
+}
+
+interface ExtendedParams {
+  translate: MatchInfo
+  roman: MatchInfo
+}
+
+export const processExtendedLyric = (context: Context, info: Lyric.Info, params: ExtendedParams) => {
+  if (!info.config.isSupportAutoScroll) {
+    return info
+  }
+
+  const result = info
+  const target = info.lines
 
   const translate = processNormal(context, 'translate', params.translate.line)
   const translateAlign =
@@ -69,6 +84,6 @@ export const processLyric = (context: Context, params: Params) => {
     }
   }
 
-  result.lines = sortLines(target)
+  result.lines = target
   return result
 }
