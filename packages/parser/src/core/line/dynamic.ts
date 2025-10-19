@@ -41,20 +41,12 @@ const processLine = (options: ContentNormalOptionsRequired, line: MatchItem) => 
     if (!wordContent) continue
 
     const wordContentTrim = wordContent.trim()
-
-    if (wordLast && !wordLast.config.needSpaceEnd) {
-      if (!wordContentTrim) {
-        wordLast.config.needSpaceEnd = true
-        continue
-      } else if (SPACE_START.test(wordContent)) {
-        wordLast.config.needSpaceEnd = true
-      } else if (checkFirstCharIsPunctuation(wordContentTrim)) {
-        wordLast.config.needSpaceEnd = true
-      }
+    if (wordLast && !wordContentTrim) {
+      wordLast.config.needSpaceEnd = true
+      continue
     }
 
     const wordResult = cloneDeep(EMPTY_LYRIC_DYNAMIC_WORD)
-
     wordResult.time = {
       start: wordTime,
       end: wordTime + wordDuration,
@@ -62,9 +54,15 @@ const processLine = (options: ContentNormalOptionsRequired, line: MatchItem) => 
     }
     wordResult.text = options.insert.space.enable ? insertSpace(wordContentTrim, options.insert.space.types) : wordContentTrim
 
-    if (SPACE_END.test(wordContent)) {
-      wordResult.config.needSpaceEnd = true
-    } else if (checkEndCharIsPunctuation(wordContentTrim)) {
+    if (wordLast?.config.needSpaceEnd === true) {
+      wordResult.config.needSpaceStart = true
+    }
+    if (SPACE_START.test(wordContent) || checkFirstCharIsPunctuation(wordContentTrim)) {
+      if (wordLast) wordLast.config.needSpaceEnd = true
+      wordResult.config.needSpaceStart = true
+    }
+
+    if (SPACE_END.test(wordContent) || checkEndCharIsPunctuation(wordContentTrim)) {
       wordResult.config.needSpaceEnd = true
     }
 

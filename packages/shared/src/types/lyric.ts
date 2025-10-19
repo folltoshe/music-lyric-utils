@@ -104,7 +104,9 @@ export namespace Lyric {
         text: string
         /** dynamic word config */
         config: {
-          /** need space in word end */
+          /** need space in word start, if line postion in right, you need use it */
+          needSpaceStart: boolean
+          /** need space in word end, if line postion in left, you need use it */
           needSpaceEnd: boolean
           /** long tail sound */
           needTrailing: boolean

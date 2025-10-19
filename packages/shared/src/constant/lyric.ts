@@ -19,6 +19,7 @@ export const EMPTY_LYRIC_DYNAMIC_WORD: Lyric.Line.Dynamic.Word = {
   time: EMPTY_LYRIC_TIME_INFO,
   text: '',
   config: {
+    needSpaceStart: false,
     needSpaceEnd: false,
     needTrailing: false,
   },
