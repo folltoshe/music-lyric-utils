@@ -40,7 +40,13 @@ export const EMPTY_LYRIC_INFO: Lyric.Info = {
 export const EMPTY_LYRIC_LINE: Lyric.Line.Info = {
   type: LYRIC_LINE_TYPES.NORMAL,
   time: EMPTY_LYRIC_TIME_INFO,
-  group: '',
+  group: {
+    id: '',
+    index: {
+      global: 0,
+      block: 0,
+    },
+  },
   content: {
     original: '',
   },

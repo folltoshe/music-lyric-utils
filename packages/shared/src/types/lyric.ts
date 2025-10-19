@@ -16,11 +16,25 @@ export namespace Lyric {
   }
 
   export namespace Group {
+    export interface LineInfo {
+      /** group id (crc32) */
+      id: string
+      /** group index */
+      index: {
+        /** index in global */
+        global: number
+        /** index in this block */
+        block: number
+      }
+    }
+
     export interface Item {
       /** group id (crc32) */
       id: string
       /** group name */
       name: string
+      /** group total line */
+      total: number
     }
   }
 
@@ -110,7 +124,7 @@ export namespace Lyric {
       /** time info (relative to the time of this lyrics) */
       time: Time
       /** belong to a duet group id */
-      group: string
+      group: Group.LineInfo
       /** line content */
       content: {
         /** original text */

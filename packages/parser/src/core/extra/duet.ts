@@ -17,14 +17,30 @@ export const insertDuet = (context: Context, info: Lyric.Info) => {
   }
 
   const lines: Lyric.Line.Info[] = []
-  const groups: Record<string, string> = {}
+  const groups: Record<string, [string, number]> = {}
 
   let currentGroupName = ''
   let currentGroupId = ''
+  let currentGroupGlobalIndex = 0
+  let currentGroupBlockIndex = 0
 
   const handleAdd = (line: Lyric.Line.Info) => {
-    line.group = currentGroupId
+    line.group = {
+      id: currentGroupId,
+      index: {
+        global: currentGroupGlobalIndex,
+        block: currentGroupBlockIndex,
+      },
+    }
     lines.push(line)
+    currentGroupGlobalIndex++
+    currentGroupBlockIndex++
+  }
+
+  const handleUpdateCurrent = () => {
+    if (currentGroupId) {
+      groups[currentGroupId] = [currentGroupName, currentGroupGlobalIndex]
+    }
   }
 
   for (const line of info.lines) {
@@ -50,11 +66,20 @@ export const insertDuet = (context: Context, info: Lyric.Info) => {
     const content = line.content.original.substring(colonIndex + 1).trim()
 
     if (name && !content) {
+      // set last
+      handleUpdateCurrent()
+      // set new
       currentGroupName = name
       currentGroupId = createGroupId(name)
+      currentGroupBlockIndex = 0
       if (!groups[currentGroupId]) {
-        groups[currentGroupId] = currentGroupName
+        currentGroupGlobalIndex = 0
+        groups[currentGroupId] = [currentGroupName, currentGroupGlobalIndex]
+      } else {
+        const [_, count] = groups[currentGroupId]
+        currentGroupGlobalIndex = count
       }
+      // need replace line
       if (options.replace) {
         continue
       }
@@ -63,12 +88,14 @@ export const insertDuet = (context: Context, info: Lyric.Info) => {
     handleAdd(line)
   }
 
-  const result = info
+  handleUpdateCurrent()
 
+  const result = info
   result.groups = Object.entries(groups).map(([key, value]) => {
     return {
       id: key,
-      name: value,
+      name: value[0],
+      total: value[1],
     }
   })
   result.lines = lines
