@@ -1,5 +1,5 @@
 export type { Lyric } from '@music-lyric-utils/shared'
-export type { ParserOptions, ParserProps } from './types'
+export type { ParserOptions, ParserProps, MusicInfoProps } from './types'
 
 export {
   LYRIC_LINE_TYPES,

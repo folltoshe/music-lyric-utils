@@ -7,6 +7,13 @@ import { PRODUCER_MATCH_MODE } from './producer'
 import { freezeDeep } from '@music-lyric-utils/shared'
 
 const NORMAL_LINE_BASE_OPTIONS: ContentNormalOptionsRequired = {
+  purification: {
+    enable: true,
+    firstLine: {
+      enable: true,
+      checkPercentage: 50,
+    },
+  },
   replace: {
     punctuation: true,
   },

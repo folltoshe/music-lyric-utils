@@ -2,6 +2,29 @@ import type { DeepRequired, InsertTextSpaceTypes, OptionsManager, ValueOf } from
 import type { PRODUCER_MATCH_MODE } from '@root/constant'
 
 export interface ContentNormalOptions {
+  purification?: {
+    /**
+     * is enable purification lyric
+     * @default true
+     */
+    enable?: boolean
+    /**
+     * some lyrics have the song title and singer as the first line
+     * if the match exceeds the threshold, delete the row
+     * use user-supplied rules
+     */
+    firstLine: {
+      /**
+       * is enable purification first line
+       * @default true
+       */
+      enable?: boolean
+      /**
+       * @default 50
+       */
+      checkPercentage?: number
+    }
+  }
   replace?: {
     /**
      * replace chinese punctuation to english

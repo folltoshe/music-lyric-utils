@@ -1,10 +1,13 @@
-import { Lyric } from '@music-lyric-utils/shared'
-
 export interface ParserProps {
   original?: string
   translate?: string
   roman?: string
   dynamic?: string
+}
+
+export interface MusicInfoProps {
+  name: string
+  singer: string[]
 }
 
 export interface MatchItem {

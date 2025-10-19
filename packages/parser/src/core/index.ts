@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { Context, ParserOptions, ParserProps } from '@root/types'
+import type { Context, MusicInfoProps, ParserOptions, ParserProps } from '@root/types'
 
 import { DEFAULT_PARSER_OPTIONS } from '@root/constant'
 
@@ -14,6 +14,7 @@ import { processMainLyric, processExtendedLyric } from './line'
 import { processMeta } from './meta'
 // extra process
 import { insertDuet, insertInterlude } from './extra'
+import { purificationLyric } from './extra/purification'
 
 export class LyricParser {
   private context: Context
@@ -28,13 +29,16 @@ export class LyricParser {
     }
   }
 
-  parse(props: ParserProps): Lyric.Info | null {
+  parse(props: ParserProps, musicInfo?: MusicInfoProps): Lyric.Info | null {
     const [original, dynamic, translate, roman] = [matchLyric(props.original), matchLyric(props.dynamic), matchLyric(props.translate), matchLyric(props.roman)]
 
     let target = processMainLyric(this.context, { original, dynamic })
     if (!target) {
       return null
     }
+
+    // purification original
+    target = purificationLyric(this.context, target, 'original', musicInfo)
 
     // meta
     target = processMeta(this.context, original.meta, target)
