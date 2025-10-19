@@ -22,7 +22,7 @@ export const insertInterlude = (context: Context, info: Lyric.Info) => {
       const line = cloneDeep(EMPTY_LYRIC_LINE)
       const start = 500
       const duration = current.time.start - start
-      const end = current.time.start + duration
+      const end = start + duration
       line.time = { start, end, duration }
       line.type = LYRIC_LINE_TYPES.INTERLUDE
       result.lines.push(line)
