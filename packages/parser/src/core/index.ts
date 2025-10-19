@@ -45,14 +45,18 @@ export class LyricParser {
 
     // duet
     target = insertDuet(this.context, target)
+
+    // process extended
+    target = processExtendedLyric(this.context, target, { translate, roman })
+    // purification extended
+    target = purificationLyric(this.context, target, 'translate', musicInfo)
+    target = purificationLyric(this.context, target, 'roman', musicInfo)
+
     // interlude
     target = insertInterlude(this.context, target)
 
     // sort lines
     target.lines = sortLines(target.lines)
-
-    // extended
-    target = processExtendedLyric(this.context, target, { translate, roman })
 
     return target
   }

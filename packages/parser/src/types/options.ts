@@ -1,5 +1,5 @@
 import type { DeepRequired, InsertTextSpaceTypes, OptionsManager, ValueOf } from '@music-lyric-utils/shared'
-import type { PRODUCER_MATCH_MODE } from '@root/constant'
+import type { PRODUCER_MATCH_MODE, PURIFICATION_MATCH_MODE } from '@root/constant'
 
 export interface ContentNormalOptions {
   purification?: {
@@ -8,6 +8,50 @@ export interface ContentNormalOptions {
      * @default true
      */
     enable?: boolean
+    /**
+     * match options
+     */
+    match?: {
+      /**
+       * match mode
+       * @default PURIFICATION_MATCH_MODE.FUZZY
+       */
+      mode?: ValueOf<typeof PURIFICATION_MATCH_MODE>
+      /**
+       * exact mode options
+       */
+      exact?: {
+        /**
+         * check options
+         */
+        check?: {
+          /**
+           * need more than this percentage
+           * @default 50
+           */
+          percentage?: number
+        }
+      }
+      /**
+       * fuzzy mode options
+       */
+      fuzzy?: {}
+      /**
+       * common check rules
+       */
+      rule?: {
+        /**
+         * is use default rule
+         * @default true
+         */
+        useDefault?: boolean
+        /**
+         * custom rule, it will be merge with default when useDefault is enable
+         * @default []
+         */
+        custom?: (string | RegExp)[]
+      }
+    }
     /**
      * some lyrics have the song title and singer as the first line
      * if the match exceeds the threshold, delete the row

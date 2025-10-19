@@ -3,12 +3,26 @@ import type { DeepRequired } from '@music-lyric-utils/shared'
 
 import { INSERT_TEXT_SPACE_TYPES } from '@music-lyric-utils/shared'
 import { PRODUCER_MATCH_MODE } from './producer'
+import { PURIFICATION_MATCH_MODE } from './purification'
 
 import { freezeDeep } from '@music-lyric-utils/shared'
 
 const NORMAL_LINE_BASE_OPTIONS: ContentNormalOptionsRequired = {
   purification: {
     enable: true,
+    match: {
+      mode: PURIFICATION_MATCH_MODE.FUZZY,
+      exact: {
+        check: {
+          percentage: 50,
+        },
+      },
+      fuzzy: {},
+      rule: {
+        useDefault: true,
+        custom: [],
+      },
+    },
     firstLine: {
       enable: true,
       checkPercentage: 50,
