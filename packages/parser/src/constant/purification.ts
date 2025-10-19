@@ -3,7 +3,7 @@ export const PURIFICATION_MATCH_MODE = {
   FUZZY: 'FUZZY',
 } as const
 
-export const DEFAULT_PURIFICATION_RULES: RegExp[] = [/(?:版权所有|License)/]
+export const DEFAULT_PURIFICATION_RULES: RegExp[] = [/(?:版权所有|License)/, /(?:翻唱|Cover)/]
 
 export const DEFAULT_PURIFICATION_RULES_QUICK_KEYWORDS: string[] = (() => {
   const src = DEFAULT_PURIFICATION_RULES.map((r) => r.source).join(' ')
