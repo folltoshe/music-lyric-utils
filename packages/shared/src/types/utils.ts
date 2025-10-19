@@ -50,4 +50,16 @@ export type DeepRequired<T> = T extends (...args: any[]) => any
   ? { [K in keyof T]-?: DeepRequired<NonNullable<T[K]>> }
   : NonNullable<T>
 
+export type DeepReadonly<T> = T extends (...args: any[]) => any
+  ? T
+  : T extends Array<infer U>
+  ? ReadonlyArray<DeepReadonly<U>>
+  : T extends Map<infer K, infer V>
+  ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
+  : T extends Set<infer U>
+  ? ReadonlySet<DeepReadonly<U>>
+  : T extends object
+  ? { readonly [P in keyof T]: DeepReadonly<T[P]> }
+  : T
+
 export type ValueOf<T extends object> = T[keyof T]

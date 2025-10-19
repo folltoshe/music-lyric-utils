@@ -4,6 +4,8 @@ import type { DeepRequired } from '@music-lyric-utils/shared'
 import { INSERT_TEXT_SPACE_TYPES } from '@music-lyric-utils/shared'
 import { PRODUCER_MATCH_MODE } from './producer'
 
+import { freezeDeep } from '@music-lyric-utils/shared'
+
 const NORMAL_LINE_BASE_OPTIONS: ContentNormalOptionsRequired = {
   replace: {
     punctuation: true,
@@ -71,3 +73,4 @@ export const DEFAULT_PARSER_OPTIONS: DeepRequired<ParserOptions> = {
     },
   },
 } as const
+freezeDeep(DEFAULT_PARSER_OPTIONS)
