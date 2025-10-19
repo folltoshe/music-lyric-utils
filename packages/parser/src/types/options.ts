@@ -2,6 +2,14 @@ import type { DeepRequired, InsertTextSpaceTypes, OptionsManager, ValueOf } from
 import type { PRODUCER_MATCH_MODE } from '@root/constant'
 
 export interface ContentNormalOptions {
+  trailing?: {
+    /**
+     * If the duration of the word exceeds this number, add trailing
+     * @unit ms
+     * @default 1000
+     */
+    checkTime?: number
+  }
   replace?: {
     /**
      * replace chinese punctuation to english
@@ -26,6 +34,10 @@ export interface ContentNormalOptions {
 }
 
 export type ContentNormalOptionsRequired = DeepRequired<ContentNormalOptions>
+
+export interface ContentDynamicOptions extends ContentNormalOptions {}
+
+export type ContentDynamicOptionsRequired = DeepRequired<ContentDynamicOptions>
 
 export interface ParserOptions {
   meta?: {
@@ -160,7 +172,7 @@ export interface ParserOptions {
       /**
        * dynamic line
        */
-      dynamic?: ContentNormalOptions
+      dynamic?: ContentDynamicOptions
       /**
        * translate line
        */

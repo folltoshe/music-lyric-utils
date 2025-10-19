@@ -1,5 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
-import type { Context, MatchItem, ContentNormalOptionsRequired } from '@root/types'
+import type { Context, MatchItem, ContentDynamicOptionsRequired } from '@root/types'
 
 import { EMPTY_LYRIC_DYNAMIC_WORD, EMPTY_LYRIC_LINE } from '@music-lyric-utils/shared'
 
@@ -12,7 +12,7 @@ const TIME_TAG_2 = /<(?<start>[0-9]+),(?<duration>[0-9]+)\>/
 const SPACE_START = /^\s+/
 const SPACE_END = /\s+$/
 
-const processLine = (options: ContentNormalOptionsRequired, line: MatchItem) => {
+const processLine = (options: ContentDynamicOptionsRequired, line: MatchItem) => {
   const targetWords: Lyric.Line.Dynamic.Word[] = []
 
   const lineTime = parseTagTime(line.tag)
@@ -53,6 +53,10 @@ const processLine = (options: ContentNormalOptionsRequired, line: MatchItem) => 
       duration: wordDuration,
     }
     wordResult.text = options.insert.space.enable ? insertSpace(wordContentTrim, options.insert.space.types) : wordContentTrim
+
+    if (wordDuration > options.trailing.checkTime) {
+      wordResult.config.needTrailing = true
+    }
 
     if (wordLast?.config.needSpaceEnd === true) {
       wordResult.config.needSpaceStart = true
