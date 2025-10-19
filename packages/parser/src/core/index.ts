@@ -37,11 +37,11 @@ export class LyricParser {
       return null
     }
 
-    // purification original
-    target = purificationLyric(this.context, target, 'original', musicInfo)
-
     // meta
     target = processMeta(this.context, original.meta, target)
+
+    // purification original
+    target = purificationLyric(this.context, target, 'original', musicInfo)
 
     // duet
     target = insertDuet(this.context, target)
