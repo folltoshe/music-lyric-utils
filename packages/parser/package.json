@@ -14,9 +14,9 @@
     "parser"
   ],
   "repository": {
-    "url": "https://github.com/folltoshe/music-lyric-utils.git",
-    "directory": "packages/parser",
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/folltoshe/music-lyric-utils.git",
+    "directory": "packages/parser"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

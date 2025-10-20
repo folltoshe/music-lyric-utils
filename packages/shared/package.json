@@ -8,9 +8,9 @@
     "build": "vite build"
   },
   "repository": {
-    "url": "https://github.com/folltoshe/music-lyric-utils.git",
-    "directory": "packages/shared",
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/folltoshe/music-lyric-utils.git",
+    "directory": "packages/shared"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

@@ -13,9 +13,9 @@
     "player"
   ],
   "repository": {
-    "url": "https://github.com/folltoshe/music-lyric-utils.git",
-    "directory": "packages/player",
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/folltoshe/music-lyric-utils.git",
+    "directory": "packages/player"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
