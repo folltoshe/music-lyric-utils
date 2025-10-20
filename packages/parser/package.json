@@ -7,6 +7,12 @@
   "scripts": {
     "build": "vite build"
   },
+  "keywords": [
+    "music",
+    "lyric",
+    "lrc",
+    "parser"
+  ],
   "repository": {
     "url": "https://github.com/folltoshe/music-lyric-utils.git",
     "directory": "packages/parser",
