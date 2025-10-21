@@ -2,6 +2,41 @@
   <img src="https://socialify.git.ci/folltoshe/music-lyric-utils/image?custom_description=A+Music+Lyric+Utils&description=1&font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Plus&pulls=1&stargazers=1&theme=Auto" />
 </div>
 
+<div align="center">
+  Lyric Parser And Lyric Player
+</div>
+
+## Features
+
+- Format Support
+
+  - [x] LRC
+  - [ ] TTML
+
+- Export Lyric
+
+  - [ ] LRC
+  - [ ] TTML
+
+- Parse Lyric
+
+  - [x] Original
+  - [x] Dynamic
+  - [x] Translate
+  - [x] Roman
+
+- Parse Meta
+
+  - [x] Meta Tag
+  - [x] Auto Match Producer
+
+- Extra
+
+  - [x] Insert Space
+  - [x] Insert Interlude Line
+  - [x] Insert Duet Info
+  - [x] Purification Lyrics
+
 ## Install
 
 ```shell
@@ -37,37 +72,6 @@ player.updateLyric(info)
 
 player.play()
 ```
-
-## Features
-
-- Format Support
-
-  - [x] LRC
-  - [ ] TTML
-
-- Export Lyric
-
-  - [ ] LRC
-  - [ ] TTML
-
-- Parse Lyric
-
-  - [x] Original
-  - [x] Dynamic
-  - [x] Translate
-  - [x] Roman
-
-- Parse Meta
-
-  - [x] Meta Tag
-  - [x] Auto Match Producer
-
-- Extra
-
-  - [x] Insert Space
-  - [x] Insert Interlude Line
-  - [x] Insert Duet Info
-  - [x] Purification Lyrics
 
 ## Contributor
 
