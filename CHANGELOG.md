@@ -1,3 +1,17 @@
+## [1.2.2](https://github.com/folltoshe/music-lyric-utils/compare/v1.2.1...v1.2.2) (2025-10-22)
+
+
+### Bug Fixes
+
+* **parser:** errors may occur when align some extended lyric ([ae51c78](https://github.com/folltoshe/music-lyric-utils/commit/ae51c789be5f1f892aa8781a6c6fe5bb9f101a8f))
+
+
+### Features
+
+* **parser:** optimize insert space in some char ([059c318](https://github.com/folltoshe/music-lyric-utils/commit/059c3189986e1fe4bb9febd58e28ae65e218db16))
+
+
+
 ## [1.2.1](https://github.com/folltoshe/music-lyric-utils/compare/v1.2.0...v1.2.1) (2025-10-19)
 
 
