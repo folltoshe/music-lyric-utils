@@ -1,7 +1,5 @@
 import type { Lyric } from '@music-lyric-utils/shared'
 
-import { cloneDeep } from '@music-lyric-utils/shared'
-
 const LYRIC_TIME_REGEXP = /^(?:(?<hour>\d+):)?(?<minute>\d+):(?<second>\d+)(?:\.(?<milliSecond>\d{1,3}))?$/u
 
 /**
@@ -75,110 +73,6 @@ export const parseLyricLine = (text: string): ParsedLyricLine[] => {
   return result
 }
 
-const nearestIndex = (base: number[], time: number) => {
-  let lo = 0,
-    hi = base.length - 1
-  if (time <= base[lo]) return lo
-  if (time >= base[hi]) return hi
-  while (lo + 1 < hi) {
-    const mid = (lo + hi) >> 1
-    if (base[mid] === time) return mid
-    if (base[mid] < time) lo = mid
-    else hi = mid
-  }
-  return Math.abs(base[lo] - time) <= Math.abs(base[hi] - time) ? lo : hi
-}
-
-export interface AlignLyricLine {
-  time: Lyric.Time
-  [k: string]: any
-}
-
-/**
- * align lyric to base
- */
-export const alignLyricWithTime = ({
-  base,
-  target,
-  threshold = 20,
-  unique = false,
-  maxDistance = Infinity,
-}: {
-  base: AlignLyricLine[]
-  target: AlignLyricLine[]
-  threshold?: number
-  unique?: boolean
-  maxDistance?: number
-}): AlignLyricLine[] => {
-  if (!base || base.length === 0 || !target || target.length === 0) {
-    return target.map((t) => cloneDeep(t))
-  }
-
-  const basePairs = base.map((item, index) => ({ time: item.time, index })).sort((a, b) => a.time.start - b.time.start)
-  const baseTimes = basePairs.map((item) => item.time.start)
-
-  const assigned = new Array(baseTimes.length).fill(false)
-  const result = target.map((t) => cloneDeep(t))
-
-  const order = result.map((item, index) => ({ time: item.time, index })).sort((a, b) => a.time.start - b.time.start)
-  for (const { time, index } of order) {
-    const targetLine = result[index]
-    const nearIndex = nearestIndex(baseTimes, time.start)
-    const bestBaseTime = baseTimes[nearIndex]
-    const dist = Math.abs(bestBaseTime - time.start)
-
-    if (dist <= threshold && dist <= maxDistance) {
-      targetLine.time.start = bestBaseTime
-      if (unique) assigned[index] = true
-      continue
-    }
-
-    // not find same time line
-    if (!unique) {
-      if (dist <= maxDistance) targetLine.time.start = bestBaseTime
-      continue
-    } else {
-      if (dist > maxDistance && maxDistance !== Infinity) continue
-      if (!assigned[index]) {
-        assigned[index] = true
-        targetLine.time.start = bestBaseTime
-        continue
-      }
-      let left = index - 1
-      let right = index + 1
-      let chosen = -1
-      let chosenDist = Infinity
-      while (left >= 0 || right < baseTimes.length) {
-        if (left >= 0) {
-          const d = Math.abs(baseTimes[left] - time.start)
-          if (!assigned[left] && d <= maxDistance && d < chosenDist) {
-            chosen = left
-            chosenDist = d
-          }
-          left--
-        }
-        if (right < baseTimes.length) {
-          const d = Math.abs(baseTimes[right] - time.start)
-          if (!assigned[right] && d <= maxDistance && d < chosenDist) {
-            chosen = right
-            chosenDist = d
-          }
-          right++
-        }
-        if (chosenDist < dist) break
-      }
-      if (chosen >= 0) {
-        assigned[chosen] = true
-        targetLine.time.start = baseTimes[chosen]
-      } else {
-        if (dist <= maxDistance) targetLine.time.start = bestBaseTime
-      }
-    }
-  }
-
-  return result
-}
-
 export const splitNameWithRule = (name: string, rule: string | RegExp) => {
   return name
     .split(rule)
@@ -189,3 +83,5 @@ export const splitNameWithRule = (name: string, rule: string | RegExp) => {
 export const sortLines = (lines: Lyric.Line.Info[]) => {
   return lines.sort((a, b) => a.time.start - b.time.start)
 }
+
+export * from './align'
