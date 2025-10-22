@@ -1,4 +1,4 @@
-import type { ValueOf } from '../../types/utils'
+import type { ValueOf } from '@root/types'
 
 export const INSERT_TEXT_SPACE_TYPES = {
   ALL: 'ALL',
