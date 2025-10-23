@@ -1,3 +1,19 @@
+## [1.2.4](https://github.com/folltoshe/music-lyric-utils/compare/v1.2.3...v1.2.4) (2025-10-23)
+
+
+### Bug Fixes
+
+* **parser:** bad rule in producer math rules ([2606c57](https://github.com/folltoshe/music-lyric-utils/commit/2606c571c028add7cf7dafe94166c534bea75ab0))
+
+
+### Features
+
+* **parser:** match lines with content when match duet info ([f1fa276](https://github.com/folltoshe/music-lyric-utils/commit/f1fa2766681f8366ae0ac992837cf057c30527e0))
+* **parser:** support custom match mode and rules when purification first line ([c9fa18d](https://github.com/folltoshe/music-lyric-utils/commit/c9fa18d0a3ff4579d2d2572ac68e3f6200bd087e))
+* **parser:** update default purification match mode ([fb2c43a](https://github.com/folltoshe/music-lyric-utils/commit/fb2c43a2e72508fd0f60a8646d60f60c6951cd0c))
+
+
+
 ## [1.2.3](https://github.com/folltoshe/music-lyric-utils/compare/v1.2.2...v1.2.3) (2025-10-23)
 
 
