@@ -25,7 +25,7 @@ const NORMAL_LINE_BASE_OPTIONS: ContentNormalOptionsRequired = {
     },
     firstLine: {
       useMusicInfo: true,
-      mode: PURIFICATION_MATCH_MODE.FUZZY,
+      mode: PURIFICATION_MATCH_MODE.EXACT,
       exact: {
         check: {
           percentage: 30,
