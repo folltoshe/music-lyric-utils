@@ -14,7 +14,7 @@ const DefaultConfig = defineConfig({
       formats: ['es', 'cjs'],
       fileName: 'index',
     },
-    minify: false,
+    minify: 'esbuild',
     reportCompressedSize: false,
     emptyOutDir: true,
     sourcemap: true,
