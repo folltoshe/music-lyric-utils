@@ -65,7 +65,7 @@ export const insertDuet = (context: Context, info: Lyric.Info) => {
     const name = line.content.original.substring(0, colonIndex).trim()
     const content = line.content.original.substring(colonIndex + 1).trim()
 
-    if (name && !content) {
+    if (name) {
       // set last
       handleUpdateCurrent()
       // set new
@@ -79,11 +79,14 @@ export const insertDuet = (context: Context, info: Lyric.Info) => {
         const [_, count] = groups[currentGroupId]
         currentGroupGlobalIndex = count
       }
+
       // need replace line
-      if (options.replace) {
+      if (!content && options.replace) {
         continue
       }
     }
+
+    line.content.original = content.trim()
 
     handleAdd(line)
   }
