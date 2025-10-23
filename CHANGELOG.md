@@ -1,3 +1,14 @@
+## [1.2.3](https://github.com/folltoshe/music-lyric-utils/compare/v1.2.2...v1.2.3) (2025-10-23)
+
+
+### Features
+
+* enable minify for output file ([8de93c2](https://github.com/folltoshe/music-lyric-utils/commit/8de93c2b0a2d3c4526bcb4810735e4e0934650db))
+* **parser:** add check whether it is pure music ([8ad5ef6](https://github.com/folltoshe/music-lyric-utils/commit/8ad5ef6c7dcc5fde4cc9604aa05405a555641d37))
+* **parser:** update default purification match rules ([7db178f](https://github.com/folltoshe/music-lyric-utils/commit/7db178f6e8d74e89f5c5fa3974cc64576f66e846))
+
+
+
 ## [1.2.2](https://github.com/folltoshe/music-lyric-utils/compare/v1.2.1...v1.2.2) (2025-10-22)
 
 
