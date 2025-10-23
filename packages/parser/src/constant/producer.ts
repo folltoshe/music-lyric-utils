@@ -78,9 +78,9 @@ export const DEFAULT_PRODUCER_RULES: RegExp[] = [
   /(?:执行制作人|执制|ExecutiveProducer|ExProd)/giu,
   /(?:协力制作人|协力|共同制作人|Co-Producer|CoProd|AssociateProducer)/giu,
 
-  /(?:编曲|编|Arranger|Arrangement|Arr)/giu,
-  /(?:作曲|作|Composer|Comp)/giu,
-  /(?:作词|词|Lyricist|Lyr)/giu,
+  /(?:编曲|编|曲|Arranger|Arrangement|Arr)/giu,
+  /(?:作曲|作|曲|Composer|Comp)/giu,
+  /(?:作词|作|词|Lyricist|Lyr)/giu,
   /(?:乐谱|谱|Music)/giu,
   /(?:和声编写|和声|BackingVocalsArranger|BVArranger|BGVsArranger)/giu,
   /(?:编辑|AudioEditor|Edit|Editor)/giu,
