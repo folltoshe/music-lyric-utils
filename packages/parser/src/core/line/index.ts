@@ -32,6 +32,9 @@ export const processMainLyric = (context: Context, params: MainParams) => {
   const isSupportAutoScroll = !!target.find((line) => line.time.start > 0)
   result.config.isSupportAutoScroll = isSupportAutoScroll
 
+  const isInstrumental = target.length <= 0
+  result.config.isInstrumental = isInstrumental
+
   // if no time tag, skip align extended lyric
   if (!isSupportAutoScroll) {
     result.lines = target
