@@ -91,7 +91,7 @@ export const DEFAULT_PRODUCER_RULES: RegExp[] = [
   /(?:Rap)/giu,
 
   /(?:题字|文案)/giu,
-  /(?:封面|海报|图绘|映像||封|Cover|Image)/giu,
+  /(?:封面|海报|图绘|映像|封|Cover|Image)/giu,
   /(?:脚本|分镜|视频|Video|PV|MV|CG)/giu,
   /(?:OP|SP)/giu,
   /(?:视觉设计|视觉|设计)/giu,
