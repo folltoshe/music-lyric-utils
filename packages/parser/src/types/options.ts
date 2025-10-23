@@ -62,6 +62,11 @@ export interface ContentNormalOptions {
        */
       useMusicInfo?: boolean
       /**
+       * match mode
+       * @default PURIFICATION_MATCH_MODE.EXACT
+       */
+      mode?: ValueOf<typeof PURIFICATION_MATCH_MODE>
+      /**
        * it will be override exact options
        */
       exact?: {
@@ -75,6 +80,25 @@ export interface ContentNormalOptions {
            */
           percentage?: number
         }
+      }
+      /**
+       * fuzzy mode options
+       */
+      fuzzy?: {}
+      /**
+       * common check rules
+       */
+      rule?: {
+        /**
+         * is use common rule
+         * @default true
+         */
+        useCommon?: boolean
+        /**
+         * custom rule, it will be merge with common rules when useCommon is enable
+         * @default []
+         */
+        custom?: (string | RegExp)[]
       }
     }
   }

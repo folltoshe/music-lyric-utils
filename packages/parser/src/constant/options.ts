@@ -25,10 +25,16 @@ const NORMAL_LINE_BASE_OPTIONS: ContentNormalOptionsRequired = {
     },
     firstLine: {
       useMusicInfo: true,
+      mode: PURIFICATION_MATCH_MODE.FUZZY,
       exact: {
         check: {
           percentage: 30,
         },
+      },
+      fuzzy: {},
+      rule: {
+        useCommon: true,
+        custom: [],
       },
     },
   },

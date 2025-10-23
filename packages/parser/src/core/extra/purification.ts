@@ -48,12 +48,22 @@ export const purificationLyric = (context: Context, info: Lyric.Info, key: Lyric
     }
 
     const isFirstLine = index === 0
-    const extraRules = isFirstLine && musicInfo && options.firstLine.useMusicInfo ? handleProcessMusicInfoRules(musicInfo) : []
-    const targetRules = [...matchRules, ...extraRules]
 
-    if (options.match.mode === PURIFICATION_MATCH_MODE.EXACT) {
+    const firstLineRules = isFirstLine
+      ? [
+          ...(musicInfo && options.firstLine.useMusicInfo ? handleProcessMusicInfoRules(musicInfo) : []),
+          ...options.firstLine.rule.custom,
+          ...(options.firstLine.rule.useCommon ? matchRules : []),
+        ]
+      : []
+    const targetRules = isFirstLine ? [...matchRules, ...firstLineRules] : matchRules
+
+    const mode = isFirstLine ? options.firstLine.mode : options.match.mode
+    const exact = isFirstLine ? options.firstLine.exact : options.match.exact
+
+    if (mode === PURIFICATION_MATCH_MODE.EXACT) {
       const percentage = matchTextWithPercentage(content, targetRules)
-      const check = isFirstLine ? options.firstLine.exact.check.percentage : options.match.exact.check.percentage
+      const check = exact.check.percentage
       if (percentage > check) {
         handleMatched(line)
         continue
